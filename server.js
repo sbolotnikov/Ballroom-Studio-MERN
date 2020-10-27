@@ -17,10 +17,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+// routes
 require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/google-auth-routes.js")(app);
 require("./routes/kicks-api-routes.js")(app);
+require('./routes/stripe-routes.js')(app);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,
