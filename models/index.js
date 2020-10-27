@@ -1,5 +1,7 @@
 module.exports = {
   User: require('./user'),
-  Kick: require('./Kick'),
-  Session: require('./Session')
+  Step: require('./step'),
+  Session: require('./session'),
+  Invoice: require('./invoice'),
+  Payroll: require('./payroll')
 };

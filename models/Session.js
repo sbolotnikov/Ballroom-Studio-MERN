@@ -28,7 +28,8 @@ const SessionSchema = new Schema ({
         date: {
             type: Date,
         }
-    }]
+    }],
+    price: Number
 });
 
 SessionSchema.set('timestamps', true);
