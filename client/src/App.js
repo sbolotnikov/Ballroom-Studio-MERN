@@ -1,26 +1,37 @@
-import logo from './logo.svg';
-import Checkout from './components/Checkout';
-import './App.css';
-
+import React from "react";
+// import {BrowserRouter as Router,Route,Switch} from "react-router-dom"
+import Checkout from "./components/Checkout";
+// import NoMatch from  "./pages/NoMatch"
+import NavBar from "./components/Navbar";
+import "./App.css";
+import { useRoutes } from "hookrouter";
+const routes = {
+  "/": () => <Checkout />,
+};
 function App() {
+  const routeResult = useRoutes(routes);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <a href="/">Main Page</a>
+      {routeResult}
     </div>
   );
 }
+// function App() {
+//   return (
+//     // <NavBar> </NavBar>
+//     <Router>
+//      <div>
+//        <Switch>
+//          <Route exact path="/" component = {Main}/>
+//          <Route  component = {NoMatch}/>
+//        </Switch>
+
+//      </div>
+
+//     </Router>
+//   )
+// }
 
 export default App;
