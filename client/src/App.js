@@ -2,8 +2,9 @@ import React from "react";
 // import {BrowserRouter as Router,Route,Switch} from "react-router-dom"
 import Checkout from "./components/Checkout";
 // import NoMatch from  "./pages/NoMatch"
-import NavBar from "./components/Navbar";
+import NavBar from "./components/pages/Navbar";
 import "./App.css";
+import Home from "./components/pages/home";
 import { useRoutes } from "hookrouter";
 const routes = {
   "/": () => <Checkout />,
@@ -13,6 +14,7 @@ function App() {
   return (
     <div className="App">
       <NavBar />
+      <Home/>
       <a href="/">Main Page</a>
       {routeResult}
     </div>
