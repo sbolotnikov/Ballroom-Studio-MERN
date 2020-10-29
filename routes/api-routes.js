@@ -307,20 +307,11 @@ module.exports = function (app) {
 
 const hasReachedInPersonLimit = async function (id) {
 
-  const numberOfStudents = await db.UserSessions.count({
-    where: {
-      CalendarSessionId: id,
-    }
+  const numberOfStudents = await db.User.count({
+    "userSessions.session": id
   });
-  const queryResults = await db.CalendarSessions.findOne({
-    where: {
-      id: id
-    },
-    include: {
-      model: db.Sessions,
-    }
-  });
-  if (numberOfStudents >= queryResults.Session.dataValues.inPersonLimit) {
+  const inPersonLimit = await db.Session.find({_id: id}, {'inPersonLimit':1});
+  if (numberOfStudents >= inPersonLimit) {
     console.log(`class ${id} has reached limit`);
     return true;
   } else return false;

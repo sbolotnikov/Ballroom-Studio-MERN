@@ -26,7 +26,8 @@ require('./routes/stripe-routes.js')(app);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true
 });
 
 app.listen(PORT, () => {
