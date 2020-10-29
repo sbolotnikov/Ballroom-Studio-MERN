@@ -1,7 +1,7 @@
 {
-  "name": "martial-arts-school",
+  "name": "ballroom-studio-mern",
   "version": "1.1.0",
-  "description": "fs-mma react app",
+  "description": "dance studio running in react app",
   "main": "server.js",
   "scripts": {
     "test": "npm run lint",
@@ -19,11 +19,11 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "moment": "^2.27.0",
-    "mongoose": "^5.10.9",
+    "moment": "^2.29.1",
+    "mongoose": "^5.10.11",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
-    "stripe": "^8.117.0"
+    "stripe": "^8.119.0"
   }
 }
