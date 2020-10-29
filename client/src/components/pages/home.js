@@ -6,6 +6,8 @@ import { NavBar } from "./Navbar/index";
 const Home = () => {
   return (
 <h1>Hello test </h1>
+
+
   );
 };
 
