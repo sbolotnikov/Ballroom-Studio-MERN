@@ -229,7 +229,7 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.User.update({
+      db.User.updateOne({
           _id: mongoose.Types.ObjectId(req.params.id)
         }, {
           $set: {
@@ -252,14 +252,14 @@ module.exports = function (app) {
       res.redirect("/");
     } else {
       // console.log(req.body, "params ", req.params.id);
-      db.User.update({
+      db.User.updateOne({
         _id: req.params.id
       }, {
         $set: {
           birthday: req.body.birthday,
           certLevel: req.body.certLevel,
           phoneNumber: req.body.phoneNumber,
-          // profilePhotoURL: req.body.profilePhotoURL,
+          profilePhotoURL: req.body.profilePhotoURL,
         }
       }).then(function (results) {
         console.log(results);
@@ -289,7 +289,7 @@ module.exports = function (app) {
       console.log("params ", req.params.id);
       console.log("body ", req.body);
       for (let i = 0; i < req.body.attendance.length; i++) {
-        db.User.update({
+        db.User.updateOne({
           _id: mongoose.Types.ObjectId(req.body.attendance[i].id),
           "userSessions.session": mongoose.Types.ObjectId(req.params.id)
         }, {
