@@ -1,5 +1,6 @@
 import React, {Fragment, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import Navbar from '../components/Navbar';
 
 function Splash(){
     useEffect( () => {
@@ -8,7 +9,7 @@ function Splash(){
 
     return (
         <Fragment>
-SPLASH PAGE
+            <Navbar/>
         </Fragment>
     )
 }
