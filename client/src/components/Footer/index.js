@@ -3,12 +3,8 @@ import react from "react"
 
 const Footer = () => {
 
-return (
+return (<div>TEST IT OUT</div>)
 
-
-
-)
-
-}
+};
 
 export default Footer
