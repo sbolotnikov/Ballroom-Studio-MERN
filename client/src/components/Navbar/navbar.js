@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import "./navbar.css";
 
 function Navbar() {
     const location = useLocation();
@@ -10,14 +11,14 @@ function Navbar() {
     }
 
 	return (
-		<nav className="navbar navbar-expand-md navbar-dark bg-primary">
-			<Link to="/" className="navbar-brand font-weight-bold">
+		<nav className="navbar navbar-expand-lg" style={{backgroundColor: "#152a61"}}>
+			<Link to="/" className="navHeader onHover">
 				MERN Ballroom Studio
 			</Link>
             <button className="navbar-toggler" type="button" data-toggle="collapse" 
                 data-target="#navbarNav" aria-controls="navbarNav" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation"
                 onClick={handleNavCollpase}>
-                <span className="navbar-toggler-icon"></span>
+                <span className="navItem"><i class="fas fa-music"></i></span>
             </button>
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
                 <ul className="navbar-nav">
@@ -50,28 +51,28 @@ function Navbar() {
                                 </div>
                             </div>
                         </li> */}
-                <li className="nav-item">
-                    <Link to="/login" className={location.pathname==="/login" ? "nav-link active" : "nav-link"}>
+                <li className="">
+                    <Link to="/login" className={location.pathname==="/login" ? "navItem onHover" : "navItem onHover"}>
                         Login
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link to="/signup" className={location.pathname==="/signup" ? "nav-link active" : "nav-link"}>
+                <li className="">
+                    <Link to="/signup" className={location.pathname==="/signup" ? "navItem onHover" : "navItem onHover"}>
                         Signup
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link to="/events" className={location.pathname==="/events" ? "nav-link active" : "nav-link"}>
+                <li className="">
+                    <Link to="/events" className={location.pathname==="/events" ? "navItem onHover" : "navItem onHover"}>
                        Events
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link to="/social" className={location.pathname==="/social" ? "nav-link active" : "nav-link"}>
+                <li className="">
+                    <Link to="/social" className={location.pathname==="/social" ? "navItem onHover" : "navItem onHover"}>
                        Social
                     </Link>
                 </li>
-                <li className="nav-item">
-                    <Link to="/payment" className={location.pathname==="/payment" ? "nav-link active" : "nav-link"}>
+                <li className="">
+                    <Link to="/payment" className={location.pathname==="/payment" ? "navItem onHover" : "navItem onHover"}>
                         Payment
                     </Link>
                 </li>

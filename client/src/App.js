@@ -2,6 +2,7 @@
 import React from 'react';
 import Home from "./pages/Home/index.js";
 // import Checkout from './components/Checkout';
+// eslint-disable-next-line
 import logo from './logo.svg';
 import Checkout from './components/Checkout';
 import Footer from './components/Footer';

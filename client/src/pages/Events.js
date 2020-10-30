@@ -1,14 +1,18 @@
-import React, {Fragment, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react';
+import Navbar from '../components/Navbar/navbar.js';
+import Calendar from '../components/Calendar/calendar.js';
+// eslint-disable-next-line
+import { Link } from 'react-router-dom';
 
-function Events(){
-    useEffect( () => {
+function Events() {
+    useEffect(() => {
         console.log("on-load");
     }, []);
 
     return (
         <Fragment>
-Events PAGE
+            <Navbar></Navbar>
+            <Calendar></Calendar>
         </Fragment>
     )
 }
