@@ -1,0 +1,102 @@
+
+.modal-header {
+  background-color: #dc3545;
+  color: white;
+ 
+}
+
+.modal-body{
+  color: #dc3545;
+  display: flexbox;
+  flex-wrap: wrap;
+  height: fit-content;
+}
+
+#alertText{
+  text-align: center; 
+  float:left; 
+  width: 55%
+}
+
+.kick {
+  padding: 10px;
+  margin: 10px;
+  background-color: #e8f9ff;
+  color: #dc3545;
+}
+
+.class-info-hover {
+  background: #aaaaaa;
+}
+
+.add-session-hover {
+  font-size: 50px;
+  color: #dddddd;
+  text-align: center;
+}
+
+.member-photo {
+  border-radius: 50%;
+  width: 64px;
+  height: 64px;
+}
+
+#myVideo {
+  position: fixed;
+  top: 36px;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  opacity: 0.5;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.dropdown-menu {
+  width: 300px;
+}
+
+.footer-link {
+  text-decoration: underline;
+  color: white;
+}
+
+@media (max-width: 767.98px) {
+  .display-3 {
+    font-size: 3rem;
+  }
+
+  #smScreenBg {
+    position: fixed;
+    top: 36px;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+    opacity: 0.35;
+    object-fit: cover;
+    z-index: -1;
+  }
+}
+.break{
+color: white;
+}
+
+.w{
+  background-color: white
+}
+
+.pad{
+  padding: 10px
+}
+.n
+{
+  opacity: 0;
+}
+.glow
+{
+ 
+  color: yellow;
+  text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF ;
+}

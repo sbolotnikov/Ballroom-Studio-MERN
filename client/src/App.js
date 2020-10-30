@@ -1,3 +1,7 @@
+
+import React from 'react';
+import Home from "./pages/Home";
+// import Checkout from './components/Checkout';
 import logo from './logo.svg';
 import Checkout from './components/Checkout';
 import Footer from './components/Footer';
@@ -16,15 +20,10 @@ import { HashRouter as Router, Route } from 'react-router-dom';
 function App() {
   return (
     <div className="App">
-      <Router>
-        <Route exact={true} path="/" component={Splash} />
-        <Route exact={true} path="/login" component={Login} />
-        <Route exact={true} path="/signup" component={Signup} />
-        <Route exact={true} path="/social" component={Social} />
-        <Route exact={true} path="/payment" component={Payment} />
-        <Route exact={true} path="/events" component={Events} />
-      </Router>
-    </div>
+    <Router>
+      <Route exact path="/" component={Home} />
+    </Router>
+  </div>
   );
 }
 
