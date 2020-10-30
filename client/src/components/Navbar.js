@@ -10,7 +10,7 @@ function Navbar() {
     }
 
 	return (
-		<nav className="navbar navbar-expand-md navbar-dark bg-primary">
+		<nav className="navbar navbar-expand-lg navbar-dark bg-primary">
 			<Link to="/" className="navbar-brand font-weight-bold">
 				MERN Ballroom Studio
 			</Link>
