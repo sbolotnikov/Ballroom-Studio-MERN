@@ -1,14 +1,7 @@
 
 const Footer = () => {
 
-return (
+return (<div>TEST IT OUT</div>)
 
-
-    <div> Hello i am your footer</div>
-    
-
-
-
-)
 }
 export default Footer
