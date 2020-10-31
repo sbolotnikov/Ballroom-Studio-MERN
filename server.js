@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const passport = require("./config/passport");
 
 const PORT = process.env.PORT || 8080;
-const db = require("./models");
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +25,8 @@ require('./routes/stripe-routes.js')(app);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,
-  useFindAndModify: false
+  useFindAndModify: false,
+  useUnifiedTopology: true 
 });
 
 app.listen(PORT, () => {

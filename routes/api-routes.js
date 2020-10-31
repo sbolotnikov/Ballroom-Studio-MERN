@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 module.exports = function (app) {
+  // Route for member login
   app.post("/api/login", passport.authenticate("local"), (req, res) => {
     // Sending back a password, even a hashed password, isn't a good idea
     res.json({
@@ -14,6 +15,7 @@ module.exports = function (app) {
     });
   });
 
+  // Route to signup a new member
   app.post("/api/signup", (req, res) => {
     console.log(req.body);
     db.User.create({
@@ -41,6 +43,7 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
+  // Route to retrieve info of member who is currently logged in
   app.get("/api/user_data", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
@@ -56,7 +59,7 @@ module.exports = function (app) {
         phoneNumber: req.user.phoneNumber,
         certLevel: req.user.certLevel,
         memberStatus: req.user.memberStatus,
-        // profilePhotoURL: req.user.profilePhotoURL,
+        profilePhotoURL: req.user.profilePhotoURL,
         // cloudUploadName: process.env.CLOUDINARY_CLOUDNAME,
         // cloudUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
       });
@@ -78,6 +81,7 @@ module.exports = function (app) {
     });
   });
 
+  // get class schedule based on level, isAdult, and current week
   app.get("/api/class_schedule/:level/:isAdult/:weekNumber", async (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
@@ -89,13 +93,13 @@ module.exports = function (app) {
       try {
         const results = await db.Session.find({
           "sessionCalendar.date": {
-            $gte: date.dateA,
-            $lte: date.dateB
+            $gte: dateA,
+            $lte: dateB
           },
           level: req.params.level,
           adultClass: req.params.isAdult
         });
-        // res.json(results);
+        console.log(results);
         // check if classes are full. If full add a flag to an updatedResults array
         const data = await updateResults(results);
         res.json(data);
@@ -259,7 +263,7 @@ module.exports = function (app) {
           birthday: req.body.birthday,
           certLevel: req.body.certLevel,
           phoneNumber: req.body.phoneNumber,
-          // profilePhotoURL: req.body.profilePhotoURL,
+          profilePhotoURL: req.body.profilePhotoURL,
         }
       }).then(function (results) {
         console.log(results);
@@ -325,6 +329,7 @@ const hasReachedInPersonLimit = async function (id) {
     return true;
   } else return false;
 };
+
 
 const updateResults = async function (results) {
   const updatedResults = [];

@@ -225,6 +225,11 @@ express@^4.17.1:
     utils-merge "1.0.1"
     vary "~1.1.2"
 
+faker@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/faker/-/faker-5.1.0.tgz#e10fa1dec4502551aee0eb771617a7e7b94692e8"
+  integrity sha512-RrWKFSSA/aNLP0g3o2WW1Zez7/MnMr7xkiZmoCfAGZmdkDQZ6l2KtuXHN5XjdvpRjDl8+3vf+Rrtl06Z352+Mw==
+
 finalhandler@~1.1.2:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/finalhandler/-/finalhandler-1.1.2.tgz#b7e7d000ffd11938d0fdb053506f6ebabe9f587d"

@@ -16,8 +16,8 @@ import Payment from './pages/Payment';
 import Signup from './pages/Signup';
 import Social from './pages/Social';
 import { HashRouter as Router, Route } from 'react-router-dom';
-import populateTab from './db-seed'
-console.log(populateTab());
+// import populateTab from './db-seed'
+// console.log(populateTab());
 
 function App() {
   return (
