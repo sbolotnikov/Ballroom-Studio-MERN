@@ -50,19 +50,7 @@ module.exports = function (app) {
       res.json({});
     } else {
       console.log(req.user);
-      res.json({
-        id: req.user._id,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        age: req.user.age,
-        email: req.user.email,
-        phoneNumber: req.user.phoneNumber,
-        certLevel: req.user.certLevel,
-        memberStatus: req.user.memberStatus,
-        profilePhotoURL: req.user.profilePhotoURL,
-        // cloudUploadName: process.env.CLOUDINARY_CLOUDNAME,
-        // cloudUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
-      });
+      res.json(req.user);
     }
   });
 
@@ -72,7 +60,7 @@ module.exports = function (app) {
     const dateB = moment().week(req.params.weekNumber).endOf('week');
     console.log(dateA, dateB);
     db.Session.find({
-      "sessionCalendar.date": {
+      sessionCalendar: {
         $gte: dateA,
         $lte: dateB
       }
@@ -92,7 +80,7 @@ module.exports = function (app) {
 
       try {
         const results = await db.Session.find({
-          "sessionCalendar.date": {
+          sessionCalendar: {
             $gte: dateA,
             $lte: dateB
           },
@@ -159,7 +147,7 @@ module.exports = function (app) {
           _id: req.params.memberId
         }).populate({
           path: 'Session.sessionCalendar',
-          "sessionCalendar.date": {
+          sessionCalendar: {
             $gte: dateA,
             $lte: dateB
           },

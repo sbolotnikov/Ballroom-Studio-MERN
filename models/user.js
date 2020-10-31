@@ -20,7 +20,7 @@ const UserSchema = new Schema({
     type: String
   },
   phoneNumber: {
-    type: Number
+    type: String
   },
   googleId: {
     type: String
@@ -42,11 +42,13 @@ const UserSchema = new Schema({
   },
   userSessions: [
     {
-      _id:false,
+      // _id:false,
       session: {
         type: Schema.Types.ObjectId,
         ref: "Session.sessionCalendar",
       },
+      sessionDate: Date,
+      length: Number,
       isPresent: {
         type: Boolean
       }

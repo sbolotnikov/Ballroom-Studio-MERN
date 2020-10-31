@@ -12,22 +12,13 @@ const SessionSchema = new Schema ({
     },
     inPersonLimit: {type: Number},
     adultClass: {type: Boolean},
-    sessionDuration: {
-        type: Number,
-        required: true
-    },
-    startTime: {type: Number},
+    sessionType: {type:String},
     teachers: [{
         type: Schema.Types.ObjectId,
         ref: "User"
     }],
-    daysOfWeek:[{
-        type: String,
-    }],
     sessionCalendar: [{
-        date: {
             type: Date,
-        }
     }],
     price: Number
 });

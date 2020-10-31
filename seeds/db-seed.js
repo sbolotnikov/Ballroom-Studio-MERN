@@ -61,8 +61,10 @@ module.exports = function populateTab() {
             fullDate = moment(fullDate).set({
                 'hour': randomN(12) + 10,
                 'minute': [0, 15, 30, 45][randomN(4)]
-            }).format("YYYY-MM-DD HH:mm");
-            randomDate.push(fullDate)
+            })
+            .format("YYYY-MM-DD HH:mm");
+            let tempDate = new Date(fullDate);
+            randomDate.push(tempDate);
         }
         temp = randomN(5);
         groupId.push(randomAlphanum(24));
@@ -135,7 +137,7 @@ console.log(sessionTypes)
             profilePhotoUrl: faker.image.avatar(),
             certLevel: randomN(5),
             memberStatus: "student",
-            userSessions: sessions
+            // userSessions: sessions
         });
         // certlevel: social foundation, bronze, silver, gold, open
         sessions = [];
