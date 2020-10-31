@@ -41,70 +41,32 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
-  app.get("/api/user_data", (req, res) => {
+  app.get("/api/profile", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      console.log(req.user);
-      res.json({
-        id: req.user._id,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        age: req.user.age,
-        email: req.user.email,
-        phoneNumber: req.user.phoneNumber,
-        certLevel: req.user.certLevel,
-        memberStatus: req.user.memberStatus,
-        // profilePhotoURL: req.user.profilePhotoURL,
-        // cloudUploadName: process.env.CLOUDINARY_CLOUDNAME,
-        // cloudUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
-      });
+      // console.log(req.user);
+      res.json(req.user);
     }
   });
 
-  // get class schedule for current week
-  app.get("/api/class_schedule/:weekNumber", (req, res) => {
-    const dateA = moment().week(req.params.weekNumber).startOf('week');
-    const dateB = moment().week(req.params.weekNumber).endOf('week');
-    console.log(dateA, dateB);
+  // get session date for specific month
+  app.get("/api/session_date/month/:monthNumber", (req, res) => {
+    let month = parseInt(req.params.monthNumber) - 1;
+    let date = new Date();
+    let firstDayOfMonth = new Date(date.getFullYear(), month, 1);
+    let lastDayOfMonth = new Date(date.getFullYear(), month+1, 0);
+    console.log(firstDayOfMonth, lastDayOfMonth);
     db.Session.find({
-      "sessionCalendar.date": {
-        $gte: dateA,
-        $lte: dateB
+      sessionCalendar: {
+        $gte: firstDayOfMonth,
+        $lte: lastDayOfMonth
       }
     }).then(function (results) {
       res.json(results);
     });
   });
-
-  app.get("/api/class_schedule/:level/:isAdult/:weekNumber", async (req, res) => {
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      const dateA = moment().week(req.params.weekNumber).startOf('week');
-      const dateB = moment().week(req.params.weekNumber).endOf('week');
-
-      try {
-        const results = await db.Session.find({
-          "sessionCalendar.date": {
-            $gte: date.dateA,
-            $lte: date.dateB
-          },
-          level: req.params.level,
-          adultClass: req.params.isAdult
-        });
-        // res.json(results);
-        // check if classes are full. If full add a flag to an updatedResults array
-        const data = await updateResults(results);
-        res.json(data);
-      } catch (err) {
-        res.json(err);
-      }
-    }
-  });
-
 
   app.get("/api/all_members", (req, res) => {
     if (!req.user) {
@@ -117,11 +79,11 @@ module.exports = function (app) {
     }
   });
 
-  app.put("/api/enroll", (req, res) => {
-    console.log(req.body);
-    const promises = req.body.data.map(e => {
+  app.put("/api/register/sessions/:userId", (req, res) => {
+    // console.log(req.body);
+    req.body.data.map(e => {
       db.User.findOneAndUpdate({
-          _id: e.UserId
+          _id: req.params.userId
         }, {
           $push: {
             userSessions: {
@@ -155,7 +117,7 @@ module.exports = function (app) {
           _id: req.params.memberId
         }).populate({
           path: 'Session.sessionCalendar',
-          "sessionCalendar.date": {
+          sessionCalendar: {
             $gte: dateA,
             $lte: dateB
           },
@@ -189,7 +151,6 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-
       const start = new Date(req.body.startDate);
       const end = new Date(req.body.endDate);
 
@@ -209,13 +170,8 @@ module.exports = function (app) {
         inPersonLimit: parseInt(req.body.inPersonLimit),
         adultClass: req.body.adultClass,
         sessionDuration: req.body.sessionDuration,
-        startTime: req.body.startTime,
         daysOfWeek: req.body.daysOfWeek,
-        sessionCalendar: sessionCalendarDates.map(e => {
-          return {
-            date: e
-          }
-        })
+        sessionCalendar: sessionCalendarDates
       }).then(function (results) {
         res.json({
           message: "Successfully added session"

@@ -29,9 +29,15 @@ const UserSchema = new Schema({
   profilePhotoUrl: {
     type: String
   },
+  cloudUploadName: {
+    type: String
+  },
+  cloudUploadPreset: {
+    type: String
+  },
   certLevel: {
-    type: Number,
-    max: 7,
+    type: String,
+    enum: ["social foundation", "bronze", "silver", "gold", "open"]
   },
   memberStatus: [{
     type: String,
@@ -53,9 +59,9 @@ const UserSchema = new Schema({
       }
     }
   ],
-  kicks: [{
+  steps: [{
     type: Schema.Types.ObjectId,
-    ref: "Kick",
+    ref: "Steps",
   }]
 }, {
   toJSON: {virtuals: true}
@@ -99,10 +105,11 @@ UserSchema.virtual('age')
 const User = mongoose.model("User", UserSchema);
 
 User.prototype.validPassword = function (password) {
-  return bcrypt.compareSync(password, this.password, (err, isMatch) => {
-    if (err) return cb(err);
-    cb(null, isMatch);
-  });
+  // return bcrypt.compareSync(password, this.password, (err, isMatch) => {
+  //   if (err) return cb(err);
+  //   cb(null, isMatch);
+  // });
+  return this.password;
 }
 
 module.exports = User;
