@@ -1,26 +1,37 @@
-import logo from './logo.svg';
+
+import React from 'react';
+import Home from "./pages/Home/index.js";
 // import Checkout from './components/Checkout';
+// eslint-disable-next-line
+import logo from './logo.svg';
+import Footer from './components/Footer';
 import './App.css';
+import './css/body.css';
+import './css/heading.css';
+import './css/styles.css';
+import Events from './pages/Events';
+import Login from './pages/Login';
+import Payment from './pages/Payment';
+import Signup from './pages/Signup';
+import Social from './pages/Social';
+import { HashRouter as Router, Route } from 'react-router-dom';
+import populateTab from './db-seed'
+console.log(populateTab());
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/events" component={Events} />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/payment" component={Payment} />
+      <Route exact path="/signup" component={Signup} />
+      <Route exact path="/social" component={Social} />
+    </Router>
+  </div>
   );
 }
 
 export default App;
+
