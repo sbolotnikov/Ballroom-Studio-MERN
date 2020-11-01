@@ -4,7 +4,8 @@ const mongoose = require('mongoose');
 const passport = require("./config/passport");
 
 const PORT = process.env.PORT || 8080;
-const db = require("./models");
+
+// attaching socket.io to express http
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -21,8 +22,11 @@ app.use(passport.session());
 require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/google-auth-routes.js")(app);
-require("./routes/kicks-api-routes.js")(app);
+require("./routes/steps-routes.js")(app);
 require('./routes/stripe-routes.js')(app);
+
+const http = require('http').createServer(app);
+const io = require('socket.io')(http);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,
@@ -30,6 +34,19 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio
   useUnifiedTopology: true
 });
 
-app.listen(PORT, () => {
+// socket connection
+io.on('connection', (socket) => {
+  console.log('a user is connected over socket');
+  socket.on('disconnect', ()=> {
+      console.log('a user disconnected');
+  });
+  socket.on('steps dm', (msg) => {
+      console.log({'steps dm': msg});
+      io.emit('steps dm', msg);
+  })
+});
+
+// using http through app to use socket.io
+http.listen(PORT, () => {
   console.log(`App running on port http://localhost:${PORT}`);
 });

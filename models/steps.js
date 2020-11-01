@@ -8,10 +8,10 @@ const StepsSchema = new Schema({
   topic: {
     type: String,
   },
-  dm_recipient: [{
+  dm_recipient: {
     type: Schema.Types.ObjectId,
     ref: "User"
-  }],
+  },
   author: {
     type: Schema.Types.ObjectId,
     ref: "User"

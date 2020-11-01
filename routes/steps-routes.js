@@ -133,4 +133,41 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
     }
   });
 
+  //DM Routes
+  //=========
+  // Create a new DM route sent to recipient
+  app.post("/api/steps/dm/:recipientId", function(req, res) {
+    if (!req.user) {
+      res.redirect("/");
+    } else {
+       db.Steps.create({
+         message: req.body.message,
+         dm_recipient: req.params.recipientId,
+         author: req.user.id
+       }).then(function(data) {
+         res.end();
+       }).catch(function(err) {
+         res.send(err);
+       })
+    }
+  });
+
+  // GET all DMs between two users, sorted by createdAt
+  app.get("/api/steps/dm/:recipientId", function (req, res) {
+    if (!req.user) {
+      res.redirect("/");
+    } else {
+       db.Steps.find({
+         dm_recipient: req.params.recipientId,
+         author: req.user.id
+       }).sort({
+         'createdAt': 1
+       }).then(function(data) {
+         res.json(data)
+       }).catch(function(err) {
+         res.send(err);
+       })
+    }
+  })
+
 };
