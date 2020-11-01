@@ -52,8 +52,10 @@ const UserSchema = new Schema({
       _id:false,
       session: {
         type: Schema.Types.ObjectId,
-        ref: "Session.sessionCalendar",
+        ref: "Session",
       },
+      sessionDate: Date,
+      length: Number,
       isPresent: {
         type: Boolean
       }
@@ -105,11 +107,11 @@ UserSchema.virtual('age')
 const User = mongoose.model("User", UserSchema);
 
 User.prototype.validPassword = function (password) {
-  // return bcrypt.compareSync(password, this.password, (err, isMatch) => {
-  //   if (err) return cb(err);
-  //   cb(null, isMatch);
-  // });
-  return this.password;
+  return bcrypt.compareSync(password, this.password, (err, isMatch) => {
+    if (err) return cb(err);
+    cb(null, isMatch);
+  });
+  // return this.password;
 }
 
 module.exports = User;

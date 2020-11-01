@@ -41,6 +41,7 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
+  // get user profile if user is logged in
   app.get("/api/profile", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
@@ -52,17 +53,35 @@ module.exports = function (app) {
   });
 
   // get session date for specific month
-  app.get("/api/session_date/month/:monthNumber", (req, res) => {
+  app.get("/api/session_dates/month/:monthNumber", (req, res) => {
     let month = parseInt(req.params.monthNumber) - 1;
     let date = new Date();
     let firstDayOfMonth = new Date(date.getFullYear(), month, 1);
     let lastDayOfMonth = new Date(date.getFullYear(), month+1, 0);
-    console.log(firstDayOfMonth, lastDayOfMonth);
+    // console.log(firstDayOfMonth, lastDayOfMonth);
     db.Session.find({
       sessionCalendar: {
         $gte: firstDayOfMonth,
         $lte: lastDayOfMonth
       }
+    }).then(function (results) {
+      res.json(results);
+    });
+  });
+
+  // get session date for adult or non-adult classes
+  app.get("/api/session_dates/adult/:isAdult", (req, res) => {
+    db.Session.find({
+      adultClass: req.params.isAdult
+    }).then(function (results) {
+      res.json(results);
+    });
+  });
+
+  // get session date based on session type
+  app.get("/api/session_dates/sessionType/:sessionType", (req, res) => {
+    db.Session.find({
+      sessionType: req.params.sessionType
     }).then(function (results) {
       res.json(results);
     });
@@ -80,47 +99,73 @@ module.exports = function (app) {
   });
 
   app.put("/api/register/sessions/:userId", (req, res) => {
-    // console.log(req.body);
-    req.body.data.map(e => {
-      db.User.findOneAndUpdate({
-          _id: req.params.userId
-        }, {
-          $push: {
-            userSessions: {
-              session: {
-                _id: mongoose.Types.ObjectId(e.SessionCalendarId),
-              },
-              isPresent: false
-            }
-          }
-        }, {
-          returnNewDocument: true
-        })
-        .then(results => {
-          res.json(results);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    });
-  });
-
-  app.get("/api/classes/:memberId/:weekNumber", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      const dateA = moment().week(req.params.weekNumber).startOf('week');
-      const dateB = moment().week(req.params.weekNumber).endOf('week');
-
+      // console.log(req.body);
+      req.body.data.map(e => {
+        db.User.findOneAndUpdate({
+            _id: req.params.userId
+          }, {
+            $push: {
+              userSessions: {
+                session: {
+                  _id: mongoose.Types.ObjectId(e.sessionId),
+                },
+                sessionDate: e.sessionDate,
+                length: e.length,
+                isPresent: false
+              }
+            }
+          }, {
+            new: true
+          })
+          .then(results => {
+            res.json(results);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      });
+    }
+  });
+  
+  // GET/ user's session dates. IF user is a student, this returns all the user's sessions. 
+  app.get("/api/my_sessions", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
       db.User.find({
-          _id: req.params.memberId
+          _id: req.user._id
+        }).populate('Session')
+        .then(data => {
+          res.json(data)
+        }).catch(err => {
+          res.send(err);
+        })
+    }
+  });
+
+  // GET/ user's session dates for specific month
+  app.get("/api/my_sessions/month/:monthNumber", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      let month = parseInt(req.params.monthNumber) - 1;
+      let date = new Date();
+      let firstDayOfMonth = new Date(date.getFullYear(), month, 1);
+      let lastDayOfMonth = new Date(date.getFullYear(), month+1, 0);
+      db.User.find({
+          _id: req.user._id
         }).populate({
-          path: 'Session.sessionCalendar',
+          path: 'Session',
           sessionCalendar: {
-            $gte: dateA,
-            $lte: dateB
-          },
+            $gte: firstDayOfMonth,
+            $lte: lastDayOfMonth
+          }
         })
         .then(data => {
           res.json(data)
@@ -130,13 +175,16 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/session_members/:id", (req, res) => {
+  // Get sessions based on userId param. For Teacher or Admin
+  app.get("/api/sessions/:userId", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
       db.User.find({
-          "userSessions.session": req.params.id
+          _id: req.params.userId
+        }, {
+          userSessions: true
         })
         .then(results => {
           res.json(results);
@@ -176,17 +224,19 @@ module.exports = function (app) {
         res.json({
           message: "Successfully added session"
         });
-      });
+      }).catch(function(err) {
+        res.send(err);
+      })
     }
   });
 
-  app.put('/api/member/promote/:id', function (req, res) {
+  app.put('/api/profile/level_up/:userId', function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
       db.User.updateOne({
-          _id: mongoose.Types.ObjectId(req.params.id)
+          _id: req.params.userId
         }, {
           $set: {
             certLevel: req.body.certLevel,
@@ -197,19 +247,19 @@ module.exports = function (app) {
           res.json(results);
         })
         .catch(err => {
-          console.log(err);
+          res.send(err);
         })
     }
   })
 
-  app.put('/api/member/profile/:id', function (req, res) {
+  app.put('/api/profile/:userId', function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
       // console.log(req.body, "params ", req.params.id);
       db.User.updateOne({
-        _id: req.params.id
+        _id: req.params.userId
       }, {
         $set: {
           birthday: req.body.birthday,
@@ -220,46 +270,97 @@ module.exports = function (app) {
       }).then(function (results) {
         console.log(results);
         res.json({});
+      }).catch(function(err) {
+        res.send(err);
       })
     }
   })
   // delete user
-  app.delete('/api/member/remove/:id', function (req, res) {
+  app.delete('/api/profile/remove/:userId', function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log("params ", req.params.id);
+      // console.log("params ", req.params.userId);
       db.User.deleteOne({
-        _id: mongoose.Types.ObjectId(req.params.id)
+        _id: req.params.userId
       }).then(function (results) {
         res.json({});
+      }).catch(function(err) {
+        res.send(err);
       })
     }
   })
-  app.post("/api/session/attendance/:id", function (req, res) {
+
+  // get all students in a particular session
+  app.get("/api/session/registered/:sessionId", function (req, res) {
+    if(!req.user) {
+      res.redirect("/");
+    } else {
+      db.User.find({
+        "userSessions.session": req.params.sessionId
+      }).then (function (results) {
+        res.json(results)
+      }).catch(function(err) {
+        res.send(err);
+      })
+    }
+  })
+
+  // post attendance for user for particular session
+  app.put("/api/session/attendance/:sessionId", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log("params ", req.params.id);
-      console.log("body ", req.body);
+      // console.log("params ", req.params.id);
+      // console.log("body ", req.body);
       for (let i = 0; i < req.body.attendance.length; i++) {
         db.User.updateOne({
-          _id: mongoose.Types.ObjectId(req.body.attendance[i].id),
-          "userSessions.session": mongoose.Types.ObjectId(req.params.id)
+          _id: mongoose.Types.ObjectId(req.body.attendance[i].userId),
+          "userSessions.session": mongoose.Types.ObjectId(req.params.sessionId)
         }, {
           $set:{
-            "userSessions.isPresent": req.body.attendance[i].isPresent
+            "userSessions.$.isPresent": req.body.attendance[i].isPresent
           }
         }).then(function (results) {
           console.log(results);
+        }).catch(function(err) {
+          res.send(err);
         })
       }
       res.json({});
     }
   })
 };
+
+const getDaysBetweenDates = (start, end, weekDay, startTime) => {
+  const weekDays = {
+    "Sunday": 0,
+    "Monday": 1,
+    "Tuesday": 2,
+    "Wednesday": 3,
+    "Thursday": 4,
+    "Friday": 5,
+    "Saturday": 6
+  };
+  const result = [];
+
+  const day = weekDays[weekDay];
+  const startHour = Math.floor(startTime);
+  const startMinute = (startTime - startHour) * 60;
+
+  const current = new Date(start);
+  const endDate = new Date(end);
+
+  current.setDate(current.getDate() + (day - current.getDay() + 7) % 7);
+  current.setHours(startHour, startMinute);
+  while (current <= endDate) {
+    result.push(new Date(current));
+    current.setDate(current.getDate() + 7);
+  }
+  return result;
+}
 
 const hasReachedInPersonLimit = async function (id) {
 
@@ -285,32 +386,4 @@ const updateResults = async function (results) {
     }
   }
   return updatedResults;
-}
-
-const getDaysBetweenDates = (start, end, weekDay, startTime) => {
-  const weekDays = {
-    "Sunday": 0,
-    "Monday": 1,
-    "Tuesday": 2,
-    "Wednesday": 3,
-    "Thursday": 4,
-    "Friday": 5,
-    "Saturday": 6
-  };
-  const result = [];
-
-  const day = weekDays[weekDay];
-  const startHour = Math.floor(startTime);
-  const startMinute = (startTime - startHour) * 60;
-
-  const current = new Date(start);
-  const endDate = new Date(end);
-
-  current.setHours(startHour, startMinute);
-  current.setDate(current.getDate() + (day - current.getDay() + 7) % 7);
-  while (current <= endDate) {
-    result.push(new Date(current));
-    current.setDate(current.getDate() + 7);
-  }
-  return result;
 }
