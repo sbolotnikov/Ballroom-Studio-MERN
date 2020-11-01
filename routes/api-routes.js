@@ -242,6 +242,8 @@ module.exports = function (app) {
             certLevel: req.body.certLevel,
             memberStatus: req.body.role
           }
+        },{
+          new: true
         })
         .then(results => {
           res.json(results);
@@ -267,6 +269,8 @@ module.exports = function (app) {
           phoneNumber: req.body.phoneNumber,
           profilePhotoURL: req.body.profilePhotoURL,
         }
+      },{
+        new: true
       }).then(function (results) {
         console.log(results);
         res.json({});
