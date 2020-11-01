@@ -26,7 +26,7 @@ passport.use(
           });
         }
         return done(null, user);
-      });
+      }).select("+password");
     }
   ),
 );

@@ -41,70 +41,51 @@ module.exports = function (app) {
     res.redirect("/");
   });
 
-  app.get("/api/user_data", (req, res) => {
+  // get user profile if user is logged in
+  app.get("/api/profile", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      console.log(req.user);
-      res.json({
-        id: req.user._id,
-        firstName: req.user.firstName,
-        lastName: req.user.lastName,
-        age: req.user.age,
-        email: req.user.email,
-        phoneNumber: req.user.phoneNumber,
-        certLevel: req.user.certLevel,
-        memberStatus: req.user.memberStatus,
-        // profilePhotoURL: req.user.profilePhotoURL,
-        // cloudUploadName: process.env.CLOUDINARY_CLOUDNAME,
-        // cloudUploadPreset: process.env.CLOUDINARY_UPLOAD_PRESET
-      });
+      // console.log(req.user);
+      res.json(req.user);
     }
   });
 
-  // get class schedule for current week
-  app.get("/api/class_schedule/:weekNumber", (req, res) => {
-    const dateA = moment().week(req.params.weekNumber).startOf('week');
-    const dateB = moment().week(req.params.weekNumber).endOf('week');
-    console.log(dateA, dateB);
+  // get session date for specific month
+  app.get("/api/session_dates/month/:monthNumber", (req, res) => {
+    let month = parseInt(req.params.monthNumber) - 1;
+    let date = new Date();
+    let firstDayOfMonth = new Date(date.getFullYear(), month, 1);
+    let lastDayOfMonth = new Date(date.getFullYear(), month+1, 0);
+    // console.log(firstDayOfMonth, lastDayOfMonth);
     db.Session.find({
-      "sessionCalendar.date": {
-        $gte: dateA,
-        $lte: dateB
+      sessionCalendar: {
+        $gte: firstDayOfMonth,
+        $lte: lastDayOfMonth
       }
     }).then(function (results) {
       res.json(results);
     });
   });
 
-  app.get("/api/class_schedule/:level/:isAdult/:weekNumber", async (req, res) => {
-    if (!req.user) {
-      // The user is not logged in, send back an empty object
-      res.json({});
-    } else {
-      const dateA = moment().week(req.params.weekNumber).startOf('week');
-      const dateB = moment().week(req.params.weekNumber).endOf('week');
-
-      try {
-        const results = await db.Session.find({
-          "sessionCalendar.date": {
-            $gte: date.dateA,
-            $lte: date.dateB
-          },
-          level: req.params.level,
-          adultClass: req.params.isAdult
-        });
-        // res.json(results);
-        // check if classes are full. If full add a flag to an updatedResults array
-        const data = await updateResults(results);
-        res.json(data);
-      } catch (err) {
-        res.json(err);
-      }
-    }
+  // get session date for adult or non-adult classes
+  app.get("/api/session_dates/adult/:isAdult", (req, res) => {
+    db.Session.find({
+      adultClass: req.params.isAdult
+    }).then(function (results) {
+      res.json(results);
+    });
   });
 
+  // get session date based on session type
+  app.get("/api/session_dates/sessionType/:sessionType", (req, res) => {
+    db.Session.find({
+      sessionType: req.params.sessionType
+    }).then(function (results) {
+      res.json(results);
+    });
+  });
 
   app.get("/api/all_members", (req, res) => {
     if (!req.user) {
@@ -117,48 +98,74 @@ module.exports = function (app) {
     }
   });
 
-  app.put("/api/enroll", (req, res) => {
-    console.log(req.body);
-    const promises = req.body.data.map(e => {
-      db.User.findOneAndUpdate({
-          _id: e.UserId
-        }, {
-          $push: {
-            userSessions: {
-              session: {
-                _id: mongoose.Types.ObjectId(e.SessionCalendarId),
-              },
-              isPresent: false
-            }
-          }
-        }, {
-          returnNewDocument: true
-        })
-        .then(results => {
-          res.json(results);
-        })
-        .catch(err => {
-          console.log(err);
-        })
-    });
-  });
-
-  app.get("/api/classes/:memberId/:weekNumber", (req, res) => {
+  app.put("/api/register/sessions/:userId", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      const dateA = moment().week(req.params.weekNumber).startOf('week');
-      const dateB = moment().week(req.params.weekNumber).endOf('week');
-
+      // console.log(req.body);
+      req.body.data.map(e => {
+        db.User.findOneAndUpdate({
+            _id: req.params.userId
+          }, {
+            $push: {
+              userSessions: {
+                session: {
+                  _id: mongoose.Types.ObjectId(e.sessionId),
+                },
+                sessionDate: e.sessionDate,
+                length: e.length,
+                isPresent: false
+              }
+            }
+          }, {
+            new: true
+          })
+          .then(results => {
+            res.json(results);
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      });
+    }
+  });
+  
+  // GET/ user's session dates. IF user is a student, this returns all the user's sessions. 
+  app.get("/api/my_sessions", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
       db.User.find({
-          _id: req.params.memberId
+          _id: req.user._id
+        }).populate('Session')
+        .then(data => {
+          res.json(data)
+        }).catch(err => {
+          res.send(err);
+        })
+    }
+  });
+
+  // GET/ user's session dates for specific month
+  app.get("/api/my_sessions/month/:monthNumber", (req, res) => {
+    if (!req.user) {
+      // The user is not logged in, send back an empty object
+      res.json({});
+    } else {
+      let month = parseInt(req.params.monthNumber) - 1;
+      let date = new Date();
+      let firstDayOfMonth = new Date(date.getFullYear(), month, 1);
+      let lastDayOfMonth = new Date(date.getFullYear(), month+1, 0);
+      db.User.find({
+          _id: req.user._id
         }).populate({
-          path: 'Session.sessionCalendar',
-          "sessionCalendar.date": {
-            $gte: dateA,
-            $lte: dateB
-          },
+          path: 'Session',
+          sessionCalendar: {
+            $gte: firstDayOfMonth,
+            $lte: lastDayOfMonth
+          }
         })
         .then(data => {
           res.json(data)
@@ -168,13 +175,16 @@ module.exports = function (app) {
     }
   });
 
-  app.get("/api/session_members/:id", (req, res) => {
+  // Get sessions based on userId param. For Teacher or Admin
+  app.get("/api/sessions/:userId", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
       db.User.find({
-          "userSessions.session": req.params.id
+          _id: req.params.userId
+        }, {
+          userSessions: true
         })
         .then(results => {
           res.json(results);
@@ -189,7 +199,6 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-
       const start = new Date(req.body.startDate);
       const end = new Date(req.body.endDate);
 
@@ -209,136 +218,125 @@ module.exports = function (app) {
         inPersonLimit: parseInt(req.body.inPersonLimit),
         adultClass: req.body.adultClass,
         sessionDuration: req.body.sessionDuration,
-        startTime: req.body.startTime,
         daysOfWeek: req.body.daysOfWeek,
-        sessionCalendar: sessionCalendarDates.map(e => {
-          return {
-            date: e
-          }
-        })
+        sessionCalendar: sessionCalendarDates
       }).then(function (results) {
         res.json({
           message: "Successfully added session"
         });
-      });
+      }).catch(function(err) {
+        res.send(err);
+      })
     }
   });
 
-  app.put('/api/member/promote/:id', function (req, res) {
+  app.put('/api/profile/level_up/:userId', function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.User.update({
-          _id: mongoose.Types.ObjectId(req.params.id)
+      db.User.updateOne({
+          _id: req.params.userId
         }, {
           $set: {
             certLevel: req.body.certLevel,
             memberStatus: req.body.role
           }
+        },{
+          new: true
         })
         .then(results => {
           res.json(results);
         })
         .catch(err => {
-          console.log(err);
+          res.send(err);
         })
     }
   })
 
-  app.put('/api/member/profile/:id', function (req, res) {
+  app.put('/api/profile/:userId', function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
       // console.log(req.body, "params ", req.params.id);
-      db.User.update({
-        _id: req.params.id
+      db.User.updateOne({
+        _id: req.params.userId
       }, {
         $set: {
           birthday: req.body.birthday,
           certLevel: req.body.certLevel,
           phoneNumber: req.body.phoneNumber,
-          // profilePhotoURL: req.body.profilePhotoURL,
+          profilePhotoURL: req.body.profilePhotoURL,
         }
+      },{
+        new: true
       }).then(function (results) {
         console.log(results);
         res.json({});
+      }).catch(function(err) {
+        res.send(err);
       })
     }
   })
   // delete user
-  app.delete('/api/member/remove/:id', function (req, res) {
+  app.delete('/api/profile/remove/:userId', function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log("params ", req.params.id);
+      // console.log("params ", req.params.userId);
       db.User.deleteOne({
-        _id: mongoose.Types.ObjectId(req.params.id)
+        _id: req.params.userId
       }).then(function (results) {
         res.json({});
+      }).catch(function(err) {
+        res.send(err);
       })
     }
   })
-  app.post("/api/session/attendance/:id", function (req, res) {
+
+  // get all students in a particular session
+  app.get("/api/session/registered/:sessionId", function (req, res) {
+    if(!req.user) {
+      res.redirect("/");
+    } else {
+      db.User.find({
+        "userSessions.session": req.params.sessionId
+      }).then (function (results) {
+        res.json(results)
+      }).catch(function(err) {
+        res.send(err);
+      })
+    }
+  })
+
+  // post attendance for user for particular session
+  app.put("/api/session/attendance/:sessionId", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log("params ", req.params.id);
-      console.log("body ", req.body);
+      // console.log("params ", req.params.id);
+      // console.log("body ", req.body);
       for (let i = 0; i < req.body.attendance.length; i++) {
-        db.User.update({
-          _id: mongoose.Types.ObjectId(req.body.attendance[i].id),
-          "userSessions.session": mongoose.Types.ObjectId(req.params.id)
+        db.User.updateOne({
+          _id: mongoose.Types.ObjectId(req.body.attendance[i].userId),
+          "userSessions.session": mongoose.Types.ObjectId(req.params.sessionId)
         }, {
           $set:{
-            "userSessions.isPresent": req.body.attendance[i].isPresent
+            "userSessions.$.isPresent": req.body.attendance[i].isPresent
           }
         }).then(function (results) {
           console.log(results);
+        }).catch(function(err) {
+          res.send(err);
         })
       }
       res.json({});
     }
   })
 };
-
-const hasReachedInPersonLimit = async function (id) {
-
-  const numberOfStudents = await db.UserSessions.count({
-    where: {
-      CalendarSessionId: id,
-    }
-  });
-  const queryResults = await db.CalendarSessions.findOne({
-    where: {
-      id: id
-    },
-    include: {
-      model: db.Sessions,
-    }
-  });
-  if (numberOfStudents >= queryResults.Session.dataValues.inPersonLimit) {
-    console.log(`class ${id} has reached limit`);
-    return true;
-  } else return false;
-};
-
-const updateResults = async function (results) {
-  const updatedResults = [];
-
-  for (const result of results) {
-    if (await hasReachedInPersonLimit(result.id)) {
-      result.dataValues["reachedLimit"] = true;
-      updatedResults.push(result);
-    } else {
-      updatedResults.push(result);
-    }
-  }
-  return updatedResults;
-}
 
 const getDaysBetweenDates = (start, end, weekDay, startTime) => {
   const weekDays = {
@@ -359,11 +357,37 @@ const getDaysBetweenDates = (start, end, weekDay, startTime) => {
   const current = new Date(start);
   const endDate = new Date(end);
 
-  current.setHours(startHour, startMinute);
   current.setDate(current.getDate() + (day - current.getDay() + 7) % 7);
+  current.setHours(startHour, startMinute);
   while (current <= endDate) {
     result.push(new Date(current));
     current.setDate(current.getDate() + 7);
   }
   return result;
+}
+
+const hasReachedInPersonLimit = async function (id) {
+
+  const numberOfStudents = await db.User.count({
+    "userSessions.session": id
+  });
+  const inPersonLimit = await db.Session.find({_id: id}, {'inPersonLimit':1});
+  if (numberOfStudents >= inPersonLimit) {
+    console.log(`class ${id} has reached limit`);
+    return true;
+  } else return false;
+};
+
+const updateResults = async function (results) {
+  const updatedResults = [];
+
+  for (const result of results) {
+    if (await hasReachedInPersonLimit(result.id)) {
+      result.dataValues["reachedLimit"] = true;
+      updatedResults.push(result);
+    } else {
+      updatedResults.push(result);
+    }
+  }
+  return updatedResults;
 }

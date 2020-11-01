@@ -17,7 +17,8 @@ const UserSchema = new Schema({
     required: true
   },
   password: {
-    type: String
+    type: String,
+    select: false
   },
   phoneNumber: {
     type: Number
@@ -28,9 +29,15 @@ const UserSchema = new Schema({
   profilePhotoUrl: {
     type: String
   },
+  cloudUploadName: {
+    type: String
+  },
+  cloudUploadPreset: {
+    type: String
+  },
   certLevel: {
-    type: Number,
-    max: 7,
+    type: String,
+    enum: ["social foundation", "bronze", "silver", "gold", "open"]
   },
   memberStatus: [{
     type: String,
@@ -45,16 +52,18 @@ const UserSchema = new Schema({
       _id:false,
       session: {
         type: Schema.Types.ObjectId,
-        ref: "Session.sessionCalendar",
+        ref: "Session",
       },
+      sessionDate: Date,
+      length: Number,
       isPresent: {
         type: Boolean
       }
     }
   ],
-  kicks: [{
+  steps: [{
     type: Schema.Types.ObjectId,
-    ref: "Kick",
+    ref: "Steps",
   }]
 }, {
   toJSON: {virtuals: true}
@@ -102,6 +111,7 @@ User.prototype.validPassword = function (password) {
     if (err) return cb(err);
     cb(null, isMatch);
   });
+  // return this.password;
 }
 
 module.exports = User;

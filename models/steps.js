@@ -3,8 +3,7 @@ const Schema = mongoose.Schema;
 
 const StepsSchema = new Schema({
   message: {
-    type: String,
-    maxlength: 280
+    type: String
   },
   topic: {
     type: String,
@@ -12,7 +11,11 @@ const StepsSchema = new Schema({
   dm_recipient: [{
     type: Schema.Types.ObjectId,
     ref: "User"
-  }]
+  }],
+  author: {
+    type: Schema.Types.ObjectId,
+    ref: "User"
+  }
 });
 
 StepsSchema.set('timestamps', true);
