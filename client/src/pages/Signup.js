@@ -1,14 +1,17 @@
-import React, {Fragment, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar/navbar' 
+import SignupForm from '../components/SignupForm'
 
-function Signup(){
-    useEffect( () => {
+function Signup() {
+    useEffect(() => {
         console.log("on-load");
     }, []);
 
     return (
         <Fragment>
-SIGNUP PAGE
+            <Navbar></Navbar>
+            <SignupForm></SignupForm>
         </Fragment>
     )
 }
