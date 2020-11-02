@@ -1,0 +1,11 @@
+.error-notice{
+    font: 400 'Berkshire Swash', Helvetica, sans-serif;
+    color: red;
+    background-color: #FAA65C;
+    cursor: pointer;
+    z-index: 3;
+    left: 5px;
+    top: 5px;
+    position: absolute;
+
+}

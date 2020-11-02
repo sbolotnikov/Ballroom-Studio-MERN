@@ -1,0 +1,24 @@
+.navHeader {
+    font: 400 35px/1.3 'Berkshire Swash', Helvetica, sans-serif;
+    color: #faa65c;
+    padding-right: 15px;
+    /* text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15); */
+  }
+
+.nav-item{
+    font: 400 25px/1.3 'Berkshire Swash', Helvetica, sans-serif;
+    background-color: #152a61;
+    color:#faa65c;
+    padding: 8px;
+}
+
+
+.nav-item:hover,
+.nav-link:hover{
+    color: #a71d31
+}
+
+.nav-link {
+    text-decoration: none;
+    color:#faa65c;
+}
