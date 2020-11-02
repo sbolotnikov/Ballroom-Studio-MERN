@@ -5,11 +5,10 @@ import Navigation from '../../components/Navbar/navbar';
 import Footer from '../../components/Footer';
 import Typewriter from '../../components/typewriter';
 import "./style.css";
-import API from '../../utils/API';
 var i = 0;
 function ToRenderEverything() {
-  API.root()
   useEffect(() => {
+    i=0;
     // gsap.from("#cardGreeting", { duration: 1, backgroundPosition: '-200px,0px', scale: 1.5, opacity: 0, ease: "power2.out" });
     gsap.from("#cardImage1", { duration: 2, x: 300, delay: 1, opacity: 0, ease: "power2.out" });
     gsap.from("#cloud", { duration: 2, x: 200, y: 200, opacity: 0, delay: 3, ease: "elastic" });
@@ -28,7 +27,7 @@ function ToRenderEverything() {
       i++
       if (i === 165) {
         i = 0;
-        document.querySelector(".glow").classList.remove("glow");
+        // document.querySelector(".glow").classList.remove("glow");
         clearInterval(timerInterval);
       }
     }, 80);
