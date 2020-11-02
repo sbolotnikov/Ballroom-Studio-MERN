@@ -56,11 +56,10 @@ function ToRenderEverything() {
                 <div className="card-img-overlay">
                   <figure id="cloud">
 
-                    <p id="anim"><Typewriter className="typewriter" text='Hello, ' />
-                      <br /> <Typewriter className="typewriter" text='You got to the site of the Best Time To Dance Studio' />
-                      <br /><strong><Typewriter className="typewriter" text=' We are very happy to see you here' /></strong>
-                      <br /><Typewriter className="typewriter" text='If you have any questions please feel free to call us at (123)456-1234. ' />
-
+                    <p id="anim"><Typewriter text='Hello, ' />
+                      <br /> <Typewriter text='Welcome to the home of the Best Time To Dance Studio' />
+                      <br /><strong><Typewriter text="We're very happy to see you here" /></strong>
+                      <br /><Typewriter text='If you have any questions, please feel free to call us at (123)456-1234. ' />
                     </p>
                   </figure>
                 </div>

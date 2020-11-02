@@ -7,9 +7,11 @@
 
 .nav-item{
     font: 400 25px/1.3 'Berkshire Swash', Helvetica, sans-serif;
+    background-color: #152a61;
     color:#faa65c;
     padding: 8px;
 }
+
 
 .nav-item:hover,
 .nav-link:hover{
