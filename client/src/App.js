@@ -11,18 +11,27 @@ import Payment from './pages/Payment';
 import Signup from './pages/Signup';
 import Social from './pages/Social';
 import Splash from './pages/Splash';
-import { HashRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div className="App">
+
+    // <div className="App">
+    
+    <div>
+    {/* <Navbar/> */}
       <Router>
-        <Route exact={true} path="/" component={Splash} />
-        <Route exact={true} path="/login" component={Login} />
-        <Route exact={true} path="/signup" component={Signup} />
-        <Route exact={true} path="/social" component={Social} />
-        <Route exact={true} path="/payment" component={Payment} />
-        <Route exact={true} path="/events" component={Events} />
+        <div>
+          <Switch>
+        <Route exact path="/" component={Splash} />
+        <Route  path="/login" component={Login} />
+        <Route  path="/signup" component={Signup} />
+        <Route  path="/social" component={Social} />
+        <Route  path="/payment" component={Payment} />
+        <Route  path="/events" component={Events} />
+        </Switch>
+        </div>
       </Router>
     </div>
   );
