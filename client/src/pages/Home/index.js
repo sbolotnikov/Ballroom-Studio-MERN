@@ -37,8 +37,8 @@ function ToRenderEverything() {
 
   return (
     <Fragment>
+      <Navigation />
       <div className="container" style={{ maxWidth: "1440px", overflow: "hidden" }}>
-        <Navigation />
         <main className="container">
           <div className="jumbotron jumbotron-fluid bg-transparent">
             <div className="text-light align-middle">
@@ -56,10 +56,10 @@ function ToRenderEverything() {
                 <div className="card-img-overlay">
                   <figure id="cloud">
 
-                    <p id="anim"><Typewriter text='Hello, ' />
-                      <br /> <Typewriter text='You got to the site of the Best Time To Dance Studio' />
-                      <br /><strong><Typewriter text=' We are very happy to see you here' /></strong>
-                      <br /><Typewriter text='If you have any questions please feel free to call us at (123)456-1234. ' />
+                    <p id="anim"><Typewriter className="typewriter" text='Hello, ' />
+                      <br /> <Typewriter className="typewriter" text='You got to the site of the Best Time To Dance Studio' />
+                      <br /><strong><Typewriter className="typewriter" text=' We are very happy to see you here' /></strong>
+                      <br /><Typewriter className="typewriter" text='If you have any questions please feel free to call us at (123)456-1234. ' />
 
                     </p>
                   </figure>
