@@ -1,13 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import API from '../../utils/API';
 import "./navbar.css";
 import ErrorNotice from "../misc/errorNotice";
+import UserContext from '../../utils/UserContext'
 
 function Navbar() {
+    const {email, setEmail, loggedIn, setLoggedIn} = useContext(UserContext);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [email, setEmail] = useState('');
+    const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
     const [errorstate, setErrorState] = useState(false);
 
@@ -26,18 +28,22 @@ function Navbar() {
         event.preventDefault();
 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (re.test(email.toLowerCase())) {
-            console.log("username is " + email);
+        if (re.test(emailId.toLowerCase())) {
+            console.log("username is " + emailId);
             console.log("password is " + password);
 
             const userLogin = {
-                email: email,
+                email: emailId,
                 password: password
             };
             // after login is successful, use history.push to redirect
             API.login(userLogin).then(() => {
+
                 setErrorState(false);
-                history.push("/member");
+                setLoggedIn(true);
+                setEmail(emailId)
+
+                 history.push("/");
             })
                 .catch(err => {
                     console.log(err.response.data)
@@ -73,7 +79,7 @@ function Navbar() {
                                 <div className="form-group">
                                     <label htmlFor="userEmail">Email</label>
                                     <input type="email" className="form-control" id="userEmail" aria-describedby="emailHelp"  name="email"
-                                        onChange={event => setEmail(event.target.value)} />
+                                        onChange={event => setEmailId(event.target.value)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="userPassword">Password</label>

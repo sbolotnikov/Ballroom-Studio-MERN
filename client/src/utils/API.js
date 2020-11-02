@@ -6,5 +6,12 @@ export default {
     },
     signup: (user) => {
       return axios.post("/api/signup", user);
+  },
+  root:()=>{
+    return axios.get("/")
+  },
+  profile: ()=>{
+    return axios.get("/api/profile")
   }
+
 }

@@ -5,9 +5,10 @@ import Navigation from '../../components/Navbar/navbar';
 import Footer from '../../components/Footer';
 import Typewriter from '../../components/typewriter';
 import "./style.css";
+import API from '../../utils/API';
 var i = 0;
 function ToRenderEverything() {
-
+  API.root()
   useEffect(() => {
     // gsap.from("#cardGreeting", { duration: 1, backgroundPosition: '-200px,0px', scale: 1.5, opacity: 0, ease: "power2.out" });
     gsap.from("#cardImage1", { duration: 2, x: 300, delay: 1, opacity: 0, ease: "power2.out" });
