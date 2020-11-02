@@ -1,0 +1,12 @@
+.error-notice{
+    font: 400 'Berkshire Swash', Helvetica, sans-serif;
+    color: #9E4D1A;
+    background-color: #FAA65C;
+    cursor: pointer;
+    z-index: 3;
+    left: 5px;
+    top: 5px;
+    width: fit-content;
+    position: absolute;
+    display: flexbox;
+}

@@ -21,7 +21,7 @@ const UserSchema = new Schema({
     select: false
   },
   phoneNumber: {
-    type: Number
+    type: String
   },
   googleId: {
     type: String

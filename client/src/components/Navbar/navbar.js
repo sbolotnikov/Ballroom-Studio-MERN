@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import API from '../../utils/API';
 import "./navbar.css";
+import ErrorNotice from "../misc/errorNotice";
+import UserContext from '../../utils/UserContext'
 
 function Navbar() {
+    const {email, setEmail, loggedIn, setLoggedIn} = useContext(UserContext);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
-    const [email, setEmail] = useState('');
+    const [emailId, setEmailId] = useState('');
     const [password, setPassword] = useState('');
+    const [errorstate, setErrorState] = useState(false);
 
     // use history to redirect after login
     const history = useHistory();
@@ -22,20 +26,37 @@ function Navbar() {
 
     function handleLogin(event) {
         event.preventDefault();
-        console.log("clicked login")
-        const userLogin = {
-            email: email,
-            password: password
-        };
-        // after login is successful, use history.push to redirect
-        API.login(userLogin).then( () => {
-           history.push("/member");
-        }).catch( err => {
-            console.log(err);
-            alert("Your email or password does not match our records");
-        })
 
-    }
+        const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if (re.test(emailId.toLowerCase())) {
+            console.log("username is " + emailId);
+            console.log("password is " + password);
+
+            const userLogin = {
+                email: emailId,
+                password: password
+            };
+            // after login is successful, use history.push to redirect
+            API.login(userLogin).then(() => {
+
+                setErrorState(false);
+                setLoggedIn(true);
+                setEmail(emailId)
+
+                 history.push("/");
+            })
+                .catch(err => {
+                    console.log(err.response.data)
+                    setErrorState(`<p>Status${err.response.status}</p> <br /><h3>${err.response.data} <br /> Your email or password does not match our records</h3>`);
+
+                });
+        } else {
+            setErrorState("bad email input");
+        }
+    };
+
+
+
 
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#152a61" }}>
@@ -57,19 +78,21 @@ function Navbar() {
                             <form className="login px-2 py-2 dropdown-item" onSubmit={handleLogin}>
                                 <div className="form-group">
                                     <label htmlFor="userEmail">Email</label>
-                                    <input type="email" className="form-control" id="userEmail" aria-describedby="emailHelp" name="email"
-                                        onChange={event => setEmail(event.target.value)}/>
+                                    <input type="email" className="form-control" id="userEmail" aria-describedby="emailHelp"  name="email"
+                                        onChange={event => setEmailId(event.target.value)} />
                                 </div>
                                 <div className="form-group">
                                     <label htmlFor="userPassword">Password</label>
                                     <input type="password" className="form-control" id="userPassword" name="password"
-                                        onChange={event => setPassword(event.target.value)}/>
+                                        onChange={event => setPassword(event.target.value)} />
                                 </div>
                                 <div className="form-inline">
                                     <button type="submit" className="btn btn-primary">Login</button>
-                                    <a href="signup.html" role="button" className="btn btn-primary mx-2">Register</a>
+                                    {/* <Link to="/signup" className="nav-link"> Signup </Link> */}
+                                    {/* <a href="signup.html" role="button" className="btn btn-primary mx-2">Register</a> */}
                                 </div>
                             </form>
+                            {errorstate && ( <ErrorNotice message={errorstate} clearError={() => setErrorState(undefined)} /> )}
                             <div>
                                 <Link to="/auth/google">
                                     <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />

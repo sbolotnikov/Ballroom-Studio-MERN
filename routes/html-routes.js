@@ -10,7 +10,8 @@ module.exports = function(app) {
     if (req.user) {
       res.redirect("/members");
     }
-    res.sendFile(path.join(__dirname, "../public/signup.html"));
+    res.status(401).json({});
+    // res.sendFile(path.join(__dirname, "../client/src/pages/signup.js"));
   });
 
   app.get("/login", (req, res) => {
@@ -18,6 +19,7 @@ module.exports = function(app) {
     if (req.user) {
       res.redirect("/members");
     }
+    
     res.sendFile(path.join(__dirname, "../public/login.html"));
   });
 
