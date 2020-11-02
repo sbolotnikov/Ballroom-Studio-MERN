@@ -8,7 +8,7 @@ export default
             <Row>
                 <Col>
                 <button style={{ background:"transparent", border:"0", boxShadow:"0", float: "right" }} onClick={props.clearError}>X</button>
-                <h4 style={{ flex: "center", color: "black",fontFamily: "serif" }}>WARNING</h4>
+                <h4 style={{ flex: "center", color: "#A71D31",fontFamily: "serif" }}>WARNING</h4>
                    
                 </Col>
 
@@ -19,7 +19,7 @@ export default
 
                 </Col>
                 <Col xs={12} sm={6}>
-                    <img style={{ width: "100px" }} src={process.env.PUBLIC_URL + "./imgs/Zid2.gif"} alt="Attention!" />
+                    <img style={{ width: "100px" }} src={process.env.PUBLIC_URL + "./imgs/nodance.png"} alt="Attention!" />
                 </Col>
             </Row>
 
