@@ -14,9 +14,9 @@ import Login from './pages/Login';
 import Payment from './pages/Payment';
 import Signup from './pages/Signup';
 import Social from './pages/Social';
+import MemberPage from './pages/MemberPage';
 import { HashRouter as Router, Route } from 'react-router-dom';
-import populateTab from './db-seed'
-console.log(populateTab());
+
 
 function App() {
   return (
@@ -28,6 +28,7 @@ function App() {
       <Route exact path="/payment" component={Payment} />
       <Route exact path="/signup" component={Signup} />
       <Route exact path="/social" component={Social} />
+      <Route exact path="/member" component={MemberPage} />
     </Router>
   </div>
   );
