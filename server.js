@@ -2,7 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require('mongoose');
 const passport = require("./config/passport");
-
+const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
 
@@ -16,7 +16,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(cors());
 // routes
 require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);

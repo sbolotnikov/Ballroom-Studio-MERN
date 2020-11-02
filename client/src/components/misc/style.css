@@ -6,6 +6,7 @@
     z-index: 3;
     left: 5px;
     top: 5px;
+    width: fit-content;
     position: absolute;
-
+    display: flexbox;
 }
