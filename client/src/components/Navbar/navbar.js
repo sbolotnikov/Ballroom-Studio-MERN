@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import API from '../../utils/API';
 import "./navbar.css";
 
 function Navbar() {
-    const location = useLocation();
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    // use history to redirect after login
+    const history = useHistory();
 
     function handleNavCollpase() {
         setIsNavCollpased(!isNavCollapsed)
@@ -13,6 +18,23 @@ function Navbar() {
 
     function handleShowDropdown() {
         setShowDropdown(!showDropdown)
+    }
+
+    function handleLogin(event) {
+        event.preventDefault();
+        console.log("clicked login")
+        const userLogin = {
+            email: email,
+            password: password
+        };
+        // after login is successful, use history.push to redirect
+        API.login(userLogin).then( () => {
+           history.push("/member");
+        }).catch( err => {
+            console.log(err);
+            alert("Your email or password does not match our records");
+        })
+
     }
 
     return (
@@ -23,23 +45,25 @@ function Navbar() {
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                 data-target="#navbarNav" aria-controls="navbarNav" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation"
                 onClick={handleNavCollpase}>
-                <span className="nav-item"><i class="fas fa-music"></i></span>
+                <span className="nav-item"><i className="fas fa-music"></i></span>
             </button>
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
                 <ul className="navbar-nav">
-                    <li className="nav-item dropdown" onClick={handleShowDropdown}>
-                        <Link to="#" className="nav-link dropdown-toggle">
+                    <li className="nav-item dropdown">
+                        <Link to="#" className="nav-link dropdown-toggle" onClick={handleShowDropdown}>
                             Login
                         </Link>
                         <div className={`${showDropdown ? 'show' : ''} dropdown-menu`} aria-labelledby="navbarDropdown">
-                            <form className="login px-2 py-2 dropdown-item">
+                            <form className="login px-2 py-2 dropdown-item" onSubmit={handleLogin}>
                                 <div className="form-group">
-                                    <label for="userEmail">Email</label>
-                                    <input type="email" className="form-control" id="userEmail" aria-describedby="emailHelp" />
+                                    <label htmlFor="userEmail">Email</label>
+                                    <input type="email" className="form-control" id="userEmail" aria-describedby="emailHelp" name="email"
+                                        onChange={event => setEmail(event.target.value)}/>
                                 </div>
                                 <div className="form-group">
-                                    <label for="userPassword">Password</label>
-                                    <input type="password" className="form-control" id="userPassword" />
+                                    <label htmlFor="userPassword">Password</label>
+                                    <input type="password" className="form-control" id="userPassword" name="password"
+                                        onChange={event => setPassword(event.target.value)}/>
                                 </div>
                                 <div className="form-inline">
                                     <button type="submit" className="btn btn-primary">Login</button>
