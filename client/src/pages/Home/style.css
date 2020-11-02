@@ -48,7 +48,7 @@
   bottom: 0;
   min-width: 100%;
   min-height: 100%;
-  opacity: 0.5;
+  opacity: 1;
   object-fit: cover;
   z-index: -1;
 }
@@ -78,6 +78,10 @@
     object-fit: cover;
     z-index: -1;
   }
+
+  .dropdown-menu {
+    width: 100%;
+  }
 }
 .break{
 color: white;
@@ -96,7 +100,14 @@ color: white;
 }
 .glow
 {
- 
   color: yellow;
   text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF ;
+}
+
+#anim {
+  font-size: 30px;
+  color: #ffffff;
+  text-shadow: 1px 1px #faa65c;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 15px;
 }
