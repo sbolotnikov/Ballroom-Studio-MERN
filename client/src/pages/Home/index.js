@@ -37,8 +37,8 @@ function ToRenderEverything() {
 
   return (
     <Fragment>
+      <Navigation />
       <div className="container" style={{ maxWidth: "1440px", overflow: "hidden" }}>
-        <Navigation />
         <main className="container">
           <div className="jumbotron jumbotron-fluid bg-transparent">
             <div className="text-light align-middle">
@@ -60,7 +60,6 @@ function ToRenderEverything() {
                       <br /> <Typewriter text='Welcome to the home of the Best Time To Dance Studio' />
                       <br /><strong><Typewriter text="We're very happy to see you here" /></strong>
                       <br /><Typewriter text='If you have any questions, please feel free to call us at (123)456-1234. ' />
-
                     </p>
                   </figure>
                 </div>
