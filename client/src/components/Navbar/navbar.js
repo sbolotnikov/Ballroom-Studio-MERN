@@ -46,8 +46,8 @@ function Navbar() {
                  history.push("/");
             })
                 .catch(err => {
-                    console.log(err.response.data)
-                    setErrorState(`<p>Status${err.response.status}</p> <br /><h3>${err.response.data} <br /> Your email or password does not match our records</h3>`);
+                    console.log(err)
+                    setErrorState(`<h3>Your email or password does not match our records</h3>`);
 
                 });
         } else {

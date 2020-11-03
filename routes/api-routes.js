@@ -47,7 +47,7 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      // console.log(req.user);
+      console.log(req.user);
       res.json(req.user);
     }
   });
