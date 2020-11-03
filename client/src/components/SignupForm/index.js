@@ -30,7 +30,8 @@ function SignupForm(props) {
 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (re.test(email.toLowerCase())) {
-
+            let memberArr=[]
+            memberArr.push(memberstatus);
             const userLogin = {
                 firstName: firstname,
                 lastName: lastname,
@@ -39,7 +40,7 @@ function SignupForm(props) {
                 password: password,
                 birthday: birthday,
                 certLevel: certlevel,
-                memberStatus: memberstatus,
+                memberStatus: memberArr,
             };
             // after login is successful, use history.push to redirect
             API.signup(userLogin).then(() => {
