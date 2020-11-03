@@ -1,12 +1,12 @@
 import React from 'react';
 import MemberInfo from '../components/MemberInfo';
-import Navbar from '../components/Navbar/navbar';
+import MemberNav from '../components/MemberNav';
 
 function MemberPage(){
 
     return (
         <div>
-            <Navbar></Navbar>
+            <MemberNav />
             <MemberInfo></MemberInfo>
         </div>
     )

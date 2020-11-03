@@ -9,6 +9,9 @@ export default {
   },
   getProfile: ()=>{
     return axios.get("/api/profile")
+  },
+  logout: ()=> {
+    return axios.get("/logout")
   }
 
 }
