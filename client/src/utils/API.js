@@ -7,7 +7,7 @@ export default {
     signup: (user) => {
       return axios.post("/api/signup", user);
   },
-  profile: ()=>{
+  getProfile: ()=>{
     return axios.get("/api/profile")
   }
 
