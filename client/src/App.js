@@ -15,16 +15,22 @@ import Payment from './pages/Payment';
 import Signup from './pages/Signup';
 import Social from './pages/Social';
 import MemberPage from './pages/MemberPage';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import UserContext from "./utils/UserContext";
 
+import Splash from './pages/Splash';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Navbar from './components/Navbar';
 
 function App() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn]= useState(false);
 
   return (
-    <div className="App">
+
+    // <div className="App">
+    
+    <div>
+    {/* <Navbar/> */}
       <Router>
         <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn }}>
           <Route exact path="/home" component={Home} />

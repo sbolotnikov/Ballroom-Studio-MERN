@@ -18,7 +18,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
 // routes
-require("./routes/html-routes.js")(app);
+// require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/google-auth-routes.js")(app);
 require("./routes/steps-routes.js")(app);
