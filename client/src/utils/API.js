@@ -12,6 +12,9 @@ export default {
   },
   logout: ()=> {
     return axios.get("/logout")
+  },
+  googleSignin: ()=>{
+    return axios.get("/auth/google")
   }
 
 }
