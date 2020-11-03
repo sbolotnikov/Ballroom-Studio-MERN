@@ -21,7 +21,7 @@ function MemberNav() {
         let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
         API.getProfile().then(results => {
             if (results.data.profilePhotoUrl) {
-                imgLink = process.env.PUBLIC_URL + results.data.profilePhotoUrl;
+                imgLink = results.data.profilePhotoUrl;
             }
             setImgDisplay(imgLink);
         }).catch(err => {
