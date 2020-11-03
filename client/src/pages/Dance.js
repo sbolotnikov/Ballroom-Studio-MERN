@@ -1,5 +1,9 @@
 import React, {Fragment, useEffect} from 'react';
 import {Link} from 'react-router-dom';
+import './App.css';
+import './css/body.css';
+import './css/heading.css';
+import './css/styles.css';
 
 function DanceInspire(){
     useEffect( () => {
