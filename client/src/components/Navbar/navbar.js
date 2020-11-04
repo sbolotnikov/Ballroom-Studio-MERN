@@ -6,7 +6,7 @@ import ErrorNotice from "../misc/errorNotice";
 import UserContext from '../../utils/UserContext'
 
 function Navbar() {
-    const {email, setEmail, loggedIn, setLoggedIn} = useContext(UserContext);
+    const {setUserId, email, setEmail, loggedIn, setLoggedIn} = useContext(UserContext);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
     const [emailId, setEmailId] = useState('');
@@ -37,11 +37,12 @@ function Navbar() {
                 password: password
             };
             // after login is successful, use history.push to redirect
-            API.login(userLogin).then(() => {
-
+            API.login(userLogin).then((results) => {
+                console.log(results);
                 setErrorState(false);
                 setLoggedIn(true);
-                setEmail(emailId)
+                setEmail(results.data.email);
+                setUserId(results.data.id);
 
                  history.push("/");
             })

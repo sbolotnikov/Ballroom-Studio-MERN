@@ -5,6 +5,8 @@ const UserContext=createContext({
  setEmail: ()=>{},
  loggedIn: false,
  setLoggedIn: ()=>{},
+ id: "",
+ setUserId: ()=>{}
 
 });
 

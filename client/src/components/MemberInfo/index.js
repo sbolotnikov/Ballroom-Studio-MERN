@@ -6,28 +6,26 @@ import UserContext from '../../utils/UserContext';
 function MemberInfo() {
     const [profile, setProfile] = useState({});
     const {loggedIn} = useContext(UserContext);
-
-    console.log(loggedIn);
-
     
     useEffect( () => {
             API.getProfile().then( results => {
-                console.log()
                 setProfile(results.data);
             }).catch (err => {
                 console.log(err);
             })
+
+            // cleanup after component unmounts and set Profile to an empty object
+            return setProfile({});
     }, [])
 
 
     return (
         <div className="container">
-            {console.log(profile)}
-           <div className="formTop d-flex justify-content-center mt-4">{loggedIn === false ? 'Please log in' : profile.firstName + " " + profile.lastName}</div>
+           <div className="formTop d-flex justify-content-center mt-4">{loggedIn === true ? 'Welcome ' + profile.firstName + " " + profile.lastName : 'Please log in'}</div>
 
         {loggedIn === true ?
            <div className="row">
-                <div className="col col-lg-5">
+                <div className="col col-lg-6">
                     <div className="card mt-4">
                         <div className="card-header bg-danger text-light">
                             My Contact Info
@@ -40,10 +38,10 @@ function MemberInfo() {
 
                     <div className="card mt-4">
                         <div className="card-header bg-danger text-light">
-                            My School Record
+                            Ballroom
                         </div>
                         <ul className="list-group list-group-flush">
-                            <li className="list-group-item">Rank: <span className="level">{profile.certlevel}</span></li>
+                            <li className="list-group-item">Certification: <span className="level">{profile.certLevel}</span></li>
                         </ul>
                     </div>
 
