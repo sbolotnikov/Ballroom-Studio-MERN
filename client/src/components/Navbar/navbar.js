@@ -123,7 +123,7 @@ function Navbar() {
                   
                     </li>
                     <li className="nav-item">
-                        <Link to="/Dance Inspirations" className="nav-link">
+                        <Link to="/DanceInspire" className="nav-link">
                             Dance Inspirations
                     </Link>
                     </li>
