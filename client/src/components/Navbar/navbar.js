@@ -4,11 +4,12 @@ import API from '../../utils/API';
 import "./navbar.css";
 import ErrorNotice from "../misc/errorNotice";
 import UserContext from '../../utils/UserContext'
+import ProfilePhoto from '../ProfilePhoto'
 
-function Navbar() {
-    const { email, setEmail, loggedIn, setLoggedIn, userId, setUserId } = useContext(UserContext);
-    console.log("login status " + loggedIn);
-    console.log("email  " + email);
+function Navbar(props) {
+    const {setEmail, loggedIn, setLoggedIn, setUserId } = useContext(UserContext);
+    // console.log("login status " + loggedIn);
+    // console.log("email  " + email);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
     const [emailId, setEmailId] = useState('');
@@ -31,9 +32,8 @@ function Navbar() {
 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (re.test(emailId.toLowerCase())) {
-            console.log("username is " + emailId);
-            console.log("password is " + password);
-
+            // console.log("username is " + emailId);
+            // console.log("password is " + password);
             const userLogin = {
                 email: emailId,
                 password: password
@@ -58,19 +58,11 @@ function Navbar() {
         }
     };
 
-
-
-
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#152a61" }}>
             <Link to="/" className="navHeader">
                 MERN Ballroom Studio
 			</Link>
-            <button className="navbar-toggler" type="button" data-toggle="collapse"
-                data-target="#navbarNav" aria-controls="navbarNav" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation"
-                onClick={handleNavCollpase}>
-                <span className="nav-item"><i className="fas fa-music"></i></span>
-            </button>
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
                 <ul className="navbar-nav">
                     {!loggedIn && <li className="nav-item dropdown">
@@ -117,10 +109,14 @@ function Navbar() {
                             Social
                     </Link>
                     </li>
-
-                   
                 </ul>
             </div>
+            <button className="navbar-toggler" type="button" data-toggle="collapse"
+                data-target="#navbarNav" aria-controls="navbarNav" aria-expanded={!isNavCollapsed ? true : false} aria-label="Toggle navigation"
+                onClick={handleNavCollpase}>
+                <span className="nav-item"><i className="fas fa-music"></i></span>
+            </button>
+            {loggedIn && <ProfilePhoto profilePhotoUrl={props.profile}></ProfilePhoto>}
         </nav>
     );
 }

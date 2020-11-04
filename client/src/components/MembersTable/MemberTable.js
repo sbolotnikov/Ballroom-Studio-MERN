@@ -1,28 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import TableHeadings from './TableHeadings';
 import TableBody from './TableBody';
-import EmployeeRow from './EmployeeRow';
+import MemberRow from './MemberRow';
 import SearchForm from '../SearchForm.js/SearchForm';
-import employees from "../employees.json";
+import API from '../../utils/API';
 
+function MemberTable() {
+    const [members, setMembers] = useState([]);
 
-class EmployeeTable extends React.Component {
-    state = {
-        employees: employees
-    }
+    useEffect( () => {
+        API.getAllMembers().then( members => {
+            setMembers(members);
+        }).catch( err => {
+            console.log(err);
+        });
+    },[]);
 
-    sortAsc = (key) => {
-        this.setState({
-            employees: employees.sort( (a, b) => {
+    const sortAsc = (key) => {
+        setMembers({
+            members: members.sort( (a, b) => {
                 if(a[key] > b[key]) return 1;
                 if(a[key] < b[key]) return -1;
                 return 0;
             })
         })
     }
-    sortDesc = (key) => {
-        this.setState({
-            employees: employees.sort( (a, b) => {
+    const sortDesc = (key) => {
+        setMembers({
+            members: members.sort( (a, b) => {
                 if(b[key] > a[key]) return 1;
                 if(b[key] < a[key]) return -1;
                 return 0;
@@ -30,42 +35,38 @@ class EmployeeTable extends React.Component {
         })
     }
 
-    filterRecords = (key, value) => {
-        let filteredEmployees = employees.filter( employee => {
-            return (employee[key] == value)
+    const filterRecords = (key, value) => {
+        let filteredMembers = members.filter( member => {
+            return (member[key] === value)
         })
 
-        this.setState({ employees: filteredEmployees })
+        setMembers({ members: filteredMembers })
     }
 
-    showAllRecords = () => {
-        this.setState({employees: employees});
+    const showAllRecords = () => {
+        setMembers({members: members});
     }
 
-
-    render() {
-        return (
-            <div>
-                <SearchForm filterRecords={this.filterRecords} showAll={this.showAllRecords}/>
-                <table className="container table table-striped">
-                    <TableHeadings sortAsc={this.sortAsc} sortDesc={this.sortDesc}/>
-                    <TableBody>
-                    {this.state.employees.map( employee => 
-                        <EmployeeRow 
-                            employeeId={employee.id}
-                            firstName={employee.firstName}
-                            lastName={employee.lastName}
-                            title={employee.title}
-                            email={employee.email}
-                            phoneNumber={employee.phoneNumber}
-                            key={`key${employee.id}`}
-                        />
-                    )}
-                    </TableBody>
-                </table>
-            </div>
-        )
-    }
+    return (
+        <div>
+            <SearchForm filterRecords={filterRecords} showAll={showAllRecords}/>
+            <table className="container table table-striped">
+                <TableHeadings sortAsc={sortAsc} sortDesc={sortDesc}/>
+                <TableBody>
+                {members.map( member => 
+                    <MemberRow 
+                        memberId={member.id}
+                        firstName={member.firstName}
+                        lastName={member.lastName}
+                        email={member.email}
+                        phoneNumber={member.phoneNumber}
+                        key={`key${member.id}`}
+                    />
+                )}
+                </TableBody>
+            </table>
+        </div>
+    )  
 };
 
-export default EmployeeTable;
+export default MemberTable;

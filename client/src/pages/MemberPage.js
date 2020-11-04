@@ -1,15 +1,28 @@
-import React, { useContext }from 'react';
+import React, { useState, useEffect, useContext }from 'react';
 import MemberInfo from '../components/MemberInfo';
-import MemberNav from '../components/MemberNav';
+import Navbar from '../components/Navbar/navbar';
+import API from '../../utils/API';
+import UserContext from '../../utils/UserContext';
 
 function MemberPage(){
+    const [profile, setProfile] = useState({});
+    const {loggedIn} = useContext(UserContext);
 
-    const {userId} = useContext(UserContext);
+    useEffect( () => {
+        API.getProfile().then( results => {
+            setProfile(results.data);
+        }).catch (err => {
+            console.log(err);
+        })
+
+        // cleanup after component unmounts and set Profile to an empty object
+        return setProfile({});
+}, [])
 
     return (
         <div>
-            <MemberNav />
-            <MemberInfo></MemberInfo>
+            <Navbar profile={profile}/>
+            <MemberInfo profile={profile}/>
         </div>
     )
 }

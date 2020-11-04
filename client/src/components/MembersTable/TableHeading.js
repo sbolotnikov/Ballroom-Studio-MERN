@@ -20,10 +20,6 @@ class TableHeading extends React.Component {
         return (
             <thead>
                 <tr>
-                    <th scope="col">Employee Id 
-                        <span data-key="id" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
-                        <span data-key="id" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
-                    </th>
                     <th scope="col">First Name 
                         <span data-key="firstName" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
                         <span data-key="firstName" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
@@ -31,10 +27,6 @@ class TableHeading extends React.Component {
                     <th scope="col">Last Name
                         <span data-key="lastName" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
                         <span data-key="lastName" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
-                    </th>
-                    <th scope="col">Title
-                        <span data-key="title" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
-                        <span data-key="title" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
                     </th>
                     <th scope="col">Email
                         <span data-key="email" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>

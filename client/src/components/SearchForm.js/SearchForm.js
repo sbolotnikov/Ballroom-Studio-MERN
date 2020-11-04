@@ -6,7 +6,7 @@ const styles = {
     }
 }
 
-function SearchForm () {
+function SearchForm (props) {
 
     const [searchState, setSearchState] = useState({
         searchField: "---",
@@ -35,15 +35,15 @@ function SearchForm () {
         });
         event.preventDefault();
         if (searchState.searchField === '---') {
-            setEntryValidationState({ invalidSearchField: true })
+            setSearchEntryValidation({ invalidSearchField: true })
         } else if (searchState.searchTerm === '') {
-            setEntryValidationState({ invalidSearchTerm: true })
+            setSearchEntryValidation({ invalidSearchTerm: true })
         } else {
             props.filterRecords(searchState.searchField, searchState.searchTerm);
         }
     }
 
-    handleShowAll = (event) => {
+    const handleShowAll = (event) => {
         event.preventDefault();
         // reset drop down
         const searchFieldEl = document.getElementById("searchField");
@@ -54,7 +54,7 @@ function SearchForm () {
             searchTerm: ""
         });
 
-        setEntryValidationState({
+        setSearchEntryValidation({
             invalidSearchField: false,
             invalidSearchTerm: false
         })
@@ -67,34 +67,36 @@ function SearchForm () {
                     <div className="form-group col-md-4">
                         <label htmlFor="searchField">Select Field 
                             <span style={styles.span}>
-                                {this.state.invalidSearchField === true && ' Select a Search Field'}
+                                {searchEntryValidation.invalidSearchField === true && ' Select a Search Field'}
                             </span></label>
                         <select className="form-control" id="searchField" 
                             name="searchField"
                             onChange={this.handleInputChange}>
                                 <option value="---">---</option>
-                                <option value="id">Employee Id</option>
                                 <option value="firstName">First Name</option>
                                 <option value="lastName">Last Name</option>
-                                <option value="title">Title</option>
+                                <option value="certLevel">Certification Level</option>
+                                <option value="student">Student</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="teacher">Administrator</option>
                         </select>
                     </div>
                     <div className="form-group col-md-8">
                         <label htmlFor="searchTerm">Enter Search Term
                             <span style={styles.span}>
-                                {this.state.invalidSearchTerm === true && ' Please enter search term'}
+                                {searchEntryValidation.invalidSearchTerm === true && ' Please enter search term'}
                             </span>
                         </label>
                         <input type="text" className="form-control" id="searchTerm"
                             name="searchTerm" 
-                            value={this.state.searchTerm}
-                            onChange={this.handleInputChange}
+                            value={searchState.searchTerm}
+                            onChange={handleInputChange}
                         />
                     </div>
                 </div>
                 <div className="col">
-                    <button type="submit" className="btn btn-primary mx-4" onClick={this.handleFilter}>Search</button>
-                    <button type="submit" className="btn btn-secondary" onClick={this.handleShowAll}>Clear Search</button>
+                    <button type="submit" className="btn btn-primary mx-4" onClick={handleFilter}>Search</button>
+                    <button type="submit" className="btn btn-secondary" onClick={handleShowAll}>Clear Search</button>
                 </div>
             </form>
         )
