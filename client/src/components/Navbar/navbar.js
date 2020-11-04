@@ -6,7 +6,9 @@ import ErrorNotice from "../misc/errorNotice";
 import UserContext from '../../utils/UserContext'
 
 function Navbar() {
-    const {setUserId, email, setEmail, loggedIn, setLoggedIn} = useContext(UserContext);
+    const { email, setEmail, loggedIn, setLoggedIn, userId, setUserId } = useContext(UserContext);
+    console.log("login status " + loggedIn);
+    console.log("email  " + email);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
     const [emailId, setEmailId] = useState('');
@@ -44,11 +46,11 @@ function Navbar() {
                 setEmail(results.data.email);
                 setUserId(results.data.id);
 
-                 history.push("/");
+                history.push("/member");
             })
                 .catch(err => {
                     console.log(err)
-                    setErrorState(`<h3>Your email or password does not match our records</h3>`);
+                    setErrorState(`Your email or password does not match our records`);
 
                 });
         } else {
@@ -71,7 +73,7 @@ function Navbar() {
             </button>
             <div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse`} id="navbarNav">
                 <ul className="navbar-nav">
-                    <li className="nav-item dropdown">
+                    {!loggedIn && <li className="nav-item dropdown">
                         <Link to="#" className="nav-link dropdown-toggle" onClick={handleShowDropdown}>
                             Login
                         </Link>
@@ -79,7 +81,7 @@ function Navbar() {
                             <form className="login px-2 py-2 dropdown-item" onSubmit={handleLogin}>
                                 <div className="form-group">
                                     <label htmlFor="userEmail">Email</label>
-                                    <input type="email" className="form-control" id="userEmail" aria-describedby="emailHelp"  name="email"
+                                    <input type="email" className="form-control" id="userEmail" aria-describedby="emailHelp" name="email"
                                         onChange={event => setEmailId(event.target.value)} />
                                 </div>
                                 <div className="form-group">
@@ -89,23 +91,22 @@ function Navbar() {
                                 </div>
                                 <div className="form-inline">
                                     <button type="submit" className="btn btn-primary">Login</button>
-                                    {/* <Link to="/signup" className="nav-link"> Signup </Link> */}
-                                    {/* <a href="signup.html" role="button" className="btn btn-primary mx-2">Register</a> */}
+
                                 </div>
                             </form>
-                            {errorstate && ( <ErrorNotice message={errorstate} clearError={() => setErrorState(undefined)} /> )}
+                            {errorstate && (<ErrorNotice message={errorstate} clearError={() => setErrorState(undefined)} />)}
                             <div>
                                 <Link to="/auth/google">
                                     <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
                                 </Link>
                             </div>
                         </div>
-                    </li>
-                    <li className="nav-item">
+                    </li> || ""}
+                    {!loggedIn && <li className="nav-item">
                         <Link to="/signup" className="nav-link">
                             Signup
                     </Link>
-                    </li>
+                    </li> || ""}
                     <li className="nav-item">
                         <Link to="/events" className="nav-link">
                             Events
@@ -116,11 +117,8 @@ function Navbar() {
                             Social
                     </Link>
                     </li>
-                    <li className="nav-item">
-                        <Link to="/payment" className="nav-link">
-                            Payment
-                    </Link>
-                    </li>
+
+                   
                 </ul>
             </div>
         </nav>
