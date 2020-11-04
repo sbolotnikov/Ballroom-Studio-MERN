@@ -120,8 +120,7 @@ function Navbar() {
                         <Link to="/social" className="nav-link">
                             Social
                     </Link>
-                    </li>
-                    </Link>
+                  
                     </li>
                     <li className="nav-item">
                         <Link to="/Dance Inspirations" className="nav-link">
