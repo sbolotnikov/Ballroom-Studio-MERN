@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext }from 'react';
 import MemberInfo from '../components/MemberInfo';
 import Navbar from '../components/Navbar/navbar';
-import API from '../../utils/API';
-import UserContext from '../../utils/UserContext';
+import API from '../utils/API';
+// import UserContext from '../utils/UserContext';
 
 function MemberPage(){
     const [profile, setProfile] = useState({});
-    const {loggedIn} = useContext(UserContext);
+    // const {loggedIn} = useContext(UserContext);
 
     useEffect( () => {
         API.getProfile().then( results => {

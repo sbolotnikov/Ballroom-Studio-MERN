@@ -3,7 +3,7 @@ import React from 'react';
 function Teacher(props) {
     return (
         <div>
-            
+            Teacher Content
         </div>
     )
 }

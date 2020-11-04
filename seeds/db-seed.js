@@ -1,5 +1,7 @@
 var faker = require('faker');
 var moment = require('moment');
+const bcrypt = require('bcryptjs');
+
 function randomAlphanum(num) {
     let randomId = "";
     for (let k = 0; k < num; k++) {

@@ -23,13 +23,14 @@ function SearchForm (props) {
         const name = event.target.name;
     
         setSearchState({
-          [name]: value
+            ...searchState,
+            [name]: value
         });
     };
 
     const handleFilter = (event) => {
         // reset states
-        setSearchState({
+        setSearchEntryValidation({
             invalidSearchField: false,
             invalidSearchTerm: false
         });
@@ -51,6 +52,7 @@ function SearchForm (props) {
 
          // reset all states
         setSearchState({
+            searchField: "---",
             searchTerm: ""
         });
 
@@ -71,14 +73,11 @@ function SearchForm (props) {
                             </span></label>
                         <select className="form-control" id="searchField" 
                             name="searchField"
-                            onChange={this.handleInputChange}>
+                            onChange={handleInputChange}>
                                 <option value="---">---</option>
                                 <option value="firstName">First Name</option>
                                 <option value="lastName">Last Name</option>
-                                <option value="certLevel">Certification Level</option>
-                                <option value="student">Student</option>
-                                <option value="teacher">Teacher</option>
-                                <option value="teacher">Administrator</option>
+                                <option value="email">Email</option>
                         </select>
                     </div>
                     <div className="form-group col-md-8">

@@ -1,6 +1,4 @@
-import {
-    createContext
-} from 'react';
+import {createContext} from 'react';
 
 const UserContext = createContext({
     email: "",
@@ -9,8 +7,6 @@ const UserContext = createContext({
     setLoggedIn: () => {},
     userId: "",
     setUserId: () => {},
-    profilePhotoUrl: "",
-    setProfilePhotoUrl: () => {}
 });
 
 export default UserContext

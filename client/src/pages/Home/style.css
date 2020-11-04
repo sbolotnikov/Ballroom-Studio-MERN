@@ -78,10 +78,6 @@
     object-fit: cover;
     z-index: -1;
   }
-
-  .dropdown-menu {
-    width: 100%;
-  }
 }
 .break{
 color: white;

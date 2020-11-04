@@ -36,6 +36,18 @@ class TableHeading extends React.Component {
                         <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
                         <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
                     </th>
+                    <th scope="col">BirthDay
+                        <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
+                        <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
+                    </th>
+                    <th scope="col">Age
+                        <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
+                        <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
+                    </th>
+                    <th scope="col">Role
+                        <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortAsc}>&#9650;</span>
+                        <span data-key="phoneNumber" style={styles.span} onClick={this.handleSortDesc}>&#9660;</span>
+                    </th>
                 </tr>
             </thead>
         )

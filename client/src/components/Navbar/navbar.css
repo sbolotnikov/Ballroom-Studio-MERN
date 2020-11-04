@@ -27,4 +27,10 @@
     border-radius: 50%;
     width: 64px;
     height: 64px;
-  }
+}
+
+@media (min-width: 768px) {
+    .dropdown-menu {
+        width: 100%;
+      }
+}
