@@ -11,6 +11,7 @@ function MemberPage(){
     useEffect( () => {
         API.getProfile().then( results => {
             setProfile(results.data);
+            console.log(profile);
         }).catch (err => {
             console.log(err);
         })

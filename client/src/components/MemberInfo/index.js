@@ -4,17 +4,19 @@ import MemberTable from '../MembersTable/MemberTable'
 import StudentSchedule from '../StudentSchedule/';
 import TeacherContent from '../TeacherContent';
 
+let memberStatus;
+
 function MemberInfo(props) {
     const {loggedIn} = useContext(UserContext);
 
-    console.log(props);
-    let memberStatus = [...props.profile.memberStatus];
-
+    if (loggedIn && props.profile.memberStatus !== undefined) {
+        memberStatus = [...props.profile.memberStatus];
+    }
     return (
         <div className="container">
            <div className="formTop d-flex justify-content-center mt-4">{loggedIn === true ? 'Welcome ' + props.profile.firstName + " " + props.profile.lastName : 'Please log in'}</div>
 
-        {loggedIn ?
+        {(loggedIn && props.profile.memberStatus !== undefined) ?
            <div className="row">
                 <div className="col col-lg-6">
                     <div className="card mt-4">

@@ -14,19 +14,9 @@ function randomN(num) {
 }
 
 function encryptPassword(password) {
-    let hashedPassword;
-    bcrypt.genSalt(10, function (err, salt) {
-        if (err) return next(err);
-    
-        // hash the password using our new salt
-        bcrypt.hash(password, salt, function (err, hash) {
-          if (err) return next(err);
-          // override the cleartext password with the hashed one
-          password= hash;
-        });
-    });
-    hashedPassword = password;
-    return hashedPassword;
+    var salt = bcrypt.genSaltSync(10);
+    var hash = bcrypt.hashSync(password, salt);
+    return hash;
 }
 
 module.exports = function populateTab() {
@@ -43,6 +33,7 @@ module.exports = function populateTab() {
     let temp = 0;
     var certlevel = ["social foundation", "bronze", "silver", "gold", "open"];
     var dances = ["Waltz", "Arg. Tango", "Foxtrot", "Cha-Cha", "Rumba", "Technic class", "Bachata", "Swing", "Salsa"]
+    let password = encryptPassword("password");
     for (let i = 0; i < 3; i++) {
         teacherId.push(randomAlphanum(24))
         users.push({
@@ -50,7 +41,7 @@ module.exports = function populateTab() {
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             email: faker.internet.email(),
-            password: encryptPassword("password"),
+            password: password,
             phoneNumber: faker.phone.phoneNumberFormat(),
             googleId: "",
             birthday: moment().set({
@@ -60,7 +51,7 @@ module.exports = function populateTab() {
             }).format("YYYY-MM-DD"),
             profilePhotoUrl: faker.image.avatar(),
             certLevel: randomN(5),
-            memberStatus: "teacher"
+            memberStatus: ["teacher"]
         });
         privateId.push(randomAlphanum(24));
         sessionTypes.push({
@@ -143,7 +134,7 @@ console.log(sessionTypes)
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             email: faker.internet.email(),
-            password: encryptPassword("password"),
+            password: password,
             phoneNumber: faker.phone.phoneNumberFormat(),
             googleId: "",
             birthday: moment().set({
@@ -153,7 +144,7 @@ console.log(sessionTypes)
             }).format("YYYY-MM-DD"),
             profilePhotoUrl: faker.image.avatar(),
             certLevel: randomN(5),
-            memberStatus: "student",
+            memberStatus: ["student"],
             userSessions: sessions
         });
         // certlevel: social foundation, bronze, silver, gold, open
