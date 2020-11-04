@@ -12,6 +12,23 @@ function randomAlphanum(num) {
 function randomN(num) {
     return Math.floor(Math.random() * num)
 }
+
+function encryptPassword(password) {
+    let hashedPassword;
+    bcrypt.genSalt(10, function (err, salt) {
+        if (err) return next(err);
+    
+        // hash the password using our new salt
+        bcrypt.hash(password, salt, function (err, hash) {
+          if (err) return next(err);
+          // override the cleartext password with the hashed one
+          password= hash;
+        });
+    });
+    hashedPassword = password;
+    return hashedPassword;
+}
+
 module.exports = function populateTab() {
     var users = [];
     var sessions = [];
@@ -33,7 +50,7 @@ module.exports = function populateTab() {
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             email: faker.internet.email(),
-            password: faker.random.alphaNumeric() + faker.random.alphaNumeric() + faker.random.catch_phrase_noun,
+            password: encryptPassword("password"),
             phoneNumber: faker.phone.phoneNumberFormat(),
             googleId: "",
             birthday: moment().set({
@@ -126,7 +143,7 @@ console.log(sessionTypes)
             firstName: faker.name.firstName(),
             lastName: faker.name.lastName(),
             email: faker.internet.email(),
-            password: faker.random.alphaNumeric() + faker.random.alphaNumeric() + faker.random.catch_phrase_noun,
+            password: encryptPassword("password"),
             phoneNumber: faker.phone.phoneNumberFormat(),
             googleId: "",
             birthday: moment().set({
