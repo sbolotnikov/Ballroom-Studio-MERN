@@ -9,9 +9,7 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.Steps.find({}, {
-        topic: true
-      }).then(function (results) {
+      db.Topic.find().then(function (results) {
         // results are available to us inside the .then
         res.json(results);
       }).catch(function(err) {
@@ -20,15 +18,79 @@ module.exports = function (app) {
     }
   });
 
+
+  // Create a new Steps topic
+  app.post("/api/steps/new_topic", function (req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back to startup screen
+      res.redirect("/");
+    } else {
+      db.Topic.create({
+        topic: req.body.topic,
+        author: req.user._id
+      }).then(function (results) {
+        // `results` here would be the newly created topic
+        res.end();
+      }).catch(function(err) {
+        res.send(err);
+      });
+    }
+  });
+
+
+ // delete topic by id
+ app.delete("/api/steps/topic/:topicId", function (req, res) {
+  if (!req.user) {
+    // The user is not logged in, send back to startup screen
+    res.redirect("/");
+  } else {
+    // console.log("params ", req.params.id);
+    db.Topic.deleteOne({
+      _id: req.params.topicId
+    }).then(function (results) {
+      // console.log(results);
+      res.send("Topic has been deleted "+topicId);
+    }).catch(function(err) {
+      res.send(err);
+    })
+  }
+})
+
+ // POST a new Step
+ app.post("/api/steps/new_step", function (req, res) {
+  if (!req.user) {
+    // The user is not logged in, send back to startup screen
+    res.redirect("/");
+  } else {
+    // console.log("Kick Data:");
+    // console.log(req.body);
+    db.Step.create({
+      message: req.body.message,
+      topic: req.body.topic,
+      author: req.user.id
+    })
+      .then(function (results) {
+        res.send();
+      })
+      .catch(function (err) {
+        res.send(err)
+      });
+  }
+});
+
+
   // get all steps of 1 topic
   app.get("/api/steps/:topic", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.Steps.find({
+      console.log("got to route")
+      db.Step.find({
+
         topic: req.params.topic
-      }).populate('User')
+      }) 
+      // .populate('User')
       .then(function (steps) {
         res.json(steps);
       }).catch(function(err) {
@@ -57,27 +119,7 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
   }
 });
 
-  // POST a new Step
-  app.post("/api/steps/new_step", function (req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back to startup screen
-      res.redirect("/");
-    } else {
-      // console.log("Kick Data:");
-      // console.log(req.body);
-      db.Steps.create({
-        message: req.body.message,
-        topic: req.body.topic,
-        author: req.user.id
-      })
-        .then(function (results) {
-          res.end();
-        })
-        .catch(function (err) {
-          res.send(err)
-        });
-    }
-  });
+ 
 
   // delete all Steps of a topic 
   app.delete("/api/steps/:topic", function (req, res) {
@@ -85,7 +127,7 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.Steps.deleteMany({
+      db.Step.deleteMany({
         topic: req.params.topic
       }).then(function (results) {
         res.send(`Topic: ${req.params.topic}, has been deleted`);
@@ -102,7 +144,7 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
       res.redirect("/");
     } else {
       // console.log("params ", req.params.id);
-      db.Steps.deleteOne({
+      db.Step.deleteOne({
         _id: req.params.stepId
       }).then(function (results) {
         // console.log(results);
@@ -113,24 +155,5 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
     }
   })
 
-  // Create a new Steps topic
-  app.post("/api/steps/new_topic", function (req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back to startup screen
-      res.redirect("/");
-    } else {
-      // console.log("Topic Data:");
-      // console.log(req.body);
-      db.Steps.create({
-        topic: req.body.topic,
-        author: req.user.id
-      }).then(function (results) {
-        // `results` here would be the newly created topic
-        res.end();
-      }).catch(function(err) {
-        res.send(err);
-      });
-    }
-  });
-
 };
+//

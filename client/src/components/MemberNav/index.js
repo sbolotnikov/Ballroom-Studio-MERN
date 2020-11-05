@@ -50,7 +50,7 @@ function MemberNav() {
                     </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/social" className="nav-link">
+                        <Link to="/steps" className="nav-link">
                             Social
                     </Link>
                     </li>
