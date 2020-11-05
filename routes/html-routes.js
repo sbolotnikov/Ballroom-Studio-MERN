@@ -36,4 +36,6 @@ module.exports = function(app) {
   app.get("/google_registered", (req, res) => {
     res.sendFile(path.join(__dirname, "../public/goog_account_registered.html"));
   });
+
+ 
 };

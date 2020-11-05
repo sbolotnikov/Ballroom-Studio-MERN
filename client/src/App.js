@@ -20,6 +20,7 @@ import UserContext from "./utils/UserContext";
 import Splash from './pages/Splash';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar/navbar';
+import DanceInspire from "./pages/Dance";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/social" component={Social} />
           <Route exact path="/member" component={MemberPage} />
           <Route exact path="/splash" component={Splash} />
+          <Route exact path= "/DanceInspire" component={DanceInspire}/>
         </UserContext.Provider>
       </Router>
     </div>
