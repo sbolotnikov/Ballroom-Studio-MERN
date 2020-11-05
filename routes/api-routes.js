@@ -10,15 +10,15 @@ const nodemailer = require('nodemailer');
 
 //configuration, will be moved to the emailConfig file in /config and exported once fully implemented
 let transporter = nodemailer.createTransport({
-  service: EMAIL_SERVICE,
+  service: process.env.EMAIL_SERVICE,
   auth: {
-    user: EMAIL_USERNAME,
-    pass: EMAIL_PASSWORD
+    user: process.env.EMAIL_USERNAME,
+    pass: process.env.EMAIL_PASSWORD
   }
 });
 
 let mailOptions = {
-  from: EMAIL_USERNAME,
+  from: process.env.EMAIL_USERNAME,
   // the To becomes a variable
   to: 'recipient',
   // so will the text and subject
