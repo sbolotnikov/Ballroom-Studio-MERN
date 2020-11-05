@@ -5,6 +5,35 @@ var moment = require('moment');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
+//email from Node.js
+const nodemailer = require('nodemailer');
+
+//configuration, will be moved to the emailConfig file in /config and exported once fully implemented
+let transporter = nodemailer.createTransport({
+  service: EMAIL_SERVICE,
+  auth: {
+    user: EMAIL_USERNAME,
+    pass: EMAIL_PASSWORD
+  }
+});
+
+let mailOptions = {
+  from: EMAIL_USERNAME,
+  // the To becomes a variable
+  to: 'recipient',
+  // so will the text and subject
+  subject: 'Test E-Mail from Node.js',
+  text: 'It works!!!'
+};
+
+transporter.sendMail(mailOptions, function(error, info){
+  if (error) {
+    console.log(error);
+  } else {
+    console.log('Email sent: ' + info.response);
+  }
+});
+
 module.exports = function (app) {
   app.post("/api/login", passport.authenticate("local"), (req, res) => {
     // Sending back a password, even a hashed password, isn't a good idea
