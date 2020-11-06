@@ -4,12 +4,12 @@ import API from '../../utils/API';
 import "./navbar.css";
 import UserContext from '../../utils/UserContext'
 
-function MemberNav() {
+function MemberNav(props) {
     const { email, setEmail, loggedIn, setLoggedIn } = useContext(UserContext);
     console.log("login status " + loggedIn);
     console.log("email  " + email);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
-    const [imgDisplay, setImgDisplay] = useState('');
+    // const [imgDisplay, setImgDisplay] = useState('');
 
     // use history to redirect after login
     const history = useHistory();
@@ -17,19 +17,19 @@ function MemberNav() {
     function handleNavCollpase() {
         setIsNavCollpased(!isNavCollapsed)
     }
-    useEffect(() => {
-        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
-        API.getProfile().then(results => {
-            if (results.data.profilePhotoUrl) {
-                imgLink = results.data.profilePhotoUrl;
-            }
-            setImgDisplay(imgLink);
-        }).catch(err => {
-            console.log(err);
-        })
+    // useEffect(() => {
+    //     let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
+    //     API.getProfile().then(results => {
+    //         if (results.data.profilePhotoUrl) {
+    //             imgLink = results.data.profilePhotoUrl;
+    //         }
+    //         setImgDisplay(imgLink);
+    //     }).catch(err => {
+    //         console.log(err);
+    //     })
 
 
-    }, []);
+    // }, []);
 
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#152a61" }}>
@@ -59,6 +59,7 @@ function MemberNav() {
                             Payment
                     </Link>
                     </li>
+                    {loggedIn && 
                     <li className="nav-item">
                         <Link to="" className="nav-link" onClick={event => {
 
@@ -78,9 +79,9 @@ function MemberNav() {
                         }} >
                             Logout
                     </Link>
-                    </li>
+                    </li> }
                 </ul>
-                <img src={imgDisplay} alt="member photo" className="member-photo" />
+                <img src={props.imgLink} alt="member photo" className="member-photo" />
             </div>
         </nav>
     );
