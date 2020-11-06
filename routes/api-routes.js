@@ -220,11 +220,19 @@ module.exports = function (app) {
 
       const sessionCalendarDates = [];
 
-      req.body.daysOfWeek.forEach(day => {
-        let dates = getDaysBetweenDates(start, end, day, req.body.startTime);
-        sessionCalendarDates.push(...dates);
-      });
-      sessionCalendarDates.sort((a, b) => a - b);
+      if (req.body.endDate === '') {
+        const startHour = parseInt(req.body.startTime.slice(0,2));
+        const startMinute = parseInt(req.body.startTime.slice(3,5));
+        console.log(startHour, ":", startMinute)
+        start.setHours(startHour, startMinute);
+        sessionCalendarDates.push(start)
+      } else {
+        req.body.daysOfWeek.forEach(day => {
+          let dates = getDaysBetweenDates(start, end, day, req.body.startTime);
+          sessionCalendarDates.push(...dates);
+        });
+        sessionCalendarDates.sort((a, b) => a - b);
+     }
       console.log(sessionCalendarDates);
 
       db.Session.create({
@@ -375,21 +383,21 @@ module.exports = function (app) {
   })
 };
 
-const getDaysBetweenDates = (start, end, weekDay, startTime) => {
-  const weekDays = {
-    "Sunday": 0,
-    "Monday": 1,
-    "Tuesday": 2,
-    "Wednesday": 3,
-    "Thursday": 4,
-    "Friday": 5,
-    "Saturday": 6
-  };
+const getDaysBetweenDates = (start, end, day, startTime) => {
+  // const weekDays = {
+  //   "Sunday": 0,
+  //   "Monday": 1,
+  //   "Tuesday": 2,
+  //   "Wednesday": 3,
+  //   "Thursday": 4,
+  //   "Friday": 5,
+  //   "Saturday": 6
+  // };
   const result = [];
 
-  const day = weekDays[weekDay];
-  const startHour = Math.floor(startTime);
-  const startMinute = (startTime - startHour) * 60;
+  // const day = weekDays[weekDay];
+  const startHour = parseInt(startTime.slice(0,2));
+  const startMinute = parseInt(startTime.slice(3,5));
 
   const current = new Date(start);
   const endDate = new Date(end);

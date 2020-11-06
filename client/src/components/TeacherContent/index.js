@@ -1,38 +1,46 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import API from '../../utils/API'
+import UserContext from '../../utils/UserContext';
+import TimePicker from 'react-time-picker';
+import './teacher.css';
 
-function TeacherContent(props) {
+function TeacherContent() {
+    const {userId} = useContext(UserContext);
     const [repeatSession, setRepeatSession] = useState(false);
     const [session, setSession] = useState({
         sessionName: "",
         adultClass: false,
         level: "social foundation",
         sessionType: "group",
-        inPersonLimit: null,
+        inPersonLimit: 0,
         startDate:"",
         endDate:"",
-        startTime:"",
         daysOfWeek:[],
-        teachers:[]
+        teachers:[userId]
     });
+    const [time, setTime] = useState('10:00');
+
+    // const days= {
+    //     Sunday: 0,
+    //     Monday: 1,
+    //     Tuesday: 2,
+    //     Wednesday: 3,
+    //     Thursday: 4,
+    //     Friday: 5,
+    //     Saturday: 6 
+    // }
+
+    // console.log(userId);
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        // if(!repeatSession) {
-        //     let end = session.startDate;
-        //     console.log(end);
-        //     setSession({
-        //         ...session,
-        //         endDate: end,
-        //         daysOfWeek:[]
-        //     })
-        // }
-        console.log(props.profile);
-        setSession({
-            ...session,
-            teachers:[props.profile._id]
-        })
-        API.createSession(session).then( res => {
+        if(!repeatSession) {
+            setSession({
+                ...session,
+                endDate: ""
+            })
+        }
+        API.createSession({...session, startTime: time}).then( res => {
             console.log("successfully created a new session");
         }).catch(err => {
             console.log(err);
@@ -47,6 +55,20 @@ function TeacherContent(props) {
             ...session,
             [name]: value
         });
+    }
+
+    const handleMultipleSelect = event => {
+        console.log(event.target.options);
+        let days = []
+        for (let i=0; i<event.target.options.length; i++) {
+            if (event.target.options[i].selected) {
+                days.push(parseInt(event.target.options[i].value));
+            }
+        }
+        setSession({
+            ...session,
+            daysOfWeek: days
+        })
     }
 
     return (
@@ -86,7 +108,7 @@ function TeacherContent(props) {
                         <input type="number" className="form-control" name="inPersonLimit" onChange={handleInput}/>
                     </div>
                     <div className="form-group form-check">
-                        <input className="form-check-input" type="checkbox" value="repeat" id="repeat-class"
+                        <input className="form-check-input" type="checkbox" value="repeat"
                             onClick={event => setRepeatSession(!repeatSession)}/>
                         <label className="form-check-label" htmlFor="repeat-class">
                             Is this a repeat session?
@@ -97,21 +119,20 @@ function TeacherContent(props) {
                             <label htmlFor="startDate">Enter {repeatSession && "Start"} Date</label>
                             <input type="date" className="form-control" name="startDate" onChange={handleInput} required/>
                         </div>
-                        <div className="form-group col-6">
-                            <label htmlFor="startTime">Enter Start Time</label>
-                            <input type="number" className="form-control" name="startTime" onChange={handleInput} required/>
+                        <div className="col-6">
+                        <TimePicker onChange={setTime} value={time} clearIcon={null} clockIcon={null}/>
                         </div>
                     </div>
                         {repeatSession &&
                         <div>
                         <div className="row form-group col-6">
                             <label htmlFor="endDate">Enter End Date</label>
-                            <input type="date" className="form-control" name="endDate" value={!repeatSession && session.startDate} onChange={handleInput}/>
+                            <input type="date" className="form-control" name="endDate" onChange={handleInput}/>
                         </div>
                         
                         <div className="form-group col">
                             <label htmlFor="daysOfWeek">Select Which Days of Week</label>
-                            <select multiple className="form-control" name="daysOfWeek" onChange={handleInput}>
+                            <select multiple={true} className="form-control" name="daysOfWeek" onChange={handleMultipleSelect}>
                             <option value="0">Sunday</option>
                             <option value="1">Monday</option>
                             <option value="2">Tuesday</option>
