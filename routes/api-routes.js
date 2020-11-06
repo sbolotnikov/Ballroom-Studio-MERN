@@ -199,6 +199,7 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
+      console.log(req.body);
       const start = new Date(req.body.startDate);
       const end = new Date(req.body.endDate);
 
@@ -217,8 +218,8 @@ module.exports = function (app) {
         level: req.body.level,
         inPersonLimit: parseInt(req.body.inPersonLimit),
         adultClass: req.body.adultClass,
-        sessionDuration: req.body.sessionDuration,
         daysOfWeek: req.body.daysOfWeek,
+        price: req.body.price,
         sessionCalendar: sessionCalendarDates
       }).then(function (results) {
         res.json({
