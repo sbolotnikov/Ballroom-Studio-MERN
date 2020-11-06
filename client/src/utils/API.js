@@ -25,6 +25,12 @@ export default {
   deleteTopic: (item)=> {
     return axios.delete("/api/steps/topic/"+item)
   },
+  deleteTopicSteps: (topic)=> {
+    return axios.delete("/api/steps/"+topic)
+  },
+  deleteOneStep: (step)=> {
+    return axios.delete("/api/steps/step/"+step)
+  },
   postStep: (item)=> {
     return axios.post("/api/steps/new_step",item)
   },
@@ -32,4 +38,5 @@ export default {
     console.log("got to API"+topic)
     return axios.get("/api/steps/"+topic)
   }
+
 }

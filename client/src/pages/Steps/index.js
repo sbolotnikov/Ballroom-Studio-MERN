@@ -1,11 +1,13 @@
 import "./style.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MemberNav from '../../components/MemberNav';
-import StepsList from '../../components/StepsList';
+import StepDisplayItem from '../../components/StepDisplayItem';
 import API from '../../utils/API';
 import ErrorNotice from "../../components/misc/errorNotice";
 import { isValidObjectId } from "mongoose";
+import { Col, Row } from "react-bootstrap";
 function Steps() {
+    const [profile, setProfile] = useState({});
     const [addtopic, setAddTopic] = useState('');
     const [topic, setTopic] = useState('');
     const [errorstate, setErrorState] = useState(false);
@@ -14,6 +16,15 @@ function Steps() {
     const [stepsSet, setStepsSet] = useState([]);
 
     useEffect(() => {
+        setTopicState();
+        API.getProfile().then(results => {
+            console.log()
+            setProfile(results.data);
+        }).catch(err => {
+            console.log(err);
+        })
+    }, []);
+    function setTopicState() {
         API.allTopics().then(results => {
             console.log(results.data[0]._id);
             setTopicsArray(results.data);
@@ -21,21 +32,24 @@ function Steps() {
             setTopic(results.data[0]._id);
             console.log(topic);
         }).then(() => {
+            document.querySelector("#topics").options[0].selected = 'true';
+        })
+            .catch(err => {
 
-            API.getSetSteps(topic).then(res1 => {
-                setStepsSet(res1.data);
-                console.log(res1)
-            }).catch(err => {
-                setStepsSet([])
                 console.log(err);
             });
+    }
+    function getSetofSteps(topicref) {
+        API.getSetSteps(topicref).then(res1 => {
+            setStepsSet(res1.data);
+            console.log(res1)
         }).catch(err => {
-
+            setStepsSet([])
             console.log(err);
         });
 
-    }, []);
 
+    }
 
 
     function handleAddTopic() {
@@ -45,7 +59,8 @@ function Steps() {
             API.addNewTopic({ topic: addtopic }).then(results => {
                 document.querySelector("#topic").value = "";
                 console.log("success add topic");
-                window.location.reload();
+            }).then(() => {
+                setTopicState()
             }).catch(err => {
                 console.log(err);
             });
@@ -57,14 +72,20 @@ function Steps() {
     function handleDelTopic() {
         console.log(topic)
         // add 
-
-        API.deleteTopic(topic).then(results => {
-            console.log("success delete topic");
-            window.location.reload();
+        API.deleteTopicSteps(topic).then(res => {
+            console.log("success delete all topic steps");
+        }).then(() => {
+            API.deleteTopic(topic).then(results => {
+                console.log("success delete topic");
+            }).then(() => {
+                // window.location.reload();
+                getSetofSteps(topic);
+            }).catch(err => {
+                console.log(err);
+            });
         }).catch(err => {
             console.log(err);
         });
-
     }
     function handleAddStep() {
         console.log(topic)
@@ -72,10 +93,31 @@ function Steps() {
         let newStep = { topic: topic, message: addstep }
         API.postStep(newStep).then(results => {
             console.log("success add Step");
-            window.location.reload();
+            document.querySelector("#step-box").value = "";
+        }).then(() => {
+            getSetofSteps(topic);
         }).catch(err => {
             console.log(err);
         });
+
+    }
+    const topicChange = (event) => {
+        setTopic(event.target.value);
+        console.log(topic)
+        getSetofSteps(event.target.value);
+    }
+    function handleDelStepSubmit(event) {
+        if (event.target.value) {
+
+            API.deleteOneStep(event.target.value).then(results => {
+                console.log("success delete Step");
+            }).then(() => {
+                getSetofSteps(topic);
+            }).catch(err => {
+                console.log(err);
+            });
+        }
+        console.log(event.target.value)
 
     }
     return (
@@ -83,7 +125,7 @@ function Steps() {
             <MemberNav />
             <div className="container">
 
-                <h2 className="display-4 font-weight-bold pad">Welcome <span className="member"></span></h2>
+                <h2 className="stepsTitle display-4 font-weight-bold pad">Welcome, {profile.firstName} <span className="member"></span></h2>
 
                 <div className="jumbotron jumbotron-fluid bg-transparent">
                     <div className="text-light align-middle">
@@ -99,37 +141,32 @@ function Steps() {
                             <div className="d-flex flex-row justify-content-center">
                                 <div className="col-lg-8">
 
-                                    <input type="text" className="form-control"  placeholder="Add new topic"
+                                    <input type="text" className="form-control" id="topic" placeholder="Add new topic"
                                         onChange={event => setAddTopic(event.target.value)} />
                                     {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
                                     <div className="d-flex justify-content-center">
                                         <button id="topicAdd" className="btn btn-danger" style={{ marginLeft: "10px" }} onClick={handleAddTopic} >Add</button>
                                     </div>
 
-                                    <p className="cool-font" for="topics">Choose a Topic:</p>
+                                    <h4 className="stepsTitle">Choose a Topic:</h4>
                                     <figure id="topicChoice">
-                                        <select name="topics" className="stepsItem" id="topics" onChange={event => setTopic(event.target.value)}>
-
-
-
-                                            {topicsArray.map((topic, j) => {
+                                        <select name="topics" className="stepsItem" id="topics" onChange={topicChange}>
+                                            <option value={0} className="stepsItem" id={"topic0"}></option>
+                                            {topicsArray.slice(0).reverse().map((topic, j) => {
                                                 return (
-                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic}</option>
+                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author.firstName+''+topic.author.lastName} </option>
                                                 )
                                             })}
-
-
-
-
 
                                         </select>
                                     </figure>
 
                                     <div className="d-flex justify-content-center">
                                         <button id="topicDel" className="btn btn-danger" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button>
+                                        {/* {(profile.memberStatus === ["teacher"]) || (profile.memberStatus === ["admin"]) ? <button id="topicDel" className="btn btn-danger" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button> : <div></div>} */}
                                     </div>
 
-                                    <p className="cool-font">Kick</p>
+                                    <p className="stepsTitle">Step</p>
                                     <textarea className="form-control" rows="3" id="step-box" onChange={event => setAddStep(event.target.value)}
                                         placeholder="Enter your Step-tweet Here!"></textarea>
                                     <div className="d-flex justify-content-center">
@@ -141,22 +178,28 @@ function Steps() {
                         </div>
                     </div>
                 </div>
-                <div className="d-flex flex-row justify-content-center">
-                    <div className="col-lg-8">
-                        <h2 className="cool-font">Steps list:</h2>
+                <Row className="d-flex flex-row justify-content-center">
+                    {/* <Row> */}
+                    <Col lg={8} onClick={handleDelStepSubmit}>
+                        <h2 className="stepsTitle">Steps list:</h2>
                         <hr />
-
-
-                        {stepsSet.map((step, j) => {
+                        {stepsSet.slice(0).reverse().map((step, j) => {
                             return (
-                                <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
+                                // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
+                                <StepDisplayItem
+                                    id={step._id}
+                                    message={step.message}
+                                    time={step.updatedAt}
+                                    name={step.author.firstName + ' ' + step.author.lastName}
+                                    profileImg={step.author.profilePhotoUrl}
+                                    status={profile.memberStatus[0]}
+                                    authorid={step.author.email}
+                                    userid={profile.email} />
                             )
                         })}
-
-
-                        <StepsList />
-                    </div>
-                </div>
+                    </Col>
+                    {/* </Row> */}
+                </Row>
 
 
 
