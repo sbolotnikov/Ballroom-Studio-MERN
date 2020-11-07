@@ -129,6 +129,12 @@ function Navbar() {
                         <Link to="/social" className="nav-link">
                             Social
                     </Link>
+                  
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/DanceInspire" className="nav-link">
+                            Dance Inspirations
+                    </Link>
                     </li>
 
 
