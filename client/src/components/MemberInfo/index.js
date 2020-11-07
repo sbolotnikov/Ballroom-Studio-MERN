@@ -103,17 +103,18 @@ function MemberInfo(props) {
                                     </div>
                                 </div>
                             </form>
-                            <button type="button" className="btn btn-danger mt-4" id="updateProBtn" onClick={toggleUpdate}>{updateProfile ? "Cancel" : "Update Profile"}</button>
+                            <button type="button" className="btn cuteBtn mt-4" id="updateProBtn" onClick={toggleUpdate}>{updateProfile ? "Cancel" : "Update Profile"}</button>
                             {updateProfile &&     
-                                <button type="button" className="btn btn-danger mt-4 mx-4" id="saveProBtn" onClick={saveProfile}>Save Profile</button>}
+                                <button type="button" className="btn cuteBtn mt-4 mx-4" id="saveProBtn" onClick={saveProfile}>Save Profile</button>}
 
                         </div>
                     </div>
 
                     <button type="button" className="cuteBtn mt-4" id="updateProBtn" data-toggle="modal" data-target="#updateProfileModal">Update Profile</button>
-            </div>
-            
+                </div>           
+
         : <div></div>}
+
         <div className="row mt-4">
                     {(props.profile.memberStatus && loggedIn) ?
                     <div className="col">
