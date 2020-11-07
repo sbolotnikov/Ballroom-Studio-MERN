@@ -8,10 +8,13 @@ const StepsSchema = new Schema({
   topic: {
     type: String,
   },
-  dm_recipient: [{
+  confirm: {
+    type: Boolean,
+  },
+  dm_recipient: {
     type: Schema.Types.ObjectId,
     ref: "User"
-  }],
+  },
   author: {
     type: Schema.Types.ObjectId,
     ref: "User"
