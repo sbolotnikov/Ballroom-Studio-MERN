@@ -2,7 +2,7 @@ import React, { useState , useEffect, useContext} from 'react';
 import API from '../../utils/API';
 import UserContext from '../../utils/UserContext';
 import MemberTable from '../MembersTable/MemberTable'
-import StudentSchedule from '../StudentSchedule/';
+import StudentContent from '../StudentContent';
 import TeacherContent from '../TeacherContent';
 import "./style.css";
 import Cloudinary from '../Cloudinary';
@@ -112,12 +112,13 @@ function MemberInfo(props) {
 
                     <button type="button" className="cuteBtn mt-4" id="updateProBtn" data-toggle="modal" data-target="#updateProfileModal">Update Profile</button>
                 </div>           
+
         : <div></div>}
 
         <div className="row mt-4">
                     {(props.profile.memberStatus && loggedIn) ?
                     <div className="col">
-                    {props.profile.memberStatus.indexOf("student") >= 0 ? <StudentSchedule profile={props.profile}/> : <div></div>}
+                    {props.profile.memberStatus.indexOf("student") >= 0 ? <StudentContent profile={props.profile}/> : <div></div>}
                     {props.profile.memberStatus.indexOf("teacher") >= 0 ? <TeacherContent profile={props.profile}/> : <div></div>}
                     {props.profile.memberStatus.indexOf("admin") >= 0 ? <MemberTable profile={props.profile}/> : <div></div>}
                     </div>
