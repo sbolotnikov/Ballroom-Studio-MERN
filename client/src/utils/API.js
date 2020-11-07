@@ -36,7 +36,7 @@ export default {
       return axios.post("/api/steps/new_step",item)
     },
     getSetSteps: (topic)=>{
-      return axios.get("/api/steps/"+topic)
+      return axios.get("/api/steps/data/"+topic)
     },
     getAllMembers: ()=> {
       return axios.get("/api/all_members");

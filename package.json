@@ -4,6 +4,7 @@
   "description": "dance studio running in react app",
   "main": "server.js",
   "scripts": {
+
     "start": "if-env NODE_ENV=production && yarn start:prod || yarn start:dev",
     "start:prod": "node server.js",
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn client\"",
@@ -34,5 +35,6 @@
     "react-select": "^3.1.0",
     "react-time-picker": "^4.0.1",
     "stripe": "^8.119.0"
+
   }
 }

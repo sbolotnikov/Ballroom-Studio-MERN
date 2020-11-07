@@ -40,6 +40,11 @@ function MemberNav(props) {
                     </Link>
                     </li>
                     <li className="nav-item">
+                        <Link to="/about" className="nav-link">
+                           About
+                    </Link>
+                    </li>
+                    <li className="nav-item">
                         <Link to="/payment" className="nav-link">
                             Payment
                     </Link>

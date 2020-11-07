@@ -21,7 +21,7 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 // routes
-require("./routes/html-routes.js")(app);
+// require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/google-auth-routes.js")(app);
 require("./routes/steps-routes.js")(app);

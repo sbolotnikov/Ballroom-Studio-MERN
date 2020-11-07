@@ -9,6 +9,7 @@ import './App.css';
 import './css/body.css';
 import './css/heading.css';
 import './css/styles.css';
+import About from './pages/About';
 import Events from './pages/Events';
 import Login from './pages/Login';
 import Payment from './pages/Payment';
@@ -16,9 +17,12 @@ import Signup from './pages/Signup';
 import Social from './pages/Social';
 import Steps from './pages/Steps';
 import MemberPage from './pages/MemberPage';
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import UserContext from "./utils/UserContext";
 
+import Splash from './pages/Splash';
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import Navbar from './components/Navbar/navbar';
+import DanceInspire from "./pages/Dance";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -26,13 +30,18 @@ function App() {
   const [userId, setUserId]= useState("");
 
   return (
-    <div className="App">
+
+    // <div className="App">
+    
+    <div>
+    {/* <Navbar/> */}
       <Router>
         <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn, userId, setUserId }}>
           <Route exact path="/home" component={Home} />
           <Route exact path="/">
             {loggedIn ? <Redirect to="/member" /> : <Redirect to="/home" />}
           </Route>
+          <Route exact path="/about" component={About} />
           <Route exact path="/steps" component={Steps} />
           <Route exact path="/events" component={Events} />
           <Route exact path="/login" component={Login} />
@@ -40,6 +49,8 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/social" component={Social} />
           <Route exact path="/member" component={MemberPage} />
+          <Route exact path="/splash" component={Splash} />
+          <Route exact path= "/DanceInspire" component={DanceInspire}/>
         </UserContext.Provider>
       </Router>
     </div>

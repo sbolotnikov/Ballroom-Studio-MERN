@@ -1,6 +1,7 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
-
+const mongoose =require("mongoose")
+const ObjectId = mongoose.Types.ObjectId;
 module.exports = function (app) {
 
   // GET all topics
@@ -62,8 +63,6 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      // console.log("Kick Data:");
-      // console.log(req.body);
       db.Step.create({
         message: req.body.message,
         topic: req.body.topic,
@@ -78,9 +77,9 @@ module.exports = function (app) {
     }
   });
 
-
+  
   // get all steps of 1 topic
-  app.get("/api/steps/:topic", function (req, res) {
+  app.get("/api/steps/data/:topic", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
@@ -155,13 +154,13 @@ module.exports = function (app) {
 });
   // get all PM incoming
   app.get("/api/steps/pm_in", function (req, res) {
+    console.log(req.user);
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log("got to route pm_in")
       db.Step.find({
-        dm_recipient: req.user._id
+        dm_recipient: mongoose.Types.ObjectId(req.user._id)
       })
         .populate("author")
 
