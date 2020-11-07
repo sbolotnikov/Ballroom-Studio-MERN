@@ -19,6 +19,6 @@ export default {
   },
   createSession: (session) => {
     return axios.post("api/new_session", session);
-  }
+  },
 
 }
