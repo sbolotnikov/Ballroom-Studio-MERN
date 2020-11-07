@@ -19,7 +19,7 @@ import MemberPage from './pages/MemberPage';
 import UserContext from "./utils/UserContext";
 
 import Splash from './pages/Splash';
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar/navbar';
 import DanceInspire from "./pages/Dance";
 
