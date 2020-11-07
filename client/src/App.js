@@ -23,11 +23,12 @@ import UserContext from "./utils/UserContext";
 function App() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn]= useState(false);
+  const [userId, setUserId]= useState("");
 
   return (
     <div className="App">
       <Router>
-        <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn }}>
+        <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn, userId, setUserId }}>
           <Route exact path="/home" component={Home} />
           <Route exact path="/">
             {loggedIn ? <Redirect to="/member" /> : <Redirect to="/home" />}
