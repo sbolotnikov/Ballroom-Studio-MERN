@@ -62,9 +62,6 @@ function Navbar() {
         }
     };
 
-
-
-
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#152a61" }}>
             <Link to="/" className="navHeader">

@@ -36,7 +36,6 @@ export default {
       return axios.post("/api/steps/new_step",item)
     },
     getSetSteps: (topic)=>{
-      console.log("got to API"+topic)
       return axios.get("/api/steps/"+topic)
     },
     getAllMembers: ()=> {
@@ -44,6 +43,12 @@ export default {
     },
     createSession: (session) => {
       return axios.post("api/new_session", session);
+    },
+    postPM: (pm) => {
+      return axios.post("/api/steps/new_pm", pm);
+    },
+    getIncomingPM: () => {
+      console.log("in API incoming PM");
+      return axios.get("/api/steps/pm_in");
     }
-
 }

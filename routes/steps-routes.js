@@ -85,7 +85,6 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log("got to route")
       db.Step.find({
 
         topic: req.params.topic
@@ -133,9 +132,46 @@ module.exports = function (app) {
       })
     }
   })
+  // 
+ // POST a new PM
+ app.post("/api/steps/new_pm", function (req, res) {
+  if (!req.user) {
+    // The user is not logged in, send back to startup screen
+    res.redirect("/");
+  } else {
+    db.Step.create({
+      message: req.body.message,
+      dm_recipient: req.body.adressTo,
+      author: req.user.id,
+      confirm:false
+    })
+      .then(function (results) {
+        res.send();
+      })
+      .catch(function (err) {
+        res.send(err)
+      });
+  }
+});
+  // get all PM incoming
+  app.get("/api/steps/pm_in", function (req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back to startup screen
+      res.redirect("/");
+    } else {
+      console.log("got to route pm_in")
+      db.Step.find({
+        dm_recipient: req.user._id
+      })
+        .populate("author")
 
-
-
+        .then(function (steps) {
+          res.json(steps);
+        }).catch(function (err) {
+          res.send(err);
+        });
+    }
+  });
 
 
 
