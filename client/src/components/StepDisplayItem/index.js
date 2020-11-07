@@ -13,7 +13,7 @@ function StepDisplayItem(props) {
 
                 <div className="media-body" id={props.id}>
         <h5 className="mt-0">{props.name}</h5>
-        <p style={{width: "80%"}}>{props.message}</p>
+        <p style={{maxWidth: "992px", minWidth: "576px"}}>{props.message}</p>
                     <p>{moment(props.time).format("h:mma on dddd")}</p>
                 </div>                                  
                 {(props.status === "teacher") || (props.status === "admin")|| (props.authorid===props.userid)  ? <button type="submit" className="btn btn-danger float-right" value={props.id}>Delete</button> : <div></div> }

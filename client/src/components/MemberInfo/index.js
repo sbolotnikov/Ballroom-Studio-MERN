@@ -4,6 +4,7 @@ import UserContext from '../../utils/UserContext';
 import MemberTable from '../MembersTable/MemberTable'
 import StudentSchedule from '../StudentSchedule/';
 import TeacherContent from '../TeacherContent';
+import "./style.css";
 
 
 function MemberInfo(props) {
@@ -31,7 +32,7 @@ function MemberInfo(props) {
            <div className="row">
                 <div className="col">
                     <div className="card mt-4">
-                        <div className="card-header bg-danger text-light">
+                        <div className="formTop">
                             My Contact Info
                         </div>
                         <ul className="list-group list-group-flush">
@@ -41,7 +42,7 @@ function MemberInfo(props) {
                     </div>
 
                     <div className="card mt-4">
-                        <div className="card-header bg-danger text-light">
+                        <div className="formTop">
                             Certification Level
                         </div>
                         <ul className="list-group list-group-flush">
@@ -50,7 +51,7 @@ function MemberInfo(props) {
                     </div>
 
 
-                    <button type="button" className="btn btn-danger mt-4" id="updateProBtn" data-toggle="modal" data-target="#updateProfileModal">Update Profile</button>
+                    <button type="button" className="cuteBtn mt-4" id="updateProBtn" data-toggle="modal" data-target="#updateProfileModal">Update Profile</button>
                 </div>
             </div>
             

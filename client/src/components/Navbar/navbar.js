@@ -129,11 +129,15 @@ function Navbar() {
                     </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/social" className="nav-link">
+                        <Link to="/steps" className="nav-link">
                             Social
                     </Link>
                     </li>
-
+                    <li className="nav-item">
+                        <Link to="/about" className="nav-link">
+                            About
+                    </Link>
+                    </li>
 
                 </ul>
             </div>
