@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Payment from './pages/Payment';
 import Signup from './pages/Signup';
 import Social from './pages/Social';
+import Steps from './pages/Steps';
 import MemberPage from './pages/MemberPage';
 import UserContext from "./utils/UserContext";
 
@@ -25,6 +26,7 @@ import DanceInspire from "./pages/Dance";
 function App() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn]= useState(false);
+  const [userId, setUserId]= useState("");
 
   return (
 
@@ -33,12 +35,12 @@ function App() {
     <div>
     {/* <Navbar/> */}
       <Router>
-        <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn }}>
+        <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn, userId, setUserId }}>
           <Route exact path="/home" component={Home} />
           <Route exact path="/">
             {loggedIn ? <Redirect to="/member" /> : <Redirect to="/home" />}
           </Route>
-
+          <Route exact path="/steps" component={Steps} />
           <Route exact path="/events" component={Events} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/payment" component={Payment} />

@@ -17,6 +17,9 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 // routes
 // require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);

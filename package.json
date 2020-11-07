@@ -4,14 +4,15 @@
   "description": "dance studio running in react app",
   "main": "server.js",
   "scripts": {
-    "test": "npm run lint",
-    "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",
-    "start:prod": "node dist/server.js",
-    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
-    "client": "cd client && npm run start",
-    "lint": "eslint --quiet .",
-    "fix": "eslint --fix .",
-    "watch": "nodemon server.js"
+
+    "start": "if-env NODE_ENV=production && yarn start:prod || yarn start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn client\"",
+    "client": "cd client && yarn start",
+    "seed": "node scripts/seedDB.js",
+    "install": "cd client && yarn install",
+    "build": "cd client && yarn build",
+    "heroku-postbuild": "yarn build"
   },
   "keywords": [],
   "author": "",
@@ -25,12 +26,15 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "if-env": "^1.0.4",
-    "moment": "^2.27.0",
-    "mongoose": "^5.10.9",
+    "moment": "^2.29.1",
+    "mongoose": "^5.10.11",
+    "nodemailer": "^6.4.14",
     "passport": "^0.4.1",
     "passport-google-oauth": "^2.0.0",
     "passport-local": "^1.0.0",
-    "stripe": "^8.117.0"
+    "react-select": "^3.1.0",
+    "react-time-picker": "^4.0.1",
+    "stripe": "^8.119.0"
+
   }
 }

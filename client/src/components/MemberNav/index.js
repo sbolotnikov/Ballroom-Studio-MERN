@@ -1,15 +1,13 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import API from '../../utils/API';
 import "./navbar.css";
 import UserContext from '../../utils/UserContext'
 
-function MemberNav() {
+function MemberNav(props) {
     const { email, setEmail, loggedIn, setLoggedIn } = useContext(UserContext);
-    console.log("login status " + loggedIn);
-    console.log("email  " + email);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
-    const [imgDisplay, setImgDisplay] = useState('');
 
     // use history to redirect after login
     const history = useHistory();
@@ -17,19 +15,6 @@ function MemberNav() {
     function handleNavCollpase() {
         setIsNavCollpased(!isNavCollapsed)
     }
-    useEffect(() => {
-        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
-        API.getProfile().then(results => {
-            if (results.data.profilePhotoUrl) {
-                imgLink = results.data.profilePhotoUrl;
-            }
-            setImgDisplay(imgLink);
-        }).catch(err => {
-            console.log(err);
-        })
-
-
-    }, []);
 
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#152a61" }}>
@@ -50,7 +35,7 @@ function MemberNav() {
                     </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/social" className="nav-link">
+                        <Link to="/steps" className="nav-link">
                             Social
                     </Link>
                     </li>
@@ -59,6 +44,7 @@ function MemberNav() {
                             Payment
                     </Link>
                     </li>
+                    {loggedIn && 
                     <li className="nav-item">
                         <Link to="" className="nav-link" onClick={event => {
 
@@ -66,9 +52,6 @@ function MemberNav() {
                             API.logout().then((results) => {
                                 setLoggedIn(false);
                                 setEmail("");
-                                // console.log("login status after logout " + loggedIn);
-                                // console.log("email  " + email);
-                                console.log(results);
                                 history.push("/home");
                             })
                                 .catch(err => {
@@ -78,10 +61,11 @@ function MemberNav() {
                         }} >
                             Logout
                     </Link>
-                    </li>
+                    </li> }
                 </ul>
-                <img src={imgDisplay} alt="member photo" className="member-photo" />
             </div>
+            {loggedIn && 
+                <img src={props.imgLink} alt="member photo" className="member-photo" /> }
         </nav>
     );
 }
