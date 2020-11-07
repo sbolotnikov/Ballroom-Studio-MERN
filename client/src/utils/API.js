@@ -36,7 +36,6 @@ export default {
       return axios.post("/api/steps/new_step",item)
     },
     getSetSteps: (topic)=>{
-      console.log("got to API"+topic)
       return axios.get("/api/steps/"+topic)
     },
     getAllMembers: ()=> {
@@ -48,4 +47,11 @@ export default {
     updateProfile: (userId, profile) => {
       return axios.put(`/api/profile/${userId}`, profile);
     },
+    postPM: (pm) => {
+      return axios.post("/api/steps/new_pm", pm);
+    },
+    getIncomingPM: () => {
+      console.log("in API incoming PM");
+      return axios.get("/api/steps/pm_in");
+    }
 }

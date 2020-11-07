@@ -7,10 +7,7 @@ import UserContext from '../../utils/UserContext'
 
 function MemberNav(props) {
     const { email, setEmail, loggedIn, setLoggedIn } = useContext(UserContext);
-    console.log("login status " + loggedIn);
-    console.log("email  " + email);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
-    // const [imgDisplay, setImgDisplay] = useState('');
 
     // use history to redirect after login
     const history = useHistory();
@@ -18,19 +15,6 @@ function MemberNav(props) {
     function handleNavCollpase() {
         setIsNavCollpased(!isNavCollapsed)
     }
-    // useEffect(() => {
-    //     let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
-    //     API.getProfile().then(results => {
-    //         if (results.data.profilePhotoUrl) {
-    //             imgLink = results.data.profilePhotoUrl;
-    //         }
-    //         setImgDisplay(imgLink);
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-
-
-    // }, []);
 
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#152a61" }}>
@@ -68,9 +52,6 @@ function MemberNav(props) {
                             API.logout().then((results) => {
                                 setLoggedIn(false);
                                 setEmail("");
-                                // console.log("login status after logout " + loggedIn);
-                                // console.log("email  " + email);
-                                console.log(results);
                                 history.push("/home");
                             })
                                 .catch(err => {
