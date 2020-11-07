@@ -5,7 +5,7 @@ import Navigation from '../../components/Navbar/navbar';
 import Footer from '../../components/Footer';
 import Typewriter from '../../components/typewriter';
 import "./style.css";
-var i = 0;
+let i = 0;
 function ToRenderEverything() {
   useEffect(() => {
     i=0;

@@ -1,0 +1,12 @@
+.img_style{
+    height: 80px;
+    width: 80px;
+    margin-right: 0;
+}
+.stepStyle{
+    opacity: .8;
+    background-color: beige;
+    color: black;
+    text-shadow: 1px 1px #faa65c;
+    font: 400 15px/1.3 'Berkshire Swash', Helvetica, sans-serif;
+}

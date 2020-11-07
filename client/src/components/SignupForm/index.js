@@ -108,7 +108,7 @@ function SignupForm(props) {
                         <div className="form-group col-md-4">
                             <label for="certLevel">Your level</label>
                             <select id="certLevel" className="" onChange={event => setCertLevel(event.target.value)} >
-                                <option value="social foundation">Complete beginner</option> , , , , "open"
+                                <option value="social foundation">Complete beginner</option>
                                 <option value="bronze">Social dancer,not compete or 1 or 2 comps</option>
                                 <option value="silver">Intermediate competitor</option>
                                 <option value="gold">Competed in Gold</option>
