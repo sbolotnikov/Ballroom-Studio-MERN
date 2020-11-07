@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import "./style.css";
 import API from '../../utils/API';
 import ErrorNotice from "../misc/errorNotice";

@@ -2,7 +2,7 @@ import React, { useState , useEffect, useContext} from 'react';
 import API from '../../utils/API';
 import UserContext from '../../utils/UserContext';
 import MemberTable from '../MembersTable/MemberTable'
-import StudentSchedule from '../StudentSchedule/';
+import StudentSchedule from '../StudentContent';
 import TeacherContent from '../TeacherContent';
 import Cloudinary from '../Cloudinary';
 
