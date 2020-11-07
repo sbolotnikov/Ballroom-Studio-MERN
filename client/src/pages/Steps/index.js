@@ -1,11 +1,14 @@
 import "./style.css";
 import React, { useState, useEffect, useContext } from "react";
 import MemberNav from '../../components/MemberNav';
+import DirectMessage from '../../components/DirectMessage';
+import DMincoming from '../../components/DMincoming';
+import DMoutgoing from '../../components/DMoutgoing';
 import StepDisplayItem from '../../components/StepDisplayItem';
 import API from '../../utils/API';
 import ErrorNotice from "../../components/misc/errorNotice";
-import { isValidObjectId } from "mongoose";
 import { Col, Row } from "react-bootstrap";
+
 function Steps() {
     const [profile, setProfile] = useState({});
     const [addtopic, setAddTopic] = useState('');
@@ -14,23 +17,26 @@ function Steps() {
     const [topicsArray, setTopicsArray] = useState([]);
     const [addstep, setAddStep] = useState('')
     const [stepsSet, setStepsSet] = useState([]);
+    const [imgDisplay, setImgDisplay] = useState('');
 
     useEffect(() => {
         setTopicState();
+        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
         API.getProfile().then(results => {
-            console.log()
             setProfile(results.data);
+            if (results.data.profilePhotoUrl) {
+                imgLink = results.data.profilePhotoUrl;
+            }
+            setImgDisplay(imgLink);
         }).catch(err => {
             console.log(err);
         })
     }, []);
     function setTopicState() {
         API.allTopics().then(results => {
-            console.log(results.data[0]._id);
             setTopicsArray(results.data);
             // console.log(topicsArray);
             setTopic(results.data[0]._id);
-            console.log(topic);
         }).then(() => {
             document.querySelector("#topics").options[0].selected = 'true';
         })
@@ -42,7 +48,6 @@ function Steps() {
     function getSetofSteps(topicref) {
         API.getSetSteps(topicref).then(res1 => {
             setStepsSet(res1.data);
-            console.log(res1)
         }).catch(err => {
             setStepsSet([])
             console.log(err);
@@ -103,7 +108,6 @@ function Steps() {
     }
     const topicChange = (event) => {
         setTopic(event.target.value);
-        console.log(topic)
         getSetofSteps(event.target.value);
     }
     function handleDelStepSubmit(event) {
@@ -117,12 +121,11 @@ function Steps() {
                 console.log(err);
             });
         }
-        console.log(event.target.value)
 
     }
     return (
         <div>
-            <MemberNav />
+            <MemberNav imgLink={imgDisplay} />
             <div className="container">
 
                 <h2 className="formTop">Welcome, {profile.firstName} <span className="member"></span></h2>
@@ -138,9 +141,22 @@ function Steps() {
                             className="d-md-none" id="smScreenBg" width="500"
                         />
                         <div className="container">
-                            <div className="d-flex flex-row justify-content-center">
-                                <div className="col-lg-8">
+                            <Row className="d-flex flex-row justify-content-center">
+                                <Col md={4}>
+                                    <h4 className="stepsTitle">Direct messages:</h4>
+                                    <DirectMessage />
+                                    <DMincoming />
+                                    <DMoutgoing />
 
+
+
+
+
+
+
+                                </Col>
+                                <Col md={8}>
+                                    <h4 className="stepsTitle">Latest hot topics:</h4>
                                     <input type="text" className="form-control" id="topic" placeholder="Add new topic"
                                         onChange={event => setAddTopic(event.target.value)} />
                                     {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
@@ -149,12 +165,13 @@ function Steps() {
                                     </div>
 
                                     <h4 className="formTop mt-4">Choose a Topic:</h4>
+
                                     <figure id="topicChoice">
                                         <select name="topics" className="stepsItem" id="topics" onChange={topicChange}>
                                             <option value={0} className="stepsItem mt-4" id={"topic0"}></option>
                                             {topicsArray.slice(0).reverse().map((topic, j) => {
                                                 return (
-                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author.firstName+''+topic.author.lastName} </option>
+                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author.firstName + '' + topic.author.lastName} </option>
                                                 )
                                             })}
 
@@ -173,8 +190,26 @@ function Steps() {
                                         <button id="step-submit" className="cuteBtn" onClick={handleAddStep}
                                             style={{ marginLeft: "10px" }}>Submit!</button>
                                     </div>
-                                </div>
-                            </div>
+                                    <h2 className="stepsTitle">Steps list:</h2>
+                                    <hr />
+                                    <Row className="d-flex justify-content-center" onClick={handleDelStepSubmit}>
+                                        {stepsSet.slice(0).reverse().map((step, j) => {
+                                            return (
+                                                // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
+                                                <StepDisplayItem
+                                                    id={step._id}
+                                                    message={step.message}
+                                                    time={step.updatedAt}
+                                                    name={step.author.firstName + ' ' + step.author.lastName}
+                                                    profileImg={step.author.profilePhotoUrl}
+                                                    status={profile.memberStatus[0]}
+                                                    authorid={step.author.email}
+                                                    userid={profile.email} />
+                                            )
+                                        })}
+                                    </Row>
+                                </Col>
+                            </Row>
                         </div>
                     </div>
                 </div>
@@ -200,7 +235,6 @@ function Steps() {
                     </Col>
                     {/* </Row> */}
                 </Row>
-
 
 
             </div>

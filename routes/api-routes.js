@@ -288,10 +288,9 @@ module.exports = function (app) {
         _id: req.params.userId
       }, {
         $set: {
-          birthday: req.body.birthday,
-          certLevel: req.body.certLevel,
+          email: req.body.email,
           phoneNumber: req.body.phoneNumber,
-          profilePhotoURL: req.body.profilePhotoURL,
+          profilePhotoUrl: req.body.profilePhotoUrl,
         }
       },{
         new: true
@@ -384,15 +383,6 @@ module.exports = function (app) {
 };
 
 const getDaysBetweenDates = (start, end, day, startTime) => {
-  // const weekDays = {
-  //   "Sunday": 0,
-  //   "Monday": 1,
-  //   "Tuesday": 2,
-  //   "Wednesday": 3,
-  //   "Thursday": 4,
-  //   "Friday": 5,
-  //   "Saturday": 6
-  // };
   const result = [];
 
   // const day = weekDays[weekDay];

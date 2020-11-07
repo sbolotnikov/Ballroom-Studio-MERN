@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import "./style.css";
 import API from '../../utils/API';
 import ErrorNotice from "../misc/errorNotice";
+import Cloudinary from '../Cloudinary';
 
 
 //  class SignupForm extends React.Component{
@@ -19,6 +20,7 @@ function SignupForm(props) {
     const [certlevel, setCertLevel] = useState('social foundation');
     const [memberstatus, setMemberStatus] = useState('student');
     const [errorstate, setErrorState] = useState(false);
+    const [imgUrl, setImgUrl] = useState("");
    
     // setMemberStatus("student");
     // setCertLevel("social foundation");
@@ -41,6 +43,7 @@ function SignupForm(props) {
                 birthday: birthday,
                 certLevel: certlevel,
                 memberStatus: memberArr,
+                profilePhotoUrl: imgUrl
             };
             // after login is successful, use history.push to redirect
             API.signup(userLogin).then(() => {
@@ -56,6 +59,10 @@ function SignupForm(props) {
             setErrorState("bad email input");
         }
     };
+
+    function getImgUrl(url) {
+        setImgUrl(url);
+    }
 
 
 
@@ -123,6 +130,8 @@ function SignupForm(props) {
                                 <option value="guest">Guest</option>
                             </select>
                         </div>
+                        <Cloudinary getImgUrl={getImgUrl}/>
+
                     </div>
                     <div className="d-flex justify-content-around">
                         <button type="submit" className="btn btn-circle btn-lg">Sign Up</button>

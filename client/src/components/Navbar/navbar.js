@@ -62,9 +62,6 @@ function Navbar() {
         }
     };
 
-
-
-
     return (
         <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#152a61" }}>
             <Link to="/" className="navHeader">
@@ -131,6 +128,12 @@ function Navbar() {
                     <li className="nav-item">
                         <Link to="/steps" className="nav-link">
                             Social
+                    </Link>
+                  
+                    </li>
+                    <li className="nav-item">
+                        <Link to="/DanceInspire" className="nav-link">
+                            Dance Inspirations
                     </Link>
                     </li>
                     <li className="nav-item">
