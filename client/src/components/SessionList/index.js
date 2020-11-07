@@ -2,9 +2,15 @@ import React from 'react';
 
 function Session(props) {
     return(
-        <div>
-            
-        </div>
+     
+        <li className="list-group-item">
+            <div>{props.sessionName}</div>
+            <div>{props.level}</div>
+            <div>{props.inPersonLimit}</div>
+            <div>{props.teachers}</div>
+            <div>{props.sessionCalendar}</div>
+        </li>
+
     )
 }
 
