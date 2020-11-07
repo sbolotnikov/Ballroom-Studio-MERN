@@ -10,6 +10,12 @@ function MemberPage(){
     const {setUserId} = useContext(UserContext);
 
     useEffect(() => {
+        
+        getProfile();
+
+    }, []);
+
+    const getProfile = () => {
         let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
         API.getProfile().then(results => {
             setUserId(results.data._id);
@@ -18,17 +24,17 @@ function MemberPage(){
             }
             setImgDisplay(imgLink);
             setProfile(results.data);
+            console.log(results.data);
+            console.log("got profile");
         }).catch(err => {
             console.log(err);
         })
-
-
-    }, []);
+    }
 
     return (
         <div>
             <MemberNav imgLink={imgDisplay}/>
-            <MemberInfo profile={profile}></MemberInfo>
+            <MemberInfo profile={profile} getProfile={getProfile}/>
         </div>
     )
 }
