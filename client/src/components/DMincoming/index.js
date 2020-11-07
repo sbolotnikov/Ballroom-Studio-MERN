@@ -9,8 +9,7 @@ function DMincoming() {
     useEffect(() => {
         API.getIncomingPM().then(results => {
 
-            // var res = results.data.sort(compareValues('updatedAt', 'desc'));
-            var res = results.data;
+            var res = results.data.sort(compareValues('updatedAt', 'desc'));
             console.log(res)
             setDMIncoming(res)
         }).catch(err => {
