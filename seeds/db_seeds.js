@@ -41,7 +41,7 @@ module.exports = function populateTab() {
             }).format("YYYY-MM-DD"),
             profilePhotoUrl: faker.image.avatar(),
             certLevel: randomN(5),
-            memberStatus: "teacher"
+            memberStatus: ["teacher"]
         });
         privateId.push(randomAlphanum(24));
         sessionTypes.push({
@@ -61,8 +61,10 @@ module.exports = function populateTab() {
             fullDate = moment(fullDate).set({
                 'hour': randomN(12) + 10,
                 'minute': [0, 15, 30, 45][randomN(4)]
-            }).format("YYYY-MM-DD HH:mm");
-            randomDate.push(fullDate)
+            })
+            .format("YYYY-MM-DD HH:mm");
+            let tempDate = new Date(fullDate);
+            randomDate.push(tempDate);
         }
         temp = randomN(5);
         groupId.push(randomAlphanum(24));
@@ -72,7 +74,7 @@ module.exports = function populateTab() {
             level: temp,
             inPersonLimit: 3 + randomN(5),
             adultClass: true,
-            sessionType: "group class",
+            sessionType: "group",
             teachers: [users[i].id],
             price: randomN(20) + 10,
             sessionCalendar: randomDate
@@ -134,8 +136,8 @@ console.log(sessionTypes)
             }).format("YYYY-MM-DD"),
             profilePhotoUrl: faker.image.avatar(),
             certLevel: randomN(5),
-            memberStatus: "student",
-            userSessions: sessions
+            memberStatus: ["student"],
+            // userSessions: sessions
         });
         // certlevel: social foundation, bronze, silver, gold, open
         sessions = [];

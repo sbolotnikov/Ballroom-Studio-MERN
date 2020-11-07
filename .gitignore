@@ -107,5 +107,5 @@ dist
 .tern-port
 
 .DS_Store
-package-json.lock
+package-lock.json
 .env

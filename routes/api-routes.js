@@ -39,7 +39,8 @@ module.exports = function (app) {
         phoneNumber: req.body.phoneNumber,
         certLevel: req.body.certLevel,
         memberStatus: req.body.memberStatus,
-        birthday: req.body.birthday
+        birthday: req.body.birthday,
+        profilePhotoUrl: req.body.profilePhotoUrl
       })
       .then(() => {
         res.redirect(307, "/api/login");
@@ -237,6 +238,7 @@ module.exports = function (app) {
 
       db.Session.create({
         sessionName: req.body.sessionName,
+        sessionType: req.body.sessionType,
         teachers: req.body.teachers.map(e => mongoose.Types.ObjectId(e)),
         level: req.body.level,
         inPersonLimit: parseInt(req.body.inPersonLimit),
@@ -245,8 +247,9 @@ module.exports = function (app) {
         price: req.body.price,
         sessionCalendar: sessionCalendarDates
       }).then(function (results) {
+        console.log(results);
         res.json({
-          message: "Successfully added session"
+          message: "Successfully added session",
         });
       }).catch(function(err) {
         res.send(err);
