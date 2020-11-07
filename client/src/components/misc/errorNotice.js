@@ -4,7 +4,7 @@ import "./style.css";
 export default
     function ErrorNotice(props) {
     return (
-        <div className="error-notice">
+        <div className="error-notice" style={{left: props.left, top: props.top}}>
             <Row>
                 <Col>
                 <button style={{ background:"transparent", border:"0", boxShadow:"0", float: "right" }} onClick={props.clearError}>X</button>

@@ -3,59 +3,58 @@ const db = require("../models");
 
 module.exports = function (app) {
 
-  // GET all Steps topics
+  // GET all topics
   app.get("/api/steps/all_topics", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.Steps.find({}, {
-        topic: true
-      }).then(function (results) {
+      db.Topic.find({}).populate("author").then(function (results) {
         // results are available to us inside the .then
         res.json(results);
-      }).catch(function(err) {
+      }).catch(function (err) {
         res.send(err);
       })
     }
   });
 
-  // get all steps of 1 topic
-  app.get("/api/steps/:topic", function (req, res) {
+
+  // Create a new topic
+  app.post("/api/steps/new_topic", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.Steps.find({
-        topic: req.params.topic
-      }).populate('User')
-      .then(function (steps) {
-        res.json(steps);
-      }).catch(function(err) {
+      db.Topic.create({
+        topic: req.body.topic,
+        author: req.user._id
+      }).then(function (results) {
+        // `results` here would be the newly created topic
+        res.end();
+      }).catch(function (err) {
         res.send(err);
       });
     }
   });
 
-// GET all steps of 1 user
-app.get("/api/steps/profile/:profileId", function (req, res) {
-  if (!req.user) {
-    // The user is not logged in, send back to startup screen
-    res.redirect("/");
-  } else {
-    db.User.findOne({
-      _id: req.params.profileId
-    }, {
-      steps: true
-    }).populate('Steps')
-    .then(function (dbKicks) {
 
-      res.json(dbKicks);
-    }).catch(function(err) {
-      res.send(err);
-    })
-  }
-});
+  // delete topic by id
+  app.delete("/api/steps/topic/:topicId", function (req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back to startup screen
+      res.redirect("/");
+    } else {
+      // console.log("params ", req.params.id);
+      db.Topic.deleteOne({
+        _id: req.params.topicId
+      }).then(function (results) {
+        // console.log(results);
+        res.send("Topic has been deleted " + topicId);
+      }).catch(function (err) {
+        res.send(err);
+      })
+    }
+  })
 
   // POST a new Step
   app.post("/api/steps/new_step", function (req, res) {
@@ -65,16 +64,38 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
     } else {
       // console.log("Kick Data:");
       // console.log(req.body);
-      db.Steps.create({
+      db.Step.create({
         message: req.body.message,
         topic: req.body.topic,
         author: req.user.id
       })
         .then(function (results) {
-          res.end();
+          res.send();
         })
         .catch(function (err) {
           res.send(err)
+        });
+    }
+  });
+
+
+  // get all steps of 1 topic
+  app.get("/api/steps/:topic", function (req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back to startup screen
+      res.redirect("/");
+    } else {
+      console.log("got to route")
+      db.Step.find({
+
+        topic: req.params.topic
+      })
+        .populate("author")
+
+        .then(function (steps) {
+          res.json(steps);
+        }).catch(function (err) {
+          res.send(err);
         });
     }
   });
@@ -85,11 +106,11 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      db.Steps.deleteMany({
+      db.Step.deleteMany({
         topic: req.params.topic
       }).then(function (results) {
         res.send(`Topic: ${req.params.topic}, has been deleted`);
-      }).catch(function(err) {
+      }).catch(function (err) {
         res.send(err);
       })
     }
@@ -102,35 +123,43 @@ app.get("/api/steps/profile/:profileId", function (req, res) {
       res.redirect("/");
     } else {
       // console.log("params ", req.params.id);
-      db.Steps.deleteOne({
+      db.Step.deleteOne({
         _id: req.params.stepId
       }).then(function (results) {
         // console.log(results);
         res.send("Step has been deleted");
-      }).catch(function(err) {
+      }).catch(function (err) {
         res.send(err);
       })
     }
   })
 
-  // Create a new Steps topic
-  app.post("/api/steps/new_topic", function (req, res) {
+
+
+
+
+
+
+
+
+  // GET all steps of 1 user
+  app.get("/api/steps/profile/:profileId", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      // console.log("Topic Data:");
-      // console.log(req.body);
-      db.Steps.create({
-        topic: req.body.topic,
-        author: req.user.id
-      }).then(function (results) {
-        // `results` here would be the newly created topic
-        res.end();
-      }).catch(function(err) {
-        res.send(err);
-      });
+      db.User.findOne({
+        _id: req.params.profileId
+      }, {
+        steps: true
+      }).populate('Steps')
+        .then(function (dbKicks) {
+
+          res.json(dbKicks);
+        }).catch(function (err) {
+          res.send(err);
+        })
     }
   });
-
 };
+//

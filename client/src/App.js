@@ -14,6 +14,7 @@ import Login from './pages/Login';
 import Payment from './pages/Payment';
 import Signup from './pages/Signup';
 import Social from './pages/Social';
+import Steps from './pages/Steps';
 import MemberPage from './pages/MemberPage';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import UserContext from "./utils/UserContext";
@@ -32,7 +33,7 @@ function App() {
           <Route exact path="/">
             {loggedIn ? <Redirect to="/member" /> : <Redirect to="/home" />}
           </Route>
-
+          <Route exact path="/steps" component={Steps} />
           <Route exact path="/events" component={Events} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/payment" component={Payment} />

@@ -98,11 +98,23 @@ function Navbar() {
 
                                 </div>
                             </form>
-                            {errorstate && (<ErrorNotice message={errorstate} clearError={() => setErrorState(undefined)} />)}
+                            {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
                             <div>
-                                <Link to="/auth/google">
-                                    <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
-                                </Link>
+                                <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" onClick={() => {
+
+                                    API.googleSignin().then((results) => {
+                                        console.log(results);
+                                        setErrorState(false);
+                                        setLoggedIn(true);
+                                        setEmail(results.data.email);
+
+                                        history.push("/member");
+                                    }).catch(err => {
+                                        console.log(err)
+                                        setErrorState(`cannot loging with Google`);
+
+                                    });
+                                }} />
                             </div>
                         </div>
                     </li> || ""}
@@ -122,7 +134,7 @@ function Navbar() {
                     </Link>
                     </li>
 
-                   
+
                 </ul>
             </div>
         </nav>

@@ -4,11 +4,14 @@
   "description": "dance studio running in react app",
   "main": "server.js",
   "scripts": {
-    "test": "npm run lint",
-    "start": "node server.js",
-    "lint": "eslint --quiet .",
-    "fix": "eslint --fix .",
-    "watch": "nodemon server.js"
+    "start": "if-env NODE_ENV=production && yarn start:prod || yarn start:dev",
+    "start:prod": "node server.js",
+    "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn client\"",
+    "client": "cd client && yarn start",
+    "seed": "node scripts/seedDB.js",
+    "install": "cd client && yarn install",
+    "build": "cd client && yarn build",
+    "heroku-postbuild": "yarn build"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +20,7 @@
     "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.23.0",
+    "concurrently": "^5.3.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
