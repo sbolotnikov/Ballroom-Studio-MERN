@@ -128,7 +128,7 @@ function Steps() {
             <MemberNav imgLink={imgDisplay} />
             <div className="container">
 
-                <h2 className="stepsTitle display-4 font-weight-bold pad">Welcome, {profile.firstName} <span className="member"></span></h2>
+                <h2 className="formTop">Welcome, {profile.firstName} <span className="member"></span></h2>
 
                 <div className="jumbotron jumbotron-fluid bg-transparent">
                     <div className="text-light align-middle">
@@ -161,11 +161,14 @@ function Steps() {
                                         onChange={event => setAddTopic(event.target.value)} />
                                     {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
                                     <div className="d-flex justify-content-center">
-                                        <button id="topicAdd" className="btn btn-danger" style={{ marginLeft: "10px" }} onClick={handleAddTopic} >Add</button>
+                                        <button id="topicAdd" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleAddTopic} >Add</button>
                                     </div>
+
+                                    <h4 className="formTop mt-4">Choose a Topic:</h4>
+
                                     <figure id="topicChoice">
                                         <select name="topics" className="stepsItem" id="topics" onChange={topicChange}>
-                                            <option value={0} className="stepsItem" id={"topic0"}></option>
+                                            <option value={0} className="stepsItem mt-4" id={"topic0"}></option>
                                             {topicsArray.slice(0).reverse().map((topic, j) => {
                                                 return (
                                                     <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author.firstName + '' + topic.author.lastName} </option>
@@ -176,15 +179,15 @@ function Steps() {
                                     </figure>
 
                                     <div className="d-flex justify-content-center">
-                                        <button id="topicDel" className="btn btn-danger" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button>
-                                        {/* {(profile.memberStatus === ["teacher"]) || (profile.memberStatus === ["admin"]) ? <button id="topicDel" className="btn btn-danger" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button> : <div></div>} */}
+                                        <button id="topicDel" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button>
+                                        {/* {(profile.memberStatus === ["teacher"]) || (profile.memberStatus === ["admin"]) ? <button id="topicDel" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button> : <div></div>} */}
                                     </div>
 
-                                    <p className="stepsTitle">Step</p>
+                                    <p className="formTop mt-4">Step</p>
                                     <textarea className="form-control" rows="3" id="step-box" onChange={event => setAddStep(event.target.value)}
                                         placeholder="Enter your Step-tweet Here!"></textarea>
                                     <div className="d-flex justify-content-center">
-                                        <button id="step-submit" className="btn btn-danger" onClick={handleAddStep}
+                                        <button id="step-submit" className="cuteBtn" onClick={handleAddStep}
                                             style={{ marginLeft: "10px" }}>Submit!</button>
                                     </div>
                                     <h2 className="stepsTitle">Steps list:</h2>
@@ -210,6 +213,28 @@ function Steps() {
                         </div>
                     </div>
                 </div>
+                <Row className="d-flex flex-row justify-content-center">
+                    {/* <Row> */}
+                    <Col lg={8} onClick={handleDelStepSubmit}>
+                        <h2 className="formTop mt-4">Steps list:</h2>
+                        <hr />
+                        {stepsSet.slice(0).reverse().map((step, j) => {
+                            return (
+                                // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
+                                <StepDisplayItem
+                                    id={step._id}
+                                    message={step.message}
+                                    time={step.updatedAt}
+                                    name={step.author.firstName + ' ' + step.author.lastName}
+                                    profileImg={step.author.profilePhotoUrl}
+                                    status={profile.memberStatus[0]}
+                                    authorid={step.author.email}
+                                    userid={profile.email} />
+                            )
+                        })}
+                    </Col>
+                    {/* </Row> */}
+                </Row>
 
 
             </div>

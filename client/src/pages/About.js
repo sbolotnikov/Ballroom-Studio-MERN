@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar/navbar' 
 import SignupForm from '../components/SignupForm'
-import SignupHeader from '../components/Signup Header'
+import About from '../components/About'
 
 function Signup() {
     useEffect(() => {
@@ -11,9 +11,8 @@ function Signup() {
 
     return (
         <Fragment>
-            <Navbar />
-            <SignupHeader />
-            <SignupForm />
+            <Navbar></Navbar>
+            <About></About>
         </Fragment>
     )
 }

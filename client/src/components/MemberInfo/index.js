@@ -4,7 +4,9 @@ import UserContext from '../../utils/UserContext';
 import MemberTable from '../MembersTable/MemberTable'
 import StudentSchedule from '../StudentSchedule/';
 import TeacherContent from '../TeacherContent';
+import "./style.css";
 import Cloudinary from '../Cloudinary';
+
 
 const styles = {
     img: {
@@ -58,8 +60,9 @@ function MemberInfo(props) {
            <div className="formTop d-flex justify-content-center mt-4">{loggedIn === false ? 'Please log in' : "Welcome " + props.profile.firstName + " " + props.profile.lastName}</div>
 
         {loggedIn === true ?
+
            <div className="card mt-4 ">
-                     <div className="card-header bg-danger text-light">
+                     <div className="formTop">
                             My Info
                         </div>
                     <div className="row no-gutters">
@@ -103,8 +106,12 @@ function MemberInfo(props) {
                             <button type="button" className="btn btn-danger mt-4" id="updateProBtn" onClick={toggleUpdate}>{updateProfile ? "Cancel" : "Update Profile"}</button>
                             {updateProfile &&     
                                 <button type="button" className="btn btn-danger mt-4 mx-4" id="saveProBtn" onClick={saveProfile}>Save Profile</button>}
+
                         </div>
                     </div>
+
+                    <button type="button" className="cuteBtn mt-4" id="updateProBtn" data-toggle="modal" data-target="#updateProfileModal">Update Profile</button>
+                </div>
             </div>
             
         : <div></div>}

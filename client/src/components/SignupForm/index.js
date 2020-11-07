@@ -68,18 +68,18 @@ function SignupForm(props) {
 
     return (
         <div className="container bgW">
-            <div className="formTop d-flex justify-content-center mt-4">Sign Up</div>
+            <div className="formTop d-flex justify-content-center">Sign Up</div>
             <div className="card-body font-weight-bold bgW">
                 <form className="create" onSubmit={handleSignup}>
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <label for="firstName">First Name</label>
-                            <input type="text" className="" id="firstname"
+                            <input type="text" className="input" id="firstname"
                                 onChange={event => setFirstName(event.target.value)} />
                         </div>
                         <div className="form-group col-md-6">
                             <label for="lastName">Last Name</label>
-                            <input type="text" className="" id="lastname"
+                            <input type="text" className="input" id="lastname"
                                 onChange={event => setLastName(event.target.value)} />
                         </div>
                     </div>
@@ -87,29 +87,29 @@ function SignupForm(props) {
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <label for="email">Email</label>
-                            <input type="email" className="" id="email" placeholder="Dancer@Ballroom.com"
+                            <input type="email" className="input" id="email" placeholder="Dancer@Ballroom.com"
                                 onChange={event => setEmail(event.target.value)} />
                         </div>
                         <div className="form-group col-md-6">
                             <label for="phoneNumber">Telephone</label>
-                            <input type="text" className="" id="phoneNumber" placeholder="use this format 111-111-1111"
+                            <input type="text" className="input" id="phoneNumber" placeholder="use this format 111-111-1111"
                                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={event => setPhoneNumber(event.target.value)} />
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <label for="password">Password</label>
-                            <input type="password" className="" id="password" placeholder="**********" onChange={event => setPassword(event.target.value)} />
+                            <input type="password" className="input" id="password" placeholder="**********" onChange={event => setPassword(event.target.value)} />
                         </div>
                         <div className="form-group col-md-6">
                             <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" className="" id="confirmPassword" placeholder="**********"></input>
+                            <input type="password" className="input" id="confirmPassword" placeholder="**********"></input>
                         </div>
                     </div>
                     <div className="form-row">
                         <div className="form-group col-md-4">
                             <label for="birthday">Birth Date</label>
-                            <input type="date" className="" id="birthDate"
+                            <input type="date" className="input" id="birthDate"
                                 onChange={event => setBirthday(event.target.value)} />
                         </div>
                         <div className="form-group col-md-4">

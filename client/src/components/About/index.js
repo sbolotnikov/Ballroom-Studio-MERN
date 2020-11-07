@@ -30,25 +30,25 @@ function About(props) {
                 <div className="container">
 
                     <div className="text-center">
-                        <h2 className="page-section-heading d-inline-block mb-4 heading">Contact</h2>
+                        <h2 className="page-section-heading d-inline-block heading">Contact</h2>
                     </div>
 
                     <div className="row justify-content-center">
-                        <div className="col-lg-5 ml-auto lead">
+                        <div className="col-lg-5 ml-auto lead mt-4">
                             <p><a href="https://github.com/sbolotnikov" className="gitHeader">Sergey Bolotnikov</a></p>
                             <p>Database architect and lover of ballroom dance.</p>
-                            <p>sbolotnikov@gmail.com</p>
-                            <p><a href="https://github.com/sbolotnikov" className="gitHeader">Jonathan Cobb</a></p>
+                            <p><a href="sbolotnikov@gmail.com">sbolotnikov@gmail.com</a></p>
+                            <p><a href="https://github.com/jmc846" className="gitHeader">Jonathan Cobb</a></p>
                             <p>Front End Development.</p>
-                            <p>jmc846scarletmail.com</p>
+                            <p><a href="mailto:jmc846@scarletmail.rutgers.edu">jmc846@scarletmail.rutgers.edu</a></p>
                         </div>
-                        <div className="col-lg-5 mr-auto lead">
-                            <p className="gitHeader">Michael Chen</p>
+                        <div className="col-lg-5 ml-auto lead mt-4">
+                            <p><a href="https://github.com/mc4506" className="gitHeader">Michael Chen</a></p>
                             <p>Back End Development.</p>
-                            <p>mike4506@gmail.com</p>
-                            <p className="gitHeader">Nicholas La Monaco</p>
+                            <p><a href="mike4506@gmail.com">mike4506@gmail.com</a></p>
+                            <p><a href="https://github.com/nlamonaco86" className="gitHeader">Nicholas La Monaco</a></p>
                             <p>Front End Development.</p>
-                            <p>nlamonaco86@gmail.com</p>
+                            <p><a href="mailto:nlamonaco86@gmail.com">nlamonaco86@gmail.com</a></p>
                         </div>
                     </div>
                 </div>

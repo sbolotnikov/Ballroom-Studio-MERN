@@ -9,6 +9,7 @@ import './App.css';
 import './css/body.css';
 import './css/heading.css';
 import './css/styles.css';
+import About from './pages/About';
 import Events from './pages/Events';
 import Login from './pages/Login';
 import Payment from './pages/Payment';
@@ -40,6 +41,7 @@ function App() {
           <Route exact path="/">
             {loggedIn ? <Redirect to="/member" /> : <Redirect to="/home" />}
           </Route>
+          <Route exact path="/about" component={About} />
           <Route exact path="/steps" component={Steps} />
           <Route exact path="/events" component={Events} />
           <Route exact path="/login" component={Login} />

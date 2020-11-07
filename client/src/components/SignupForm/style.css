@@ -17,6 +17,15 @@ textarea {
     height:40px;
   }  
 
+  .input {
+    width:100%;
+    resize: vertical;
+    padding:5px;
+    border-radius:25px;
+    box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+    height:40px;
+  }  
+
   .extended{
     height: 180px
   }
