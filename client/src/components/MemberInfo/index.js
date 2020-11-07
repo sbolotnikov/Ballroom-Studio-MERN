@@ -1,57 +1,110 @@
 import React, { useState , useEffect, useContext} from 'react';
-// import API from '../../utils/API';
+import API from '../../utils/API';
 import UserContext from '../../utils/UserContext';
 import MemberTable from '../MembersTable/MemberTable'
 import StudentSchedule from '../StudentSchedule/';
 import TeacherContent from '../TeacherContent';
+import Cloudinary from '../Cloudinary';
 
+const styles = {
+    img: {
+        maxWidth: "200px",
+        objectFit: "cover"
+    },
+    input: {
+        width: "100%",
+        padding: "12px 20px",
+        margin: "8px 0",
+        display: "inline-block",
+        border: "1px solid #ccc",
+        borderRadius: "4px",
+        boxSizing: "border-box",
+    }
+}
 
 function MemberInfo(props) {
-    // const [profile, setProfile] = useState({});
-    const {loggedIn} = useContext(UserContext);
+    const {loggedIn, email, userId} = useContext(UserContext);
+    const [updateProfile, setUpdateProfile] = useState(false);
+    const [newPhoneNumber, setNewPhoneNumber] = useState(null);
+    const [newEmail, setNewEmail] = useState(email);
+    const [imgUrl, setImgUrl] = useState(null);
 
-    // console.log(loggedIn);
+    const saveProfile = () => {
+        // ADD VALIDATION
+        API.updateProfile(userId, {
+            email: newEmail,
+            phoneNumber: newPhoneNumber || props.profile.phoneNumber,
+            profilePhotoUrl: imgUrl || props.profile.profilePhotoUrl
+        })
+            .then((res) => {
+                console.log("succesfuly updated user");
+                setUpdateProfile(false);
+                props.getProfile();
+            }).catch( err => {
+                console.log(err);
+            })
+    }
 
-    
-    // useEffect( () => {
-    //         API.getProfile().then( results => {
-    //             console.log()
-    //             setProfile(results.data);
-    //         }).catch (err => {
-    //             console.log(err);
-    //         })
-    // }, [])
+    const toggleUpdate= () => {
+        setUpdateProfile(!updateProfile);
+    }
+
+    const getImgUrl = (url) => {
+        setImgUrl(url);
+    }
 
     return (
         <div className="container">
-            {console.log(props.profile)}
            <div className="formTop d-flex justify-content-center mt-4">{loggedIn === false ? 'Please log in' : "Welcome " + props.profile.firstName + " " + props.profile.lastName}</div>
 
         {loggedIn === true ?
-           <div className="row">
-                <div className="col">
-                    <div className="card mt-4">
-                        <div className="card-header bg-danger text-light">
-                            My Contact Info
+           <div className="card mt-4 ">
+                     <div className="card-header bg-danger text-light">
+                            My Info
                         </div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">Email: <span className="member-email">{props.profile.email}</span></li>
-                            <li className="list-group-item">Phone Number: <span className="member-phone">{props.profile.phoneNumber}</span></li>
-                        </ul>
-                    </div>
-
-                    <div className="card mt-4">
-                        <div className="card-header bg-danger text-light">
-                            Certification Level
+                    <div className="row no-gutters">
+                        {updateProfile ? 
+                            <Cloudinary style={styles.img} getImgUrl={getImgUrl}/> :
+                            <img src={props.profile.profilePhotoUrl} style={styles.img} className="card-img-top" alt="user avatar"/>
+                        }
+                        <div className="card-body">
+                            <form>
+                                <div className="form-group row">
+                                    <label className="col-4 col-form-label">Email</label>
+                                    <div className="col-8">
+                                    {updateProfile ?
+                                        <input  name="phoneNumber" type="text" className="form-control-plaintext" placeholder={props.profile.email} 
+                                            style={styles.input}
+                                            onChange={event => setNewEmail(event.target.value)}/>
+                                            :
+                                            <div className="form-control-plaintext">{props.profile.email}</div>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-4 col-form-label">Phone Number</label>
+                                    <div className="col-8">
+                                        {updateProfile ?
+                                        <input  name="phoneNumber" type="text" className="form-control-plaintext" placeholder={props.profile.phoneNumber} 
+                                            style={styles.input}
+                                            onChange={event => setNewPhoneNumber(event.target.value)}/>
+                                            :
+                                            <div className="form-control-plaintext">{props.profile.phoneNumber}</div>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <label className="col-4 col-form-label">Dance Level</label>
+                                    <div className="col-8 form-control-plaintext">
+                                    {props.profile.certLevel}
+                                    </div>
+                                </div>
+                            </form>
+                            <button type="button" className="btn btn-danger mt-4" id="updateProBtn" onClick={toggleUpdate}>{updateProfile ? "Cancel" : "Update Profile"}</button>
+                            {updateProfile &&     
+                                <button type="button" className="btn btn-danger mt-4 mx-4" id="saveProBtn" onClick={saveProfile}>Save Profile</button>}
                         </div>
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item">Level: <span className="level">{props.profile.certLevel}</span></li>
-                        </ul>
                     </div>
-
-
-                    <button type="button" className="btn btn-danger mt-4" id="updateProBtn" data-toggle="modal" data-target="#updateProfileModal">Update Profile</button>
-                </div>
             </div>
             
         : <div></div>}

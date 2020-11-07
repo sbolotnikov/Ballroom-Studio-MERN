@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/img-redundant-alt */
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import API from '../../utils/API';
@@ -62,8 +63,9 @@ function MemberNav(props) {
                     </Link>
                     </li> }
                 </ul>
-                <img src={props.imgLink} alt="member photo" className="member-photo" />
             </div>
+            {loggedIn && 
+                <img src={props.imgLink} alt="member photo" className="member-photo" /> }
         </nav>
     );
 }
