@@ -50,9 +50,15 @@ export default {
     postPM: (pm) => {
       return axios.post("/api/steps/new_pm", pm);
     },
-    getIncomingPM: () => {
-      console.log("in API incoming PM");
+    getIncomingDM: () => {
       return axios.get("/api/steps/pm_in");
+    },
+    updateDMConfirm: (id)=> {
+      return axios.put("/api/steps/dm/"+id)
+    },
+    getOutgoingDM: ()=>{
+      console.log("in API outgoing DM");
+      return axios.get("/api/steps/pm_out")
     },
     getSessionsByType: (type) => {
       return axios.get(`/api/session_dates/sessionType/${type}`);
