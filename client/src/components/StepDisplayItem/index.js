@@ -12,7 +12,7 @@ function StepDisplayItem(props) {
                     <img src={imgLink} alt='profile picture' className="img_style" />}
 
                 <div className="media-body" id={props.id}>
-        <h5 className="mt-0">{props.name}</h5>
+        <h5 className="mt-0" style={{ flexWrap: "wrap" }}>{props.name}</h5>
         <p style={{maxWidth: "992px", minWidth: "576px"}}>{props.message}</p>
                     <p>{moment(props.time).format("h:mma on dddd")}</p>
                 </div>                                  
