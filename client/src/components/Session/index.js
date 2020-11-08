@@ -63,7 +63,7 @@ function Session(props) {
             <div className="card-body">
                 <h5 className="card-title">{props.sessionType? props.sessionType.toUpperCase() : ""}</h5>
                 <h4 className="card-subtitle">Instructor: {name}</h4>
-                <p className="card-text">This class is suited for dancers of {props.level} level</p>
+                <p className="card-text">This class is suited for dancers of <span className="badge badge-warning">{props.level}</span> level</p>
                 <li className="list-group-item list-group-item-success">
                     <div>{props.inPersonLimit} people limit per session</div>
                     {props.sessionCalendar.map(date => <div key={date}>

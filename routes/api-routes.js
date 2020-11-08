@@ -195,16 +195,14 @@ module.exports = function (app) {
     }
   });
 
-  // Get sessions based on userId param. For Teacher or Admin
-  app.get("/api/sessions/:userId", (req, res) => {
+  // Get sessions based on teacher userId param. For Teacher or Admin
+  app.get("/api/sessions/teacher/:userId", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      db.User.find({
-          _id: req.params.userId
-        }, {
-          userSessions: true
+      db.Session.find({
+          teachers: mongoose.Types.ObjectId(req.params.userId)
         })
         .then(results => {
           res.json(results);
