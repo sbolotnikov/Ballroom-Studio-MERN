@@ -15,6 +15,7 @@ let transporter = nodemailer.createTransport({
   }
 });
 
+module.exports = (app) => {
 // get all students in a particular session
 app.get("/api/session/registered/:sessionId", function (req, res) {
   if(!req.user) {
@@ -35,7 +36,8 @@ app.get("/api/session/registered/:sessionId", function (req, res) {
         // to: 'nlamonaco86@gmail.com,sbolotnikov@gmail,mike4506@gmail.com',
         // so will the text and subject
         subject: `You've Been Signed Up!`,
-        // Textbox can contain HTML using template literal/inline styling 
+        // Textbox can contain HTML using template literal/inline styling as such:
+        // body: `<html>` 
         text: 'It works!!!'
       };
         // will send an e-mail to everyone in the class 
@@ -50,3 +52,4 @@ app.get("/api/session/registered/:sessionId", function (req, res) {
     })
   }
 })
+};
