@@ -30,7 +30,7 @@ module.exports = function (app) {
   });
 
   app.post("/api/signup", (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     db.User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -63,8 +63,12 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      console.log(req.user);
-      res.json(req.user);
+      // console.log(req.user);
+      db.User.findOne({
+        _id: req.user.id
+      }).then( result => {
+        res.json(result);
+      })
     }
   });
 
@@ -119,7 +123,7 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      console.log(req.body);
+      // console.log(req.body);
       req.body.map(e => {
         db.User.findOneAndUpdate({
             _id: mongoose.Types.ObjectId(req.params.userId)
@@ -138,7 +142,7 @@ module.exports = function (app) {
             new: true
           })
           .then(results => {
-            res.json(results);
+            res.send("successfully registered for a session");
           })
           .catch(err => {
             console.log(err);

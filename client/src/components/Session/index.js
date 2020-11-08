@@ -21,7 +21,7 @@ function Session(props) {
         if(props.registered) {
             setRegistered(true);
         }
-    }, []);
+    }, [props.registered, props.teacher]);
     
     const getTeacherName = (id) => {
         API.getUserProfile(id).then( results => {
