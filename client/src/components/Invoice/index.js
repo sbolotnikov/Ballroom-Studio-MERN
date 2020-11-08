@@ -5,6 +5,22 @@ import "./style.css";
 // ROUGH DRAFT OF INVOICE -
 // Feel free to modify, add to, or abandon 
 
+// let printBtn = document.querySelector("#printInvoice");
+// let emailBtn = document.querySelector(".email");
+// let id = emailBtn.getAttribute("data-id");
+
+// printBtn.addEventListener("click", () => {
+//   window.print();
+// }); 
+
+// emailBtn.addEventListener("click", () => {
+//   fetch("API CALL" + id, {type: "GET"}).then((response) => {
+//     return response.json();
+//   })
+//   .then(function (body) {
+//     console.log(body)
+//   });
+// }); 
 function Invoice(props) {
     // const [show, setShow] = useState(true);
     return (
@@ -12,7 +28,7 @@ function Invoice(props) {
 
     <div className="toolbar hidden-print">
         <div className="textPrpt">
-            <button data-id="id" className="cuteBtn email" aria-label="email"><i className="fa fa-envelope"></i>
+            <button id="SESSION NUMBER FOR API CALL GOES HERE" className="cuteBtn email" aria-label="email"><i className="fa fa-envelope"></i>
                 </button>
             <button id="printInvoice" className="cuteBtn" aria-label="print"><i className="fa fa-print"></i></button>
         </div>
