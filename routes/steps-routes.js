@@ -1,6 +1,6 @@
 // Requiring our models and passport as we've configured it
 const db = require("../models");
-const mongoose =require("mongoose")
+const mongoose = require("mongoose")
 const ObjectId = mongoose.Types.ObjectId;
 module.exports = function (app) {
 
@@ -77,7 +77,28 @@ module.exports = function (app) {
     }
   });
 
-  
+  // Put a Direct Message confirm for 
+  app.put("/api/steps/dm/:id", function (req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back to startup screen
+      res.redirect("/");
+    } else {
+      db.Step.findOneAndUpdate(
+        {
+          _id: mongoose.Types.ObjectId(req.params.id)
+        }, {
+        $set: {
+          confirm: true
+        }
+      }).then(function (results) {
+        res.send();
+      })
+        .catch(function (err) {
+          res.send(err)
+        });
+    }
+  });
+
   // get all steps of 1 topic
   app.get("/api/steps/data/:topic", function (req, res) {
     if (!req.user) {
@@ -85,11 +106,9 @@ module.exports = function (app) {
       res.redirect("/");
     } else {
       db.Step.find({
-
         topic: req.params.topic
       })
         .populate("author")
-
         .then(function (steps) {
           res.json(steps);
         }).catch(function (err) {
@@ -131,27 +150,27 @@ module.exports = function (app) {
       })
     }
   })
-  // 
- // POST a new PM
- app.post("/api/steps/new_pm", function (req, res) {
-  if (!req.user) {
-    // The user is not logged in, send back to startup screen
-    res.redirect("/");
-  } else {
-    db.Step.create({
-      message: req.body.message,
-      dm_recipient: req.body.adressTo,
-      author: req.user.id,
-      confirm:false
-    })
-      .then(function (results) {
-        res.send();
+
+  // POST a new PM
+  app.post("/api/steps/new_pm", function (req, res) {
+    if (!req.user) {
+      // The user is not logged in, send back to startup screen
+      res.redirect("/");
+    } else {
+      db.Step.create({
+        message: req.body.message,
+        dm_recipient: req.body.adressTo,
+        author: req.user.id,
+        confirm: false
       })
-      .catch(function (err) {
-        res.send(err)
-      });
-  }
-});
+        .then(function (results) {
+          res.send();
+        })
+        .catch(function (err) {
+          res.send(err)
+        });
+    }
+  });
   // get all PM incoming
   app.get("/api/steps/pm_in", function (req, res) {
     console.log(req.user);
@@ -171,7 +190,28 @@ module.exports = function (app) {
         });
     }
   });
+  // get all PM OUTGOING
+  app.get("/api/steps/pm_out", function (req, res) {
+    console.log(req.user);
+    if (!req.user) {
+      // The user is not logged in, send back to startup screen
+      res.redirect("/");
+    } else {
+      console.log("in route")
 
+      db.Step.find({
+        author: mongoose.Types.ObjectId(req.user._id),
+        dm_recipient: { $exists: true }
+      })
+        .populate("dm_recipient")
+
+        .then(function (steps) {
+          res.json(steps);
+        }).catch(function (err) {
+          res.send(err);
+        });
+    }
+  });
 
 
 

@@ -8,6 +8,7 @@ import StepDisplayItem from '../../components/StepDisplayItem';
 import API from '../../utils/API';
 import ErrorNotice from "../../components/misc/errorNotice";
 import { Col, Row } from "react-bootstrap";
+import Select from 'react-select';
 
 function Steps() {
     const [profile, setProfile] = useState({});
@@ -18,6 +19,7 @@ function Steps() {
     const [addstep, setAddStep] = useState('')
     const [stepsSet, setStepsSet] = useState([]);
     const [imgDisplay, setImgDisplay] = useState('');
+    const [switchInOut, setSwitchInOut] = useState(1);
 
     useEffect(() => {
         setTopicState();
@@ -145,8 +147,15 @@ function Steps() {
                                 <Col md={4}>
                                     <h4 className="stepsTitle">Direct messages:</h4>
                                     <DirectMessage />
-                                    <DMincoming />
-                                    <DMoutgoing />
+                                    <select onChange={event => setSwitchInOut(event.target.value)}>
+                                        <option value={1}>Incoming messages</option>
+                                        <option value={0}>Outgoing messages</option>
+                                    </select>
+                                    {(switchInOut===1) ? <DMincoming /> : <DMoutgoing />}
+                                    
+                                    
+
+
 
 
 
@@ -190,52 +199,34 @@ function Steps() {
                                         <button id="step-submit" className="cuteBtn" onClick={handleAddStep}
                                             style={{ marginLeft: "10px" }}>Submit!</button>
                                     </div>
-                                    <h2 className="stepsTitle">Steps list:</h2>
-                                    <hr />
-                                    <Row className="d-flex justify-content-center" onClick={handleDelStepSubmit}>
-                                        {stepsSet.slice(0).reverse().map((step, j) => {
-                                            return (
-                                                // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
-                                                <StepDisplayItem
-                                                    id={step._id}
-                                                    message={step.message}
-                                                    time={step.updatedAt}
-                                                    name={step.author.firstName + ' ' + step.author.lastName}
-                                                    profileImg={step.author.profilePhotoUrl}
-                                                    status={profile.memberStatus[0]}
-                                                    authorid={step.author.email}
-                                                    userid={profile.email} />
-                                            )
-                                        })}
+                                    <Row className="d-flex flex-row justify-content-center">
+                                        {/* <Row> */}
+                                        <Col lg={12} onClick={handleDelStepSubmit}>
+                                            <h2 className="formTop mt-4">Steps list:</h2>
+                                            <hr />
+                                            {stepsSet.slice(0).reverse().map((step, j) => {
+                                                return (
+                                                    // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
+                                                    <StepDisplayItem
+                                                        id={step._id}
+                                                        message={step.message}
+                                                        time={step.updatedAt}
+                                                        name={step.author.firstName + ' ' + step.author.lastName}
+                                                        profileImg={step.author.profilePhotoUrl}
+                                                        status={profile.memberStatus[0]}
+                                                        authorid={step.author.email}
+                                                        userid={profile.email} />
+                                                )
+                                            })}
+                                        </Col>
+                                        {/* </Row> */}
                                     </Row>
+
                                 </Col>
                             </Row>
                         </div>
                     </div>
                 </div>
-                <Row className="d-flex flex-row justify-content-center">
-                    {/* <Row> */}
-                    <Col lg={8} onClick={handleDelStepSubmit}>
-                        <h2 className="formTop mt-4">Steps list:</h2>
-                        <hr />
-                        {stepsSet.slice(0).reverse().map((step, j) => {
-                            return (
-                                // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
-                                <StepDisplayItem
-                                    id={step._id}
-                                    message={step.message}
-                                    time={step.updatedAt}
-                                    name={step.author.firstName + ' ' + step.author.lastName}
-                                    profileImg={step.author.profilePhotoUrl}
-                                    status={profile.memberStatus[0]}
-                                    authorid={step.author.email}
-                                    userid={profile.email} />
-                            )
-                        })}
-                    </Col>
-                    {/* </Row> */}
-                </Row>
-
 
             </div>
 

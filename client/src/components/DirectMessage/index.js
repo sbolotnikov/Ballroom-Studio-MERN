@@ -9,7 +9,35 @@ function DirectMessage() {
     const [selectedOption, setSelectedOption] = useState(null);
     const [members, setMembers] = useState([]);
     const [dm, setDM] = useState('');
-   
+
+    // styles for select component  DOCUMENTATION https://react-select.com/styles
+    const customStyles = {
+        menu: (provided, state) => ({
+            ...provided,
+            width: state.selectProps.width,
+            borderBottom: '1px dotted pink',
+            color: state.selectProps.menuColor,
+            padding: 20,
+        }),
+        option: (provided, state) => ({
+            ...provided,
+            borderBottom: '1px dotted pink',
+            color: state.isSelected ? 'red' : 'blue',
+            padding: 20,
+        }),
+        control: (_, { selectProps: { width } }) => ({
+            width: width
+        }),
+
+        singleValue: (provided, state) => {
+            const opacity = state.isDisabled ? 0.5 : 1;
+            const transition = 'opacity 300ms';
+
+            return { ...provided, opacity, transition };
+        }
+    }
+
+
     useEffect(() => {
         API.getAllMembers().then(results => {
             var res = results.data.sort(compareValues('lastName'));
@@ -33,7 +61,7 @@ function DirectMessage() {
         for (let j = 0; j < selectedOption.length; j++) {
             newDM = { adressTo: selectedOption[j].value, message: dm }
             API.postPM(newDM).then(results => {
-                console.log("success add DM");              
+                console.log("success add DM");
             }).catch(err => {
                 console.log(err);
             });
@@ -45,7 +73,9 @@ function DirectMessage() {
         <div>
             <Row>
                 <Col>
-                    {members && <Select options={members} className="stepsItem" closeMenuOnSelect={false}
+                    {members && <Select styles={customStyles}
+                        width='300px' menuColor='red'
+                        options={members} style={{ textColor: "black" }} closeMenuOnSelect={false}
                         isMulti defaultValue={selectedOption} onChange={setSelectedOption} />}
                     <textarea className="form-control mt-1" rows="3" id="dm-box" onChange={event => setDM(event.target.value)}
                         placeholder="Enter your direct message Here!"></textarea>

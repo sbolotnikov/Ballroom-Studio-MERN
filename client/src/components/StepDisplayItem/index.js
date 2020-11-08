@@ -8,7 +8,7 @@ function StepDisplayItem(props) {
     if (props.message) {
         return (
             <Col xs={12} className="stepStyle d-flex">
-                { props.profilePhotoUrl ? <img src={props.profilePhotoUrl} alt='profile picture' className="img_style" /> :
+                { props.profileImg ? <img src={props.profileImg} alt='profile picture' className="img_style" /> :
                     <img src={imgLink} alt='profile picture' className="img_style" />}
 
                 <div className="media-body" id={props.id}>
