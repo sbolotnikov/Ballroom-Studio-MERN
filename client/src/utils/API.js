@@ -59,5 +59,15 @@ export default {
     getOutgoingDM: ()=>{
       console.log("in API outgoing DM");
       return axios.get("/api/steps/pm_out")
+    },
+    getSessionsByType: (type) => {
+      return axios.get(`/api/session_dates/sessionType/${type}`)
+    },
+    getSessionByAdult: (isAdult) => {
+      return axios.get(`/api/session_dates/adult/${isAdult}`)
+    },
+    getSessionByMonth: (month) => {
+      return axios.get(`/api/session_dates/month/${month}`)
+
     }
 }

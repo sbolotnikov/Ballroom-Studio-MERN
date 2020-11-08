@@ -14,7 +14,7 @@ const SessionSchema = new Schema ({
     adultClass: {type: Boolean},
     sessionType: {
         type: String,
-        enum: ["private, group, party"]
+        enum: ["private", "group", "party"]
     },
     teachers: [{
         type: Schema.Types.ObjectId,
