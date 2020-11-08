@@ -70,7 +70,7 @@ module.exports = function (app) {
 
   // get session date for specific month
   app.get("/api/session_dates/month/:monthNumber", (req, res) => {
-    let month = parseInt(req.params.monthNumber) - 1;
+    let month = parseInt(req.params.monthNumber);
     let date = new Date();
     let firstDayOfMonth = new Date(date.getFullYear(), month, 1);
     let lastDayOfMonth = new Date(date.getFullYear(), month+1, 0);
@@ -119,17 +119,17 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      // console.log(req.body);
-      req.body.data.map(e => {
+      console.log(req.body);
+      req.body.map(e => {
         db.User.findOneAndUpdate({
-            _id: req.params.userId
+            _id: mongoose.Types.ObjectId(req.params.userId)
           }, {
             $push: {
               userSessions: {
                 session: {
                   _id: mongoose.Types.ObjectId(e.sessionId),
                 },
-                sessionDate: e.sessionDate,
+                sessionDate: new Date(e.sessionDate),
                 length: e.length,
                 isPresent: false
               }
@@ -170,7 +170,7 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      let month = parseInt(req.params.monthNumber) - 1;
+      let month = parseInt(req.params.monthNumber);
       let date = new Date();
       let firstDayOfMonth = new Date(date.getFullYear(), month, 1);
       let lastDayOfMonth = new Date(date.getFullYear(), month+1, 0);
@@ -215,7 +215,6 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log(req.body);
       const start = new Date(req.body.startDate);
       const end = new Date(req.body.endDate);
 
@@ -224,7 +223,7 @@ module.exports = function (app) {
       if (req.body.endDate === '') {
         const startHour = parseInt(req.body.startTime.slice(0,2));
         const startMinute = parseInt(req.body.startTime.slice(3,5));
-        console.log(startHour, ":", startMinute)
+        // console.log(startHour, ":", startMinute)
         start.setHours(startHour, startMinute);
         sessionCalendarDates.push(start)
       } else {
@@ -234,7 +233,7 @@ module.exports = function (app) {
         });
         sessionCalendarDates.sort((a, b) => a - b);
      }
-      console.log(sessionCalendarDates);
+      // console.log(sessionCalendarDates);
 
       db.Session.create({
         sessionName: req.body.sessionName,
@@ -300,6 +299,21 @@ module.exports = function (app) {
       }).then(function (results) {
         console.log(results);
         res.json({});
+      }).catch(function(err) {
+        res.send(err);
+      })
+    }
+  })
+
+  app.get('/api/profile/:userId', function (req, res) {
+    if(!req.user) {
+      res.redirect("/");
+    } else {
+      db.User.find({
+        _id: mongoose.Types.ObjectId(req.params.userId)
+      }).then(function(result) {
+        console.log(result);
+        res.json(result);
       }).catch(function(err) {
         res.send(err);
       })

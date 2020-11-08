@@ -55,12 +55,21 @@ export default {
       return axios.get("/api/steps/pm_in");
     },
     getSessionsByType: (type) => {
-      return axios.get(`/api/session_dates/sessionType/${type}`)
+      return axios.get(`/api/session_dates/sessionType/${type}`);
     },
-    getSessionByAdult: (isAdult) => {
-      return axios.get(`/api/session_dates/adult/${isAdult}`)
+    getSessionsByAdult: (isAdult) => {
+      return axios.get(`/api/session_dates/adult/${isAdult}`);
     },
-    getSessionByMonth: (month) => {
-      return axios.get(`/api/session_dates/month/${month}`)
+    getSessionsByMonth: (month) => {
+      return axios.get(`/api/session_dates/month/${month}`);
+    },
+    getUserProfile: (id)=>{
+      return axios.get(`/api/profile/${id}`);
+    },
+    registerForSession: (id, session) => {
+      return axios.put(`/api/register/sessions/${id}`, session);
+    },
+    getMySessions: (month) => {
+      return axios.get(`/api/my_sessions/month/${month}`);
     }
 }

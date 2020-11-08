@@ -10,7 +10,7 @@ import Cloudinary from '../Cloudinary';
 
 const styles = {
     img: {
-        maxWidth: "200px",
+        width: "200px",
         objectFit: "cover"
     },
     input: {
@@ -66,10 +66,13 @@ function MemberInfo(props) {
                             My Info
                         </div>
                     <div className="row no-gutters">
-                        {updateProfile ? 
-                            <Cloudinary style={styles.img} getImgUrl={getImgUrl}/> :
-                            <img src={props.profile.profilePhotoUrl} style={styles.img} className="card-img-top" alt="user avatar"/>
-                        }
+                        <div>
+                            <img src={props.profile.profilePhotoUrl} style={styles.img} className="card-img mb-4" alt="user avatar"/>
+                            {updateProfile ? 
+                                <Cloudinary style={styles.img} getImgUrl={getImgUrl}/> : <div></div>
+                            }
+                        </div>
+                        
                         <div className="card-body">
                             <form>
                                 <div className="form-group row">
@@ -103,14 +106,12 @@ function MemberInfo(props) {
                                     </div>
                                 </div>
                             </form>
-                            <button type="button" className="btn cuteBtn mt-4" id="updateProBtn" onClick={toggleUpdate}>{updateProfile ? "Cancel" : "Update Profile"}</button>
+                            <button type="button" className="cuteBtn mt-4" id="updateProBtn" onClick={toggleUpdate}>{updateProfile ? "Cancel" : "Update Profile"}</button>
                             {updateProfile &&     
-                                <button type="button" className="btn cuteBtn mt-4 mx-4" id="saveProBtn" onClick={saveProfile}>Save Profile</button>}
+                                <button type="button" className="cuteBtn mt-4 mx-4" id="saveProBtn" onClick={saveProfile}>Save Profile</button>}
 
                         </div>
                     </div>
-
-                    <button type="button" className="cuteBtn mt-4" id="updateProBtn" data-toggle="modal" data-target="#updateProfileModal">Update Profile</button>
                 </div>           
 
         : <div></div>}

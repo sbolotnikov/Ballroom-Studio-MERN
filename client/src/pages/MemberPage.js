@@ -24,8 +24,8 @@ function MemberPage(){
             }
             setImgDisplay(imgLink);
             setProfile(results.data);
-            console.log(results.data);
-            console.log("got profile");
+            // console.log(results.data);
+            // console.log("got profile");
         }).catch(err => {
             console.log(err);
         })
