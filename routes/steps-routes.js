@@ -197,8 +197,6 @@ module.exports = function (app) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      console.log("in route")
-
       db.Step.find({
         author: mongoose.Types.ObjectId(req.user._id),
         dm_recipient: { $exists: true }
@@ -218,23 +216,23 @@ module.exports = function (app) {
 
 
   // GET all steps of 1 user
-  app.get("/api/steps/profile/:profileId", function (req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back to startup screen
-      res.redirect("/");
-    } else {
-      db.User.findOne({
-        _id: req.params.profileId
-      }, {
-        steps: true
-      }).populate('Steps')
-        .then(function (dbKicks) {
+  // app.get("/api/steps/profile/:profileId", function (req, res) {
+  //   if (!req.user) {
+  //     // The user is not logged in, send back to startup screen
+  //     res.redirect("/");
+  //   } else {
+  //     db.User.findOne({
+  //       _id: req.params.profileId
+  //     }, {
+  //       steps: true
+  //     }).populate('Steps')
+  //       .then(function (dbKicks) {
 
-          res.json(dbKicks);
-        }).catch(function (err) {
-          res.send(err);
-        })
-    }
-  });
+  //         res.json(dbKicks);
+  //       }).catch(function (err) {
+  //         res.send(err);
+  //       })
+  //   }
+  // });
 };
 //

@@ -26,6 +26,7 @@ require("./routes/api-routes.js")(app);
 require("./routes/google-auth-routes.js")(app);
 require("./routes/steps-routes.js")(app);
 require('./routes/stripe-routes.js')(app);
+require('./routes/invoice-routes.js')(app);
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,

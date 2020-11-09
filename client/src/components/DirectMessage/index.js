@@ -80,8 +80,7 @@ function DirectMessage() {
                     <textarea className="form-control mt-1" rows="3" id="dm-box" onChange={event => setDM(event.target.value)}
                         placeholder="Enter your direct message Here!"></textarea>
                     <div className="d-flex justify-content-center">
-                        <button id="dm-submit" className="btn cuteBtn" onClick={handleSendDM}
-                            style={{ marginLeft: "10px" }}>Submit!</button>
+                        <button id="dm-submit" className="cuteBtn" onClick={handleSendDM}>Submit!</button>
                     </div>
                 </Col>
             </Row>
