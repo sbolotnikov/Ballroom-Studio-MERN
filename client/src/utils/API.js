@@ -57,7 +57,6 @@ export default {
       return axios.put("/api/steps/dm/"+id)
     },
     getOutgoingDM: ()=>{
-      console.log("in API outgoing DM");
       return axios.get("/api/steps/pm_out")
     },
     getSessionsByType: (type) => {
@@ -77,5 +76,9 @@ export default {
     },
     getMySessions: (month) => {
       return axios.get(`/api/my_sessions/month/${month}`);
-    }
+    },
+    getMembersByType: (type)=> {
+      console.log("in API outgoing DM");
+      return axios.get(`/api/members/${type}`);
+    },
 }

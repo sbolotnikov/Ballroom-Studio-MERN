@@ -18,15 +18,6 @@ function DMincoming() {
         })
     }, []);
 
-    // function handleCheckbox(e, dmIndex) {
-    //     API.updateDMConfirm(e.target.value).then(results => {
-    //         const changedDM = [...dmIncoming];
-    //         changedDM[dmIndex].confirm = true;
-    //         setDMIncoming(changedDM);
-    //     }).catch(err => {
-    //         console.log(err);
-    //     })
-    // }
     
     function handleDeleteDM(e, dmIndex) {
         console.log(e.target.value);
@@ -40,7 +31,6 @@ function DMincoming() {
     }
     return (
         <Fragment>
-            <h4 className="stepsTitle">Outgoing messages</h4>
             <div style={{ background: "white", opacity: .9, flexWrap: "nowrap", color: "black" }}>
                 {dmIncoming && dmIncoming.map((dm, j) => {
                     return (
