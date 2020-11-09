@@ -67,7 +67,7 @@ function MemberInfo(props) {
                         </div>
                     <div className="row no-gutters">
                         <div>
-                            <img src={props.profile.profilePhotoUrl} style={styles.img} className="card-img mb-4" alt="user avatar"/>
+                            <img src={props.profile.profilePhotoUrl} style={styles.img} className="card-img" alt="user avatar"/>
                             {updateProfile ? 
                                 <Cloudinary style={styles.img} getImgUrl={getImgUrl}/> : <div></div>
                             }

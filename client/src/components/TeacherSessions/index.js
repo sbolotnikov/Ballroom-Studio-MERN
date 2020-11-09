@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import API from '../../utils/API';
 import UserContext from '../../utils/UserContext';
 import SessionCard from './SessionCard';
+import Accordion from 'react-bootstrap/Accordion';
 
 function MySessions() {
     const [sessions, setSessions] = useState([]);
@@ -9,21 +10,22 @@ function MySessions() {
 
     useEffect(() => {
         API.getTeacherSessions(userId).then( results => {
-            console.log(results.data);
             setSessions(results.data);
         })
     }, [userId])
     return (
         <div>
-            {sessions.map( session => 
-                <SessionCard 
-                    key={session._id} 
-                    id={session._id}
-                    name={session.sessionName}
-                    type={session.sessionType}
-                    dates={session.sessioCalendar}/>
-                )
-            }
+            <Accordion>
+                {sessions.map( session => 
+                    <SessionCard 
+                        key={session._id} 
+                        id={session._id}
+                        name={session.sessionName}
+                        type={session.sessionType}
+                        dates={session.sessionCalendar}/>
+                    )
+                }
+            </Accordion>
         </div>
     )
 };

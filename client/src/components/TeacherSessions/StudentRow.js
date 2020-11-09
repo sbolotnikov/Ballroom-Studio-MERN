@@ -1,9 +1,9 @@
 import React from 'react';
 
-function StudentRow() {
+function StudentRow(props) {
     return (
         <div>
-
+            {props.firstName} {props.lastName} {props.isPresent ? "present" : "not present"}
         </div>
     )
 };

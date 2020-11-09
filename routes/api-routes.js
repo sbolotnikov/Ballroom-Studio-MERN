@@ -323,29 +323,60 @@ module.exports = function (app) {
     }
   })
 
+  // get all students who have registered for a specific session and specific date
+  app.get("/api/session/registered_students/:sessionId/:date", function (req, res) {
+    if(!req.user) {
+      res.redirect("/");
+    } else {
+      let date = new Date(req.params.date);
+      db.User.aggregate([
+        { $match: {"userSessions.session": mongoose.Types.ObjectId(req.params.sessionId)}},
+        { $project: {
+            firstName: 1,
+            lastName: 1,
+            userSessions: {
+              $filter: {
+                input: "$userSessions",
+                cond: {
+                   $eq: ["$$this.sessionDate", date]
+                }
+              }
+            }
+        }}
+      ]).then( results => {
+        res.json(results);
+        console.log(results);
+      }).catch( err => {
+        console.log(err);
+        res.send(err);
+      })
+    }
+  });
+
   // post attendance for user for particular session
   app.put("/api/session/attendance/:sessionId", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      // console.log("params ", req.params.id);
-      // console.log("body ", req.body);
+      console.log("params ", req.params.sessionId);
+      console.log("body ", req.body);
       for (let i = 0; i < req.body.attendance.length; i++) {
         db.User.updateOne({
           _id: mongoose.Types.ObjectId(req.body.attendance[i].userId),
-          "userSessions.session": mongoose.Types.ObjectId(req.params.sessionId)
+          "userSessions.session": mongoose.Types.ObjectId(req.params.sessionId),
+          "userSessions.sessionDate": new Date(req.body.attendance[i].date)
         }, {
           $set:{
             "userSessions.$.isPresent": req.body.attendance[i].isPresent
           }
         }).then(function (results) {
           console.log(results);
+          res.send("successfully updated record");
         }).catch(function(err) {
           res.send(err);
         })
       }
-      res.json({});
     }
   })
 };
