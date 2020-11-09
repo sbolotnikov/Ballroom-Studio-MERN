@@ -36,13 +36,18 @@ function DateCard(props) {
             </Card.Header>
             <Accordion.Collapse eventKey={props.date}>
                 <Card.Body>
-                    {students.map(student => 
-                        <StudentRow 
-                            key={student._id}
-                            firstName={student.firstName}
-                            lastName={student.lastName}
-                            isPresent={student.userSessions[0].isPresent}
-                            date={props.date}/>)}
+                    {students.length === 0 ? "No one has registered for this session" : 
+                        <div>
+                        {students.map(student => 
+                            <StudentRow 
+                                key={student._id}
+                                id={student._id}
+                                firstName={student.firstName}
+                                lastName={student.lastName}
+                                isPresent={student.userSessions[0].isPresent}
+                                date={props.date}/>)}
+                        </div>
+                    }
                 </Card.Body>
             </Accordion.Collapse>
         </Card>
