@@ -40,7 +40,7 @@ function DMincoming() {
     }
     return (
         <Fragment>
-            <h4 className="stepsTitle">Incoming messages</h4>
+            {/* <h4 className="stepsTitle">Incoming messages</h4> */}
             <div style={{ background: "white", opacity: .9, flexWrap: "nowrap", color: "black" }}>
                 {dmIncoming && dmIncoming.map((dm, j) => {
                     return (

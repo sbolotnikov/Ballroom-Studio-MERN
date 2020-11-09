@@ -1,0 +1,8 @@
+.cuteBtn{
+    font: 400 20px/1.3 'Berkshire Swash', Helvetica, sans-serif;
+    background-color: #152a61;
+    color :#faa65c;
+    padding: 15px;
+    border-bottom-left-radius: 35px;
+    border-bottom-right-radius: 35px;
+}

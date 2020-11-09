@@ -5,7 +5,10 @@ const passport = require("./config/passport");
 const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
-
+////////COMMENT BACK IN ON DEMO DAY & RUN LOCALLY DURING DEMO /////////
+// require('dotenv').config();
+// const email = require('./config/emailConfig');
+//////////////////////////////////////////////////////////////////////
 const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -27,6 +30,31 @@ require("./routes/email-routes.js")(app)
 require("./routes/google-auth-routes.js")(app);
 require("./routes/steps-routes.js")(app);
 require('./routes/stripe-routes.js')(app);
+require('./routes/invoice-routes.js')(app);
+
+
+/////////////// COMMENT BACK IN ON DEMO DAY & RUN LOCALLY DURING DEMO //////////
+// const nodemailer = require('nodemailer');
+// let transporter = nodemailer.createTransport({
+//   service: process.env.EMAIL_SERVICE,
+//   auth: {
+//     user: process.env.EMAIL_USERNAME,
+//     pass: process.env.EMAIL_PASSWORD
+//   }
+// });
+// const testEmail = () => {
+//   let mailOptions = {
+//     from: process.env.EMAIL_USERNAME,
+//     to: "*********INSTRUCTOR/TA E-MAIL GOES HERE******",
+//     subject: `About MERN Studios`,
+//     html: email.marketing
+//   };
+//   transporter.sendMail(mailOptions, function (error, info) {
+//     (error ? console.log(error) : console.log('Email sent: ' + info.response))
+//   });
+// }
+// testEmail();
+////////////////////////////////////////////////////////////////////////////////
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,
@@ -37,3 +65,5 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio
 app.listen(PORT, () => {
   console.log(`App running on port http://localhost:${PORT}`);
 });
+
+

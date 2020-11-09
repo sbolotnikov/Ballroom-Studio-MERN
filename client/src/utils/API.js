@@ -57,7 +57,6 @@ export default {
       return axios.put("/api/steps/dm/"+id)
     },
     getOutgoingDM: ()=>{
-      console.log("in API outgoing DM");
       return axios.get("/api/steps/pm_out")
     },
     getSessionsByType: (type) => {
@@ -86,5 +85,9 @@ export default {
     },
     postStudentAttendance: (sessionId, attendanceArr) => {
       return axios.put(`/api/session/attendance/${sessionId}`, attendanceArr);
-    }
+    },
+    getMembersByType: (type)=> {
+      console.log("in API outgoing DM");
+      return axios.get(`/api/members/${type}`);
+    },
 }
