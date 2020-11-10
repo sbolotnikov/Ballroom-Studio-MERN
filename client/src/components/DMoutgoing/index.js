@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Col, Row } from 'react-bootstrap';
 import moment from 'moment';
+import "./style.css";
 import API from '../../utils/API';
 import compareValues from '../../utils/compareValues';
 

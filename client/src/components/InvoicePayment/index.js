@@ -39,8 +39,8 @@ function InvoicePayment(props) {
                                 <td>{j + 1}.</td>
                                 <td><input type="date" value={item.date} /></td>
                                 <td><input type="number" value={item.amount} /></td>
-                                <td><button>{item.isPaid ? "Paid" : "Not Paid"}</button></td>
-                                <td><button id={"b" + j} value={j} onClick={handleDeletePayment}>Delete</button></td>
+                                <td><button className="cuteBtn">{item.isPaid ? "Paid" : "Not Paid"}</button></td>
+                                <td><button className="cuteBtn" id={"b" + j} value={j} onClick={handleDeletePayment}>Delete</button></td>
                             </tr>)
                     })}
                 </tbody>

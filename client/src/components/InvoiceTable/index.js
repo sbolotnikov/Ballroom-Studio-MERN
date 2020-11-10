@@ -55,7 +55,7 @@ function InvoiceTable(props) {
                         <td>{item.amount}</td>
                         <td>{item.discount}</td>
                         <td>{item.total}</td>
-                        <td><button id={"b"+j} value={j} onClick={handleDeleteItem}>Delete</button></td>
+                        <td><button id={"b"+j} value={j} onClick={handleDeleteItem} className="cuteBtn">Delete</button></td>
                     </tr>)
                  })}
                 </tbody>
