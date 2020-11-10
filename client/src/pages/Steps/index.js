@@ -1,13 +1,15 @@
 import "./style.css";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import MemberNav from '../../components/MemberNav';
 import DirectMessage from '../../components/DirectMessage';
 import DMincoming from '../../components/DMincoming';
 import DMoutgoing from '../../components/DMoutgoing';
+import Switch from '../../components/Switch';
 import StepDisplayItem from '../../components/StepDisplayItem';
 import API from '../../utils/API';
 import ErrorNotice from "../../components/misc/errorNotice";
 import { Col, Row } from "react-bootstrap";
+
 
 function Steps() {
     const [profile, setProfile] = useState({});
@@ -18,6 +20,7 @@ function Steps() {
     const [addstep, setAddStep] = useState('')
     const [stepsSet, setStepsSet] = useState([]);
     const [imgDisplay, setImgDisplay] = useState('');
+    const [box, setBox] = useState(true);
 
     useEffect(() => {
         setTopicState();
@@ -83,7 +86,6 @@ function Steps() {
             API.deleteTopic(topic).then(results => {
                 console.log("success delete topic");
             }).then(() => {
-                // window.location.reload();
                 getSetofSteps(topic);
             }).catch(err => {
                 console.log(err);
@@ -128,7 +130,7 @@ function Steps() {
             <MemberNav imgLink={imgDisplay} />
             <div className="container">
 
-                <h2 className="formTop">Welcome, {profile.firstName} <span className="member"></span></h2>
+                <h2 className="formTop d-flex justify-content-center ">Welcome, {profile.firstName} <span className="member"></span></h2>
 
                 <div className="jumbotron jumbotron-fluid bg-transparent">
                     <div className="text-light align-middle">
@@ -143,10 +145,18 @@ function Steps() {
                         <div className="container">
                             <Row className="d-flex flex-row justify-content-center">
                                 <Col md={4}>
-                                    <h4 className="stepsTitle">Direct messages:</h4>
+                                    <h4 className="formTop d-flex justify-content-center mt-4">Direct messages:</h4>
                                     <DirectMessage />
-                                    <DMincoming />
-                                    <DMoutgoing />
+
+                                     <h4 className="stepsTitle">{(box) ?"Incoming messages": "Outgoing messages"}</h4>
+                                    <Switch
+                                        isOn={box}
+                                        onColor="#152a61"
+                                        handleToggle={() => setBox(!box)}
+                                    />
+{(box) ? <DMincoming /> : <DMoutgoing />}
+
+
 
 
 
@@ -156,7 +166,7 @@ function Steps() {
 
                                 </Col>
                                 <Col md={8}>
-                                    <h4 className="stepsTitle">Latest hot topics:</h4>
+                                    <h4 className="formTop d-flex justify-content-center mt-4">Latest hot topics:</h4>
                                     <input type="text" className="form-control" id="topic" placeholder="Add new topic"
                                         onChange={event => setAddTopic(event.target.value)} />
                                     {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
@@ -164,7 +174,7 @@ function Steps() {
                                         <button id="topicAdd" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleAddTopic} >Add</button>
                                     </div>
 
-                                    <h4 className="formTop mt-4">Choose a Topic:</h4>
+                                    <h4 className="stepsTitle">Choose a Topic:</h4>
 
                                     <figure id="topicChoice">
                                         <select name="topics" className="stepsItem" id="topics" onChange={topicChange}>
@@ -183,59 +193,41 @@ function Steps() {
                                         {/* {(profile.memberStatus === ["teacher"]) || (profile.memberStatus === ["admin"]) ? <button id="topicDel" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button> : <div></div>} */}
                                     </div>
 
-                                    <p className="formTop mt-4">Step</p>
+                                    <p className="formTop d-flex justify-content-center  mt-4">Step</p>
                                     <textarea className="form-control" rows="3" id="step-box" onChange={event => setAddStep(event.target.value)}
                                         placeholder="Enter your Step-tweet Here!"></textarea>
                                     <div className="d-flex justify-content-center">
                                         <button id="step-submit" className="cuteBtn" onClick={handleAddStep}
                                             style={{ marginLeft: "10px" }}>Submit!</button>
                                     </div>
-                                    <h2 className="stepsTitle">Steps list:</h2>
-                                    <hr />
-                                    <Row className="d-flex justify-content-center" onClick={handleDelStepSubmit}>
-                                        {stepsSet.slice(0).reverse().map((step, j) => {
-                                            return (
-                                                // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
-                                                <StepDisplayItem
-                                                    id={step._id}
-                                                    message={step.message}
-                                                    time={step.updatedAt}
-                                                    name={step.author.firstName + ' ' + step.author.lastName}
-                                                    profileImg={step.author.profilePhotoUrl}
-                                                    status={profile.memberStatus[0]}
-                                                    authorid={step.author.email}
-                                                    userid={profile.email} />
-                                            )
-                                        })}
+                                    <Row className="d-flex flex-row justify-content-center">
+                                        {/* <Row> */}
+                                        <Col lg={12} onClick={handleDelStepSubmit}>
+                                            <h2 className="stepsTitle">Steps list:</h2>
+                                            <hr />
+                                            {stepsSet.slice(0).reverse().map((step, j) => {
+                                                return (
+                                                    // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
+                                                    <StepDisplayItem
+                                                        id={step._id}
+                                                        message={step.message}
+                                                        time={step.updatedAt}
+                                                        name={step.author.firstName + ' ' + step.author.lastName}
+                                                        profileImg={step.author.profilePhotoUrl}
+                                                        status={profile.memberStatus[0]}
+                                                        authorid={step.author.email}
+                                                        userid={profile.email} />
+                                                )
+                                            })}
+                                        </Col>
+                                        {/* </Row> */}
                                     </Row>
+
                                 </Col>
                             </Row>
                         </div>
                     </div>
                 </div>
-                <Row className="d-flex flex-row justify-content-center">
-                    {/* <Row> */}
-                    <Col lg={8} onClick={handleDelStepSubmit}>
-                        <h2 className="formTop mt-4">Steps list:</h2>
-                        <hr />
-                        {stepsSet.slice(0).reverse().map((step, j) => {
-                            return (
-                                // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
-                                <StepDisplayItem
-                                    id={step._id}
-                                    message={step.message}
-                                    time={step.updatedAt}
-                                    name={step.author.firstName + ' ' + step.author.lastName}
-                                    profileImg={step.author.profilePhotoUrl}
-                                    status={profile.memberStatus[0]}
-                                    authorid={step.author.email}
-                                    userid={profile.email} />
-                            )
-                        })}
-                    </Col>
-                    {/* </Row> */}
-                </Row>
-
 
             </div>
 

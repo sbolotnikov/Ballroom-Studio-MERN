@@ -8,11 +8,11 @@ function StepDisplayItem(props) {
     if (props.message) {
         return (
             <Col xs={12} className="stepStyle d-flex">
-                { props.profilePhotoUrl ? <img src={props.profilePhotoUrl} alt='profile picture' className="img_style" /> :
+                { props.profileImg ? <img src={props.profileImg} alt='profile picture' className="img_style" /> :
                     <img src={imgLink} alt='profile picture' className="img_style" />}
 
                 <div className="media-body" id={props.id}>
-        <h5 className="mt-0">{props.name}</h5>
+        <h5 className="mt-0" style={{ flexWrap: "wrap" }}>{props.name}</h5>
         <p style={{maxWidth: "992px", minWidth: "576px"}}>{props.message}</p>
                     <p>{moment(props.time).format("h:mma on dddd")}</p>
                 </div>                                  
