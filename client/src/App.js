@@ -23,7 +23,6 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar/navbar';
 import DanceInspire from "./pages/Dance";
 
-
 function App() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn]= useState(false);
