@@ -173,7 +173,6 @@ module.exports = function (app) {
   });
   // get all PM incoming
   app.get("/api/steps/pm_in", function (req, res) {
-    console.log(req.user);
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
@@ -192,7 +191,6 @@ module.exports = function (app) {
   });
   // get all PM OUTGOING
   app.get("/api/steps/pm_out", function (req, res) {
-    console.log(req.user);
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");

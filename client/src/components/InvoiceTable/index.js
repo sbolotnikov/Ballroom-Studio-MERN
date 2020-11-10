@@ -15,7 +15,7 @@ function InvoiceTable(props) {
       for (let i=0; i<props.sess.length; i++){
         totalLocal+=props.sess[i].price*(100-props.sess[i].discount)/100*props.sess[i].numberOfSessions;
         locale.push({
-            session: props.sess[i].session,
+            session: props.sess[i].sessionType,
             price: props.sess[i].price,
             amount: props.sess[i].numberOfSessions,
             discount: props.sess[i].discount,

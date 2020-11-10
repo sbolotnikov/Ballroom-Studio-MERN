@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment, useAsyncHook } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Col, Row } from 'react-bootstrap';
 import "./style.css";
 import API from '../../utils/API';
@@ -9,6 +9,7 @@ import Switch from '../../components/Switch';
 import InvoiceTable from '../../components/InvoiceTable';
 import InvoicePayment from '../../components/InvoicePayment';
 import ErrorNotice from "../../components/misc/errorNotice";
+
 // import Invoice from '../../components/Invoice';
 
 function Payments() {
@@ -22,7 +23,7 @@ function Payments() {
     const [payment, setPayment] = useState(1);
     const [wholeDiscount, setWholeDiscount] = useState(0);
     const [dateX, setDate] = useState(0);
-    const [exparationDate, setExDate] = useState(0);
+    const [expirationDate, setExDate] = useState(0);
     const [box, setBox] = useState(false);
     const [errorstate, setErrorState] = useState(false);
     const [buySessions, setBuySessions] = useState([]);
@@ -88,7 +89,7 @@ function Payments() {
             return;
         }
         let sessionsSet = {
-            session: selectedType.label,
+            sessionType: selectedType.label,
             price: selectedType.value,
             numberOfSessions: amount,
             discount: discount
@@ -140,7 +141,43 @@ function Payments() {
             handleGrandTotalChange(0);
         }
     }
+    function handleSubmitInvoice(e){
+        if (!selectedStudent) {
+            setErrorState("Please select student");
+            return;
+        }
+        if (payments.length<1) {
+            setErrorState("Please enter payment options");
+            return;
+        }
+        // var d = new Date();
+        // if ((!expirationDate) || (expirationDate>d)) {
+        //     setErrorState("Please select correct expiration date");
+        //     return;
+        // }
+        if (buySessions.length<1) {
+            setErrorState("sessions can not be blank!");
+            return;
+        }
+        let invoice={
+            manager: [profile._id],
+            customer:[selectedStudent.value],
+            installments: payments,
+            expirationDate: expirationDate,
+            sessions:buySessions,
+            discount:wholeDiscount 
+        };
+        API.postNewInvoice(invoice).then(results=>{
+            console.log(results);
+            setBuySessions([]);
+            setPayments([]);
 
+        }).catch(err => {
+            console.log(err);
+        })
+        
+
+    }
 
 
     return (
@@ -185,6 +222,7 @@ function Payments() {
                 </Col>
                 <Col lg={8}>
                     <InvoicePayment payment={payments} onChange={handleDeletePayment} />
+                    <button type="submit" id="submitSession" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleSubmitInvoice} >Submit invoice</button>
                 </Col>
             </Row>
         </Fragment>

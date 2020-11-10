@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import API from '../../utils/API';
 import "./navbar.css";
@@ -45,8 +45,8 @@ function MemberNav(props) {
                     </Link>
                     </li>
                     <li className="nav-item">
-                        <Link to="/payment" className="nav-link">
-                            Payment
+                        <Link to="/invoices" className="nav-link">
+                            Invoices
                     </Link>
                     </li>
                     {loggedIn && 

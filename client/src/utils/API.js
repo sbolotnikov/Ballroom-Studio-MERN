@@ -90,4 +90,11 @@ export default {
       console.log("in API outgoing DM");
       return axios.get(`/api/members/${type}`);
     },
+    postNewInvoice: (item)=> {
+      return axios.post('/api/invoice/new',item);
+    },
+    getAllInvoices: ()=>{
+      console.log("in API outgoing Invoice");
+      return axios.get("/api/invoice/table")
+    }
 }
