@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import API from '../../utils/API';
 import UserContext from '../../utils/UserContext';
 import MemberTable from '../MembersTable/MemberTable'
@@ -67,7 +67,7 @@ function MemberInfo(props) {
                         </div>
                     <div className="row no-gutters">
                         <div>
-                            <img src={props.profile.profilePhotoUrl} style={styles.img} className="card-img mb-4" alt="user avatar"/>
+                            <img src={props.profile.profilePhotoUrl} style={styles.img} className="card-img" alt="user avatar"/>
                             {updateProfile ? 
                                 <Cloudinary style={styles.img} getImgUrl={getImgUrl}/> : <div></div>
                             }

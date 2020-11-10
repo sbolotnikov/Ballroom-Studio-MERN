@@ -41,6 +41,7 @@ function Navbar() {
             // after login is successful, use history.push to redirect
             API.login(userLogin).then((results) => {
                 console.log(results);
+                setUserId(results.data.id);
                 setErrorState(false);
                 setLoggedIn(true);
                 setEmail(results.data.email);

@@ -29,12 +29,6 @@ const UserSchema = new Schema({
   profilePhotoUrl: {
     type: String
   },
-  cloudUploadName: {
-    type: String
-  },
-  cloudUploadPreset: {
-    type: String
-  },
   certLevel: {
     type: String,
     enum: ["social foundation", "bronze", "silver", "gold", "open"]

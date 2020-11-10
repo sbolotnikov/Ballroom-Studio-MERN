@@ -15,7 +15,7 @@ module.exports = function (app) {
   });
 
   app.post("/api/signup", (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     db.User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -48,8 +48,12 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      console.log(req.user);
-      res.json(req.user);
+      // console.log(req.user);
+      db.User.findOne({
+        _id: req.user.id
+      }).then( result => {
+        res.json(result);
+      })
     }
   });
 
@@ -104,7 +108,7 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      console.log(req.body);
+      // console.log(req.body);
       req.body.map(e => {
         db.User.findOneAndUpdate({
             _id: mongoose.Types.ObjectId(req.params.userId)
@@ -123,7 +127,7 @@ module.exports = function (app) {
             new: true
           })
           .then(results => {
-            res.json(results);
+            res.send("successfully registered for a session");
           })
           .catch(err => {
             console.log(err);
@@ -176,16 +180,14 @@ module.exports = function (app) {
     }
   });
 
-  // Get sessions based on userId param. For Teacher or Admin
-  app.get("/api/sessions/:userId", (req, res) => {
+  // Get sessions based on teacher userId param. For Teacher or Admin
+  app.get("/api/sessions/teacher/:userId", (req, res) => {
     if (!req.user) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      db.User.find({
-          _id: req.params.userId
-        }, {
-          userSessions: true
+      db.Session.find({
+          teachers: mongoose.Types.ObjectId(req.params.userId)
         })
         .then(results => {
           res.json(results);
@@ -321,29 +323,60 @@ module.exports = function (app) {
     }
   })
 
+  // get all students who have registered for a specific session and specific date
+  app.get("/api/session/registered_students/:sessionId/:date", function (req, res) {
+    if(!req.user) {
+      res.redirect("/");
+    } else {
+      let date = new Date(req.params.date);
+      db.User.aggregate([
+        { $match: {"userSessions.session": mongoose.Types.ObjectId(req.params.sessionId)}},
+        { $project: {
+            firstName: 1,
+            lastName: 1,
+            userSessions: {
+              $filter: {
+                input: "$userSessions",
+                cond: {
+                   $eq: ["$$this.sessionDate", date]
+                }
+              }
+            }
+        }}
+      ]).then( results => {
+        res.json(results);
+        console.log(results);
+      }).catch( err => {
+        console.log(err);
+        res.send(err);
+      })
+    }
+  });
+
   // post attendance for user for particular session
   app.put("/api/session/attendance/:sessionId", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen
       res.redirect("/");
     } else {
-      // console.log("params ", req.params.id);
-      // console.log("body ", req.body);
+      console.log("params ", req.params.sessionId);
+      console.log("body ", req.body);
       for (let i = 0; i < req.body.attendance.length; i++) {
         db.User.updateOne({
           _id: mongoose.Types.ObjectId(req.body.attendance[i].userId),
-          "userSessions.session": mongoose.Types.ObjectId(req.params.sessionId)
+          "userSessions.session": mongoose.Types.ObjectId(req.params.sessionId),
+          "userSessions.sessionDate": new Date(req.body.attendance[i].date)
         }, {
           $set:{
             "userSessions.$.isPresent": req.body.attendance[i].isPresent
           }
         }).then(function (results) {
           console.log(results);
+          res.send("successfully updated record");
         }).catch(function(err) {
           res.send(err);
         })
       }
-      res.json({});
     }
   })
 };

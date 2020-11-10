@@ -77,6 +77,15 @@ export default {
     getMySessions: (month) => {
       return axios.get(`/api/my_sessions/month/${month}`);
     },
+    getTeacherSessions: (id) => {
+      return axios.get(`/api/sessions/teacher/${id}`);
+    },
+    getRegisteredStudents: (sessionId, date) => {
+      return axios.get(`/api/session/registered_students/${sessionId}/${date}`);
+    },
+    postStudentAttendance: (sessionId, attendanceArr) => {
+      return axios.put(`/api/session/attendance/${sessionId}`, attendanceArr);
+    },
     getMembersByType: (type)=> {
       console.log("in API outgoing DM");
       return axios.get(`/api/members/${type}`);
