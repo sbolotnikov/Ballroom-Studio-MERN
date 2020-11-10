@@ -10,4 +10,17 @@ input {
     padding: 15px;
     border-bottom-left-radius: 35px;
     border-bottom-right-radius: 35px;
+
 }
+
+input, select{
+    width:100%;
+    resize: vertical;
+    padding:5px;
+    border-radius:25px;
+    box-shadow:4px 4px 10px rgba(0,0,0,0.06);
+    height:40px;
+  }  
+
+
+
