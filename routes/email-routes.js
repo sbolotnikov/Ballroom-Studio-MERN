@@ -102,7 +102,8 @@ module.exports = (app) => {
       (error ? console.log(error) : console.log('Email sent: ' + info.response))
     });
     res.json(results)
-  }).catch(function (err) {
-    res.send(err);
   })
+  // .catch(function (err) {
+  //   res.send(err);
+  // })
 };
