@@ -39,7 +39,7 @@ module.exports = (app) => {
           subject: `You've Been Signed Up!`,
           // Textbox can contain HTML using template literal/inline styling as such:
           // html: `<html>` 
-          text: 'It works!!!'
+          text: `It works!`
         };
         // will send an e-mail to everyone in the class 
         transporter.sendMail(mailOptions, function (error, info) {

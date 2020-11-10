@@ -131,7 +131,7 @@ function TeacherContent() {
                             </select>
                         </div>
                         </div>}
-                    <button type="submit" className="btn btn-danger" id="addSessionBtn">Create New Session</button>
+                    <button type="submit" className="cuteBtn" id="addSessionBtn">Create New Session</button>
                 </form>
             </div>
     )
