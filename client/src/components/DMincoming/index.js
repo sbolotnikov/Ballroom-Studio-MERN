@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Col, Row } from 'react-bootstrap';
 import moment from 'moment';
+import "./style.css";
 import API from '../../utils/API';
 import compareValues from '../../utils/compareValues';
 
@@ -56,7 +57,7 @@ function DMincoming() {
                                     <p style={{ flexWrap: "wrap" }}>{dm.message}</p>
                                     {!dm.confirm ? <input type="checkbox" name={"box-" + j} value={dm._id} onClick={event => handleCheckbox(event, j)} /> : <div></div>}
                                 </div>
-                                <button style={{ color: "blue", float: "right" }} value={dm._id} onClick={event => handleDeleteDM(event, j)}>x</button>
+                                <button style={{ color: "blue", float: "right" }} value={dm._id} onClick={event => handleDeleteDM(event, j)} className="cuteBtn">x</button>
                             </Col>
                             {/* {(props.status === "teacher") || (props.status === "admin") || (props.authorid === props.userid) ? <button type="submit" className="btn btn-danger float-right" value={props.id}>Delete</button> : <div></div>} */}
                         </Row>
