@@ -183,6 +183,7 @@ function Payments() {
     return (
         <Fragment>
             <MemberNav imgLink={imgDisplay} />
+            <div className="container">
             {/* <Invoice /> */}
             <Row>
                 <Col lg={4}>
@@ -225,6 +226,7 @@ function Payments() {
                     <button type="submit" id="submitSession" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleSubmitInvoice} >Submit invoice</button>
                 </Col>
             </Row>
+            </div>
         </Fragment>
     )
 }
