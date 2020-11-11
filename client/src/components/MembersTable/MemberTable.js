@@ -11,14 +11,7 @@ function MemberTable() {
     const [members, setMembers] = useState([]);
 
     useEffect( () => {
-        API.getAllMembers().then( members => {
-            setMembers(members.data);
-           allMembers = members.data;
-           console.log(allMembers);
-        }).catch( err => {
-            console.log(err);
-        });
-
+        loadMembers();
         return setMembers([]);
     },[]);
 
@@ -55,6 +48,16 @@ function MemberTable() {
         setMembers(allMembers);
     }
 
+    const loadMembers = () => {
+        API.getAllMembers().then( members => {
+            setMembers(members.data);
+           allMembers = members.data;
+           console.log(allMembers);
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
     return (
         <div>
             <SearchForm filterRecords={filterRecords} showAll={showAllRecords}/>
@@ -73,6 +76,7 @@ function MemberTable() {
                         certLevel={member.certLevel}
                         memberStatus={member.memberStatus}
                         key={`key${member.id}`}
+                        loadMembers={loadMembers}
                     />
                 )}
                 </TableBody>

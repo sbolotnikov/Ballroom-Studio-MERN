@@ -253,7 +253,7 @@ module.exports = function (app) {
         }, {
           $set: {
             certLevel: req.body.certLevel,
-            memberStatus: req.body.role
+            memberStatus: req.body.memberStatus
           }
         },{
           new: true

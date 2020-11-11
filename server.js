@@ -29,7 +29,6 @@ require("./routes/api-routes.js")(app);
 require("./routes/email-routes.js")(app);
 require("./routes/google-auth-routes.js")(app);
 require("./routes/steps-routes.js")(app);
-require('./routes/stripe-routes.js')(app);
 require('./routes/invoice-routes.js')(app);
 
 

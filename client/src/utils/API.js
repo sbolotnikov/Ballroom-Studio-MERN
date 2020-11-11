@@ -90,4 +90,10 @@ export default {
       console.log("in API outgoing DM");
       return axios.get(`/api/members/${type}`);
     },
+    levelUpUser: (userId, updateInfo) => {
+      return axios.put(`/api/profile/level_up/${userId}`, updateInfo);
+    },
+    deleteUser: (userId) => {
+      return axios.delete(`/api/profile/remove/${userId}`)
+    }
 }
