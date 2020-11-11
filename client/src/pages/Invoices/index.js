@@ -1,18 +1,20 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, useContext, Fragment } from "react";
 import { Table } from 'react-bootstrap';
 import API from '../../utils/API';
-import moment from 'moment'
+import moment from 'moment';
 import compareValues from '../../utils/compareValues';
 import MemberNav from '../../components/MemberNav';
-import ErrorNotice from "../../components/misc/errorNotice";
+import { useHistory } from "react-router-dom";
+import UserContext from '../../utils/UserContext';
 
 // import Invoice from '../../components/Invoice';
 
 function Invoices() {
+    const { invoiceId, setInvoiceId } = useContext(UserContext);
     const [imgDisplay, setImgDisplay] = useState('');
     const [profile, setProfile] = useState({});
     const [invoices, setInvoices] = useState([]);
-
+    const history = useHistory();
     useEffect(() => {
         getProfile();
 
@@ -36,10 +38,18 @@ function Invoices() {
         })
     }
     function handleEditInvoice(e){
-        console.log(e.target.value)
+        console.log(e.target.value);
+        setInvoiceId(e.target.value);
+        history.push("/editInvoice");
     }
     function handleDeleteInvoice(e){
-        console.log(e.target.value)
+        API.deleteInvoice(e.target.value).then(results=>{
+            console.log(results);
+            window.location.reload(false);
+            history.push("/invoices")
+        }).catch(err => {
+            console.log(err);
+        })
     }
     return (
         <Fragment>
@@ -75,7 +85,7 @@ function Invoices() {
                     })}
                 </tbody>
             </Table>
-
+            <button className="cuteBtn" value={''} onClick={handleEditInvoice}>Add</button>
 
         </Fragment>
     )

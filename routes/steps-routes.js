@@ -133,7 +133,7 @@ module.exports = function (app) {
     }
   })
 
-  // delete steps by id
+  // delete one step by id
   app.delete("/api/steps/step/:stepId", function (req, res) {
     if (!req.user) {
       // The user is not logged in, send back to startup screen

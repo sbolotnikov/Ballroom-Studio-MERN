@@ -13,6 +13,7 @@ import Events from './pages/Events';
 import Login from './pages/Login';
 import Payments from './pages/Payments';
 import Invoices from './pages/Invoices';
+import EditInvoice from './pages/EditInvoice';
 import Signup from './pages/Signup';
 import Social from './pages/Social';
 import Steps from './pages/Steps';
@@ -26,7 +27,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn]= useState(false);
   const [userId, setUserId]= useState("");
-
+  const [invoiceId, setInvoiceId]= useState("");
   return (
 
     // <div className="App">
@@ -34,7 +35,7 @@ function App() {
     <div>
     {/* <Navbar/> */}
       <Router>
-        <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn, userId, setUserId }}>
+        <UserContext.Provider value={{ email, setEmail, loggedIn, setLoggedIn, userId, setUserId, invoiceId, setInvoiceId }}>
           <Route exact path="/home" component={Home} />
           <Route exact path="/">
             {loggedIn ? <Redirect to="/member" /> : <Redirect to="/home" />}
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/payment" component={Payments} />
           <Route exact path="/invoices" component={Invoices} />
+          <Route exact path="/editInvoice" component={EditInvoice} />
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/social" component={Social} />
           <Route exact path="/member" component={MemberPage} />

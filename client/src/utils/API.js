@@ -87,14 +87,22 @@ export default {
       return axios.put(`/api/session/attendance/${sessionId}`, attendanceArr);
     },
     getMembersByType: (type)=> {
-      console.log("in API outgoing DM");
       return axios.get(`/api/members/${type}`);
     },
     postNewInvoice: (item)=> {
       return axios.post('/api/invoice/new',item);
     },
     getAllInvoices: ()=>{
-      console.log("in API outgoing Invoice");
       return axios.get("/api/invoice/table")
+    },
+    getOneInvoice: (id)=>{
+      return axios.get(`/api/invoice/${id}`)
+    },
+    updateInvoice: (id, obj) =>{
+      return axios.put(`/api/invoice/${id}`,obj)
+    },
+    deleteInvoice: (id) =>{
+      console.log("in API get 1 Invoice");
+      return axios.delete(`/api/invoice/${id}`)
     }
 }
