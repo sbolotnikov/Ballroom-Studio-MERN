@@ -19,7 +19,6 @@ import Splash from './pages/Splash';
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import DanceInspire from "./pages/Dance";
 
-
 function App() {
   const [email, setEmail] = useState("");
   const [loggedIn, setLoggedIn]= useState(false);

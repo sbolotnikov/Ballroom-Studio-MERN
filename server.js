@@ -45,7 +45,7 @@ require('./routes/invoice-routes.js')(app);
 // const testEmail = () => {
 //   let mailOptions = {
 //     from: process.env.EMAIL_USERNAME,
-//     to: "********INSTRUCTOR EMAIL***********",
+//     to: "vdelacuetara@gmail.com,medot2@gmail.com",
 //     subject: `About MERN Studios`,
 //     html: email.marketing
 //   };
