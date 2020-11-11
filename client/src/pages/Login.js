@@ -8,7 +8,7 @@ function Login(){
 
     return (
         <Fragment>
-LOGIN PAGE
+
         </Fragment>
     )
 }

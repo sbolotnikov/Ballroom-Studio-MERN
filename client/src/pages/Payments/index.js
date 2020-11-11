@@ -146,6 +146,7 @@ function Payments() {
     return (
         <Fragment>
             <MemberNav imgLink={imgDisplay} />
+            <div className="container">
             {/* <Invoice /> */}
             <Row>
                 <Col lg={4}>
@@ -187,6 +188,7 @@ function Payments() {
                     <InvoicePayment payment={payments} onChange={handleDeletePayment} />
                 </Col>
             </Row>
+            </div>
         </Fragment>
     )
 }
