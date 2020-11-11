@@ -1,12 +1,12 @@
 /* eslint-disable jsx-a11y/img-redundant-alt */
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import API from '../../utils/API';
 import "./navbar.css";
 import UserContext from '../../utils/UserContext'
 
 function MemberNav(props) {
-    const { email, setEmail, loggedIn, setLoggedIn } = useContext(UserContext);
+    const { setEmail, loggedIn, setLoggedIn } = useContext(UserContext);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
 
     // use history to redirect after login
@@ -44,7 +44,7 @@ function MemberNav(props) {
                            About
                     </Link>
                     </li>
-                    {loggedIn && (props.memberStatus.indexOf("admin")>=0) &&
+                    {loggedIn && props.memberStatus && (props.memberStatus.indexOf("admin")>=0) &&
                     <li className="nav-item">
                         <Link to="/payment" className="nav-link">
                             Payment

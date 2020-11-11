@@ -3,6 +3,9 @@ import React from 'react';
 const styles = {
     span: {
         cursor: "pointer"
+    },
+    th: {
+        minWidth: "200px"
     }
 }
 
@@ -43,9 +46,17 @@ function TableHeading (props) {
                         <span data-key="age" style={styles.span} onClick={handleSortAsc}>&#9650;</span>
                         <span data-key="age" style={styles.span} onClick={handleSortDesc}>&#9660;</span>
                     </th>
-                    <th scope="col">Role
+                    <th scope="col" style={styles.th}>Level
+                        <span data-key="certLevel" style={styles.span} onClick={handleSortAsc}>&#9650;</span>
+                        <span data-key="certLevel" style={styles.span} onClick={handleSortDesc}>&#9660;</span>
+                    </th>
+                    <th scope="col" style={styles.th}>Role
                         <span data-key="memberStatus" style={styles.span} onClick={handleSortAsc}>&#9650;</span>
                         <span data-key="memberStatus" style={styles.span} onClick={handleSortDesc}>&#9660;</span>
+                    </th>
+                    <th scope="col">  
+                    </th>
+                    <th scope="col">
                     </th>
                 </tr>
             </thead>

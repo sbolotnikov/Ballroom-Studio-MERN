@@ -1,5 +1,4 @@
 import React, {Fragment, useEffect} from 'react';
-import {Link} from 'react-router-dom';
 
 function Login(){
     useEffect( () => {

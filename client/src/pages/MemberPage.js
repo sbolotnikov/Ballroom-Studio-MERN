@@ -20,7 +20,7 @@ function MemberPage(){
                 setImgDisplay(imgLink);
                 setProfile(results.data);
                 setMemberStatus(status);
-                // console.log(results.data);
+                console.log(results.data);
                 // console.log("got profile");
             }).catch(err => {
                 console.log(err);

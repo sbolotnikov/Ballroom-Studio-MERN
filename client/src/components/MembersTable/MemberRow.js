@@ -18,7 +18,7 @@ const status = [
 
 function MemberRow(props) {
     const [confirmDelete, setConfirmDelete] = useState(false);
-    const [certLevel, setCertLevel] = useState(props.certlevel);
+    const [certLevel, setCertLevel] = useState(props.certLevel);
     const [memberStatus, setMemberStatus] = useState(props.memberStatus[0]);
     const [isDisabled, setIsDisabled] = useState(true);
 
@@ -41,14 +41,13 @@ function MemberRow(props) {
     }
 
     const handleChange = (event) => {
-        console.log(event.target.name);
-        console.log(event.target.value);
-        const {name, value} = event.target;
-        if (name === "certLevel") {
-            setCertLevel(value);
-        } else if (name === "memberStatus") {
-            setMemberStatus(value);
-        }
+        console.log(event.target);
+        // const {name, value} = event.target;
+        // if (name === "certLevel") {
+        //     setCertLevel(value);
+        // } else if (name === "memberStatus") {
+        //     setMemberStatus(value);
+        // }
 
     }
 
@@ -62,6 +61,7 @@ function MemberRow(props) {
 
     return (
         <tr>
+            {console.log(certLevel)}
             <td >{props.firstName}</td>
             <td>{props.lastName}</td>
             <td>{props.email}</td>
@@ -71,8 +71,7 @@ function MemberRow(props) {
             <td>
                 <Select
                 className="basic-single"
-                classNamePrefix="select"
-                defaultValue={certLevel}
+                defaultValue={props.certLevel}
                 isDisabled={isDisabled}
                 name="certLevel"
                 options={level}
@@ -80,8 +79,7 @@ function MemberRow(props) {
             </td>
             <td><Select
                 className="basic-single"
-                classNamePrefix="select"
-                defaultValue={memberStatus}
+                defaultValue={props.memberStatus[0]}
                 isDisabled={isDisabled}
                 name="memberStatus"
                 options={status}
