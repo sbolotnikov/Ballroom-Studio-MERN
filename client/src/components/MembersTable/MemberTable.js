@@ -70,6 +70,7 @@ function MemberTable() {
                         phoneNumber={member.phoneNumber}
                         birthday={member.birthday.slice(0,10)}
                         age={member.age}
+                        certLevel={member.certLevel}
                         memberStatus={member.memberStatus}
                         key={`key${member.id}`}
                     />

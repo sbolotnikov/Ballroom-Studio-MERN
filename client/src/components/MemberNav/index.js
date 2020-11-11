@@ -44,11 +44,13 @@ function MemberNav(props) {
                            About
                     </Link>
                     </li>
+                    {loggedIn && (props.memberStatus.indexOf("admin")>=0) &&
                     <li className="nav-item">
                         <Link to="/payment" className="nav-link">
                             Payment
                     </Link>
                     </li>
+                    }   
                     {loggedIn && 
                     <li className="nav-item">
                         <Link to="" className="nav-link" onClick={event => {
@@ -70,7 +72,9 @@ function MemberNav(props) {
                 </ul>
             </div>
             {loggedIn && 
-                <img src={props.imgLink} alt="member photo" className="member-photo" /> }
+            <Link to="/member" className="nav-link">
+            <img src={props.imgLink} alt="member photo" className="member-photo" />
+            </Link>}
         </nav>
     );
 }
