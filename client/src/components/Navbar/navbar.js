@@ -7,8 +7,6 @@ import UserContext from '../../utils/UserContext'
 
 function Navbar() {
     const { email, setEmail, loggedIn, setLoggedIn, userId, setUserId } = useContext(UserContext);
-    console.log("login status " + loggedIn);
-    console.log("email  " + email);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
     const [emailId, setEmailId] = useState('');
@@ -31,16 +29,12 @@ function Navbar() {
 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (re.test(emailId.toLowerCase())) {
-            console.log("username is " + emailId);
-            console.log("password is " + password);
-
             const userLogin = {
                 email: emailId,
                 password: password
             };
             // after login is successful, use history.push to redirect
             API.login(userLogin).then((results) => {
-                console.log(results);
                 setUserId(results.data.id);
                 setErrorState(false);
                 setLoggedIn(true);

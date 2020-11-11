@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState} from 'react';
 import MemberInfo from '../components/MemberInfo';
 import MemberNav from '../components/MemberNav';
 import API from '../utils/API';

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { Table } from 'react-bootstrap';
 import compareValues from '../../utils/compareValues';
-
+import moment from 'moment';
 function InvoicePayment(props) {
     console.log(props);
 
@@ -37,7 +37,7 @@ function InvoicePayment(props) {
                         return (
                             <tr>
                                 <td>{j + 1}.</td>
-                                <td><input type="date" value={item.date} /></td>
+                                <td><input type="date" defaultValue={moment(new Date(item.date)).format('YYYY-MM-DD')} /></td>
                                 <td><input type="number" value={item.amount} /></td>
                                 <td><button className="cuteBtn">{item.isPaid ? "Paid" : "Not Paid"}</button></td>
                                 <td><button className="cuteBtn" id={"b" + j} value={j} onClick={handleDeletePayment}>Delete</button></td>

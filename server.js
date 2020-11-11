@@ -61,7 +61,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio
   useFindAndModify: false,
   useUnifiedTopology: true
 });
-
+mongoose.set('toJSON', { virtuals: true });
 app.listen(PORT, () => {
   console.log(`App running on port http://localhost:${PORT}`);
 });
