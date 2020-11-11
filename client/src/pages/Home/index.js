@@ -2,7 +2,6 @@ import React, { Fragment, useEffect } from 'react';
 import gsap from 'gsap';
 import "animate.css/animate.min.css";
 import Navigation from '../../components/Navbar/navbar';
-import Footer from '../../components/Footer';
 import Typewriter from '../../components/typewriter';
 import "./style.css";
 let i = 0;
@@ -69,7 +68,6 @@ function ToRenderEverything() {
           </div>
 
         </main>
-        <Footer />
 
       </div>
     </Fragment >
