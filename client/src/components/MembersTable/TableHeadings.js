@@ -5,7 +5,10 @@ const styles = {
         cursor: "pointer"
     },
     th: {
-        minWidth: "200px"
+        minWidth: "150px"
+    },
+    tr: {
+        fontSize: "12px"
     }
 }
 
@@ -21,7 +24,7 @@ function TableHeading (props) {
 
         return (
             <thead>
-                <tr>
+                <tr style={styles.tr}>
                     <th scope="col">First Name 
                         <span data-key="firstName" style={styles.span} onClick={handleSortAsc}>&#9650;</span>
                         <span data-key="firstName" style={styles.span} onClick={handleSortDesc}>&#9660;</span>

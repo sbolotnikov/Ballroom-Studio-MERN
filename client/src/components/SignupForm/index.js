@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import "./style.css";
 import API from '../../utils/API';
 import Cloudinary from '../Cloudinary';
+import ErrorNotice from '../misc/errorNotice';
 
 
 //  class SignupForm extends React.Component{

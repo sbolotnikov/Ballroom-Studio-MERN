@@ -62,7 +62,7 @@ function MemberTable() {
         <div>
             <SearchForm filterRecords={filterRecords} showAll={showAllRecords}/>
             <div className="table-responsive">
-            <table className="container table table-striped">
+            <table className="table table-striped">
                 <TableHeadings sortAsc={sortAsc} sortDesc={sortDesc}/>
                 <TableBody>
                 {members.map( member => 

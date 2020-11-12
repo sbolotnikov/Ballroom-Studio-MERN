@@ -17,6 +17,9 @@ export default {
     googleSignin: ()=>{
       return axios.get("/auth/google")
     },
+    googleRedirect: ()=>{
+      return axios.get("/auth/google/redirect")
+    },
     allTopics: ()=>{
       return axios.get("/api/steps/all_topics")
     },

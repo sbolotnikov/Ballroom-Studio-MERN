@@ -14,7 +14,11 @@ const status = [
     {value: 'student', label: 'Student'},
     {value: 'teacher', label: 'Teacher'},
     {value: 'admin', label: 'Administrator'},    
-]
+];
+
+const styles = {
+    fontSize: "12px"
+}
 
 function MemberRow(props) {
     const [confirmDelete, setConfirmDelete] = useState(false);
@@ -41,7 +45,7 @@ function MemberRow(props) {
     }
 
     const handleChange = (event) => {
-        console.log(event.target);
+        console.log(event.value);
         // const {name, value} = event.target;
         // if (name === "certLevel") {
         //     setCertLevel(value);
@@ -60,8 +64,7 @@ function MemberRow(props) {
     }
 
     return (
-        <tr>
-            {console.log(certLevel)}
+        <tr  style={styles}>
             <td >{props.firstName}</td>
             <td>{props.lastName}</td>
             <td>{props.email}</td>
@@ -71,7 +74,7 @@ function MemberRow(props) {
             <td>
                 <Select
                 className="basic-single"
-                defaultValue={props.certLevel}
+                defaultValue={{value: props.certLevel, label: props.certLevel}}
                 isDisabled={isDisabled}
                 name="certLevel"
                 options={level}
@@ -79,7 +82,7 @@ function MemberRow(props) {
             </td>
             <td><Select
                 className="basic-single"
-                defaultValue={props.memberStatus[0]}
+                defaultValue={{value: props.memberStatus[0], label: props.memberStatus[0]}}
                 isDisabled={isDisabled}
                 name="memberStatus"
                 options={status}
