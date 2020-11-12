@@ -1,19 +1,22 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, useContext, Fragment } from "react";
 import { Col, Row } from 'react-bootstrap';
 import "./style.css";
 import API from '../../utils/API';
 import compareValues from '../../utils/compareValues';
 import Select from 'react-select';
+import moment from 'moment';
 import MemberNav from '../../components/MemberNav';
 import Switch from '../../components/Switch';
 import InvoiceTable from '../../components/InvoiceTable';
 import InvoicePayment from '../../components/InvoicePayment';
 import ErrorNotice from "../../components/misc/errorNotice";
+import UserContext from '../../utils/UserContext';
+import { useHistory } from "react-router-dom";
 
-// import Invoice from '../../components/Invoice';
 
-function Payments() {
-    const [selectedStudent, setSelectedStudent] = useState(null);
+function EditInvoice() {
+    const { invoiceId, setInvoiceId } = useContext(UserContext);
+    const [selectedStudent, setSelectedStudent] = useState({});
     const [selectedType, setSelectedType] = useState(null);
     const [imgDisplay, setImgDisplay] = useState('');
     const [profile, setProfile] = useState({});
@@ -29,24 +32,45 @@ function Payments() {
     const [buySessions, setBuySessions] = useState([]);
     const [payments, setPayments] = useState([]);
     const [contractPrice, setContractPrice] = useState(0);
+    const history = useHistory();
 
-
+    //  
 
     const priceList = [{ value: 100, label: "private" }, { value: 25, label: "group" }, { value: 15, label: "party" }];
 
     useEffect(() => {
         getProfile();
+        if (invoiceId.length > 0) {
+            API.getOneInvoice(invoiceId).then(results => {
+                var res = results.data;
+                console.log(res);
+                setBuySessions(res.sessions);
+                setPayments(res.installments);
+                setDate(moment(new Date(res.expirationDate)).format('YYYY-MM-DD'));
+                document.getElementById("exDate").defaultValue = moment(new Date(res.expirationDate)).format('YYYY-MM-DD');
 
-        API.getMembersByType("student").then(results => {
-            var res = results.data.sort(compareValues('lastName'));
-            var options = [];
-            for (let j = 0; j < res.length; j++) {
-                options.push({ value: res[j]._id, label: res[j].lastName + '_' + res[j].firstName })
-            }
-            setMembers(options)
-        }).catch(err => {
-            console.log(err);
-        })
+                setWholeDiscount(res.discount);
+                document.getElementById("wholeDiscount").defaultValue = res.discount;
+                setSelectedStudent({ value: res.customer[0].id, label: `${res.customer[0].lastName} ${res.customer[0].firstName}` })
+                setContractPrice(res.invoiceTotal)
+            }).catch(err => {
+                console.log(err);
+            })
+
+
+        } else {
+
+            API.getMembersByType("student").then(results => {
+                var res = results.data.sort(compareValues('lastName'));
+                var options = [];
+                for (let j = 0; j < res.length; j++) {
+                    options.push({ value: res[j]._id, label: res[j].lastName + '_' + res[j].firstName })
+                }
+                setMembers(options)
+            }).catch(err => {
+                console.log(err);
+            })
+        }
     }, []);
 
     const getProfile = () => {
@@ -114,9 +138,9 @@ function Payments() {
             setErrorState("Payment should be more then 0");
             return;
         }
-        if (!dateX){
+        if (!dateX) {
             setErrorState("Enter the date!");
-            return; 
+            return;
         }
         let paymentSet = {
             date: dateX,
@@ -141,54 +165,70 @@ function Payments() {
             handleGrandTotalChange(0);
         }
     }
-    function handleSubmitInvoice(e){
+    function handleSubmitInvoice(e) {
+
+
+
         if (!selectedStudent) {
             setErrorState("Please select student");
             return;
         }
-        if (payments.length<1) {
+        if (payments.length < 1) {
             setErrorState("Please enter payment options");
             return;
         }
-        // var d = new Date();
-        // if ((!expirationDate) || (expirationDate>d)) {
-        //     setErrorState("Please select correct expiration date");
-        //     return;
-        // }
-        if (buySessions.length<1) {
+
+        if (buySessions.length < 1) {
             setErrorState("sessions can not be blank!");
             return;
         }
-        let invoice={
+        let invoice = {
             manager: [profile._id],
-            customer:[selectedStudent.value],
+            customer: [selectedStudent.value],
             installments: payments,
             expirationDate: expirationDate,
-            sessions:buySessions,
-            discount:wholeDiscount 
+            sessions: buySessions,
+            discount: wholeDiscount
         };
-        API.postNewInvoice(invoice).then(results=>{
-            console.log(results);
-            setBuySessions([]);
-            setPayments([]);
+        if (invoiceId.length > 0) {
 
-        }).catch(err => {
-            console.log(err);
-        })
-        
+            API.updateInvoice(invoiceId, invoice).then(results => {
+                console.log(results);
+                setBuySessions([]);
+                setPayments([]);
+                setInvoiceId(0);
+            }).catch(err => {
+                console.log(err);
+            })
 
+        } else {
+            API.postNewInvoice(invoice).then(results => {
+                console.log(results);
+                setBuySessions([]);
+                setPayments([]);
+
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+        history.push("/invoices");
     }
 
 
     return (
         <Fragment>
             <MemberNav imgLink={imgDisplay} />
-            <div className="container">
             {/* <Invoice /> */}
             <Row>
                 <Col lg={4}>
-                    {members && <Select width='300px' menuColor='red'
-                        options={members} defaultValue={selectedStudent} onChange={setSelectedStudent} />}
+
+                    {invoiceId.length > 0 ? selectedStudent && <h3> {selectedStudent.label}</h3> :
+                        members && <Select width='300px' menuColor='red'
+                            options={members} defaultValue={selectedStudent} onChange={setSelectedStudent} />}
+
+
+
+
                     {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
                     <Select width='300px' menuColor='red'
                         options={priceList} defaultValue={selectedType} onChange={setSelectedType} />
@@ -226,9 +266,8 @@ function Payments() {
                     <button type="submit" id="submitSession" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleSubmitInvoice} >Submit invoice</button>
                 </Col>
             </Row>
-            </div>
         </Fragment>
     )
 }
 
-export default Payments;
+export default EditInvoice;

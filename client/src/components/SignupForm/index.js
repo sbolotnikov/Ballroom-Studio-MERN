@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import "./style.css";
 import API from '../../utils/API';
-import ErrorNotice from "../misc/errorNotice";
 import Cloudinary from '../Cloudinary';
 
 

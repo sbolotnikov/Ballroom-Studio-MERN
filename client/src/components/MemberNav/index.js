@@ -46,8 +46,8 @@ function MemberNav(props) {
                     </li>
                     {loggedIn && props.memberStatus && (props.memberStatus.indexOf("admin")>=0) &&
                     <li className="nav-item">
-                        <Link to="/payment" className="nav-link">
-                            Payment
+                        <Link to="/invoices" className="nav-link">
+                            Invoices
                     </Link>
                     </li>
                     }   

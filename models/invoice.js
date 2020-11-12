@@ -19,25 +19,39 @@ const InvoiceSchema = new Schema({
     }],
     expirationDate: Date,
     sessions: [{
-        session: {
-            type: Schema.Types.ObjectId,
-            ref: 'Session'
+        sessionType: {
+            type: String,
+            enum: ["private", "group", "party"]
         },
+        price: Number,
         discount: Number,
         numberOfSessions: Number
     }],
     discount: Number
 
-});
+}
+    , { toJSON: { virtuals: true, } }
+
+);
 
 //create a virtual "invoiceTotal" add up (sessions.session.price * sessions.discount)
 
 InvoiceSchema.virtual('invoiceTotal')
-.get( () => {
-    let sessionTotal = this.sessions.reduce((accumulator, session)=> accumulator + 
-        (session.session.price * (1-session.discount) * session.numberOfSessions));
-    return sessionTotal * (1-this.discount);
-})
+    .get(function() {
+         let sessionTotal= this.sessions.reduce((accumulator, session) =>{ return accumulator +
+            (session.price * (100 - session.discount) / 100 * session.numberOfSessions)},0);
+        return parseFloat(sessionTotal * (100 - this.discount)/100).toFixed(2);
+    })
+InvoiceSchema.virtual('paid')
+    .get(function() {
+        let paidAmount=0;
+        for(let i=0;i<this.installments.length;i++){
+          if(this.installments[i].isPaid){
+              paidAmount+=this.installments[i].amount;
+          }
+        }
+        return paidAmount;
+    })
 
 InvoiceSchema.set('timestamps', true);
 
