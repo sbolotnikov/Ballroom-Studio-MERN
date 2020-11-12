@@ -36,11 +36,11 @@ FUTURE UPDATES:
 Simply clone the repo, and/or visit the deployed page link to begin.
 
 ## Usage
-![splash page](./views/assets/screenshot.png) 
-![screenshot2](./views/assets/screenshot4.png) 
-![screenshot2](./views/assets/screenshot2.png) 
-![screenshot2](./views/assets/screenshot3.png) 
-![screenshot2](./views/assets/screenshot5.png)
+![splash page](./public/assets/screenshot.png) 
+![screenshot2](./public/assets/screenshot4.png) 
+![screenshot2](./public/assets/screenshot2.png) 
+![screenshot2](./public/assets/screenshot3.png) 
+![screenshot2](./public/assets/screenshot5.png)
 
 ## Questions
 
