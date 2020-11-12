@@ -1,6 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import StudentRow from './StudentRow';
-import API from '../../utils/API';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import "./style.css";
 import API from '../../utils/API';
 import Cloudinary from '../Cloudinary';
+import ErrorNotice from '../misc/errorNotice';
 
 
 //  class SignupForm extends React.Component{
@@ -51,7 +52,7 @@ function SignupForm(props) {
             })
                 .catch(err => {
                     console.log(err.response.data)
-                    setErrorState(`<p>Status${err.response.status}</p> <br /><h3>${err.response.data} <br /> Your email or password does not match our records</h3>`);
+                    setErrorState(`<p>Status${err.response.status}</p> <br /><h3>${err.response.data} <br /> Your email already exists in our database</h3>`);
 
                 });
         } else {
@@ -68,6 +69,7 @@ function SignupForm(props) {
     return (
         <div className="container bgW">
             <div className="formTop d-flex justify-content-center">Sign Up</div>
+            {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
             <div className="card-body font-weight-bold bgW">
                 <form className="create" onSubmit={handleSignup}>
                     <div className="form-row">

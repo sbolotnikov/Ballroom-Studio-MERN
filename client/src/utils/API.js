@@ -17,6 +17,9 @@ export default {
     googleSignin: ()=>{
       return axios.get("/auth/google")
     },
+    googleRedirect: ()=>{
+      return axios.get("/auth/google/redirect")
+    },
     allTopics: ()=>{
       return axios.get("/api/steps/all_topics")
     },
@@ -88,6 +91,12 @@ export default {
     },
     getMembersByType: (type)=> {
       return axios.get(`/api/members/${type}`);
+    },
+    levelUpUser: (userId, updateInfo) => {
+      return axios.put(`/api/profile/level_up/${userId}`, updateInfo);
+    },
+    deleteUser: (userId) => {
+      return axios.delete(`/api/profile/remove/${userId}`);
     },
     postNewInvoice: (item)=> {
       return axios.post('/api/invoice/new',item);

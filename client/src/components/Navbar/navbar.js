@@ -6,7 +6,7 @@ import ErrorNotice from "../misc/errorNotice";
 import UserContext from '../../utils/UserContext'
 
 function Navbar() {
-    const { email, setEmail, loggedIn, setLoggedIn, userId, setUserId } = useContext(UserContext);
+    const { setEmail, loggedIn, setLoggedIn, setUserId } = useContext(UserContext);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
     const [showDropdown, setShowDropdown] = useState(false);
     const [emailId, setEmailId] = useState('');

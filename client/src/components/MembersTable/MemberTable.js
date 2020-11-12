@@ -11,14 +11,7 @@ function MemberTable() {
     const [members, setMembers] = useState([]);
 
     useEffect( () => {
-        API.getAllMembers().then( members => {
-            setMembers(members.data);
-           allMembers = members.data;
-           console.log(allMembers);
-        }).catch( err => {
-            console.log(err);
-        });
-
+        loadMembers();
         return setMembers([]);
     },[]);
 
@@ -55,10 +48,21 @@ function MemberTable() {
         setMembers(allMembers);
     }
 
+    const loadMembers = () => {
+        API.getAllMembers().then( members => {
+            setMembers(members.data);
+           allMembers = members.data;
+           console.log(allMembers);
+        }).catch( err => {
+            console.log(err);
+        });
+    }
+
     return (
         <div>
             <SearchForm filterRecords={filterRecords} showAll={showAllRecords}/>
-            <table className="container table table-striped">
+            <div className="table-responsive">
+            <table className="table table-striped">
                 <TableHeadings sortAsc={sortAsc} sortDesc={sortDesc}/>
                 <TableBody>
                 {members.map( member => 
@@ -70,12 +74,15 @@ function MemberTable() {
                         phoneNumber={member.phoneNumber}
                         birthday={member.birthday.slice(0,10)}
                         age={member.age}
+                        certLevel={member.certLevel}
                         memberStatus={member.memberStatus}
                         key={`key${member.id}`}
+                        loadMembers={loadMembers}
                     />
                 )}
                 </TableBody>
             </table>
+            </div>
         </div>
     )  
 };

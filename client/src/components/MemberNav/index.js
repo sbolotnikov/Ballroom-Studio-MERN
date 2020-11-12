@@ -6,7 +6,7 @@ import "./navbar.css";
 import UserContext from '../../utils/UserContext'
 
 function MemberNav(props) {
-    const { email, setEmail, loggedIn, setLoggedIn } = useContext(UserContext);
+    const { setEmail, loggedIn, setLoggedIn } = useContext(UserContext);
     const [isNavCollapsed, setIsNavCollpased] = useState(true);
 
     // use history to redirect after login
@@ -44,11 +44,13 @@ function MemberNav(props) {
                            About
                     </Link>
                     </li>
+                    {loggedIn && props.memberStatus && (props.memberStatus.indexOf("admin")>=0) &&
                     <li className="nav-item">
                         <Link to="/invoices" className="nav-link">
                             Invoices
                     </Link>
                     </li>
+                    }   
                     {loggedIn && 
                     <li className="nav-item">
                         <Link to="" className="nav-link" onClick={event => {
@@ -70,7 +72,9 @@ function MemberNav(props) {
                 </ul>
             </div>
             {loggedIn && 
-                <img src={props.imgLink} alt="member photo" className="member-photo" /> }
+            <Link to="/member" className="nav-link">
+            <img src={props.imgLink} alt="member photo" className="member-photo" />
+            </Link>}
         </nav>
     );
 }
