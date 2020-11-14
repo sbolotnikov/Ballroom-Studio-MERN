@@ -20,6 +20,10 @@ const UserSchema = new Schema({
     type: String,
     select: false
   },
+  tempPassword: {
+    type: Boolean,
+    default: false
+  },
   phoneNumber: {
     type: String
   },
