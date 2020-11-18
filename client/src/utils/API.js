@@ -14,10 +14,9 @@ export default {
       return axios.get("/logout")
     },
     googleSignin: ()=>{
+      console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+      console.log(process.env.REACT_APP_GOOGLE_CLIENT_SECRET);
       return axios.get("/auth/google")
-    },
-    googleRedirect: ()=>{
-      return axios.get("/auth/google/redirect")
     },
     allTopics: ()=>{
       return axios.get("/api/steps/all_topics")

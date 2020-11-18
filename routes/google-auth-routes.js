@@ -5,8 +5,8 @@ var cors = require('cors')
 
 module.exports = function (app) {
 
-    app.use(cors()); 
-// var whitelist = ['http://localhost:3000/', 'https://mern-ballroom.herokuapp.com/','http://localhost:8080/']
+//     app.use(cors()); 
+// var whitelist = ['http://localhost:8080/','http://localhost:3000/', 'https://mern-ballroom.herokuapp.com/','http://localhost:8080/']
 // var corsOptions = {
 //   origin: function (origin, callback) {
 //     if (whitelist.indexOf(origin) !== -1) {
@@ -16,8 +16,8 @@ module.exports = function (app) {
 //     }
 //   }
 // }
-console.log(process.env.GOOGLE_CLIENT_ID);
-      console.log(process.env.GOOGLE_CLIENT_SECRET);
+// console.log(process.env.GOOGLE_CLIENT_ID);
+//       console.log(process.env.GOOGLE_CLIENT_SECRET);
     app.get('/auth/google', 
         passport.authenticate('google', {
             scope: ['profile', 'email']

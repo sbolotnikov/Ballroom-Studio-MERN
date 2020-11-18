@@ -12,24 +12,26 @@ function ToRenderEverything() {
     gsap.from("#cardImage1", { duration: 2, x: 300, delay: 1, opacity: 0, ease: "power2.out" });
     gsap.from("#cloud", { duration: 2, x: 200, y: 200, opacity: 0, delay: 3, ease: "elastic" });
     gsap.from("#aside1", { duration: 1, opacity: 0, delay: 4, ease: "elastic" });
-    var timerInterval = setInterval(function () {
-      let element = document.querySelector("span.n");
-      if (!element) {
-        clearInterval(timerInterval);
-        return
-      }
-      element.className = "";
-      element.className = "glow"
-      if (i > 0) {
-        document.querySelector(".glow").classList.remove("glow");
-      }
-      i++
-      if (i === 165) {
-        i = 0;
-        clearInterval(timerInterval);
-      }
-    }, 80);
-
+    var timerIntervalbefore = setInterval(function () {
+      var timerInterval = setInterval(function () {
+        let element = document.querySelector("span.n");
+        if (!element) {
+          clearInterval(timerInterval);
+          clearInterval(timerIntervalbefore);
+          return
+        }
+        element.className = "";
+        element.className = "glow"
+        if (i > 0) {
+          document.querySelector(".glow").classList.remove("glow");
+        }
+        i++
+        // if (i === 165) {
+        //   i = 0;
+        //   clearInterval(timerInterval);
+        // }
+      }, 80);
+    }, 4000);
   }, []);
   let top = 0;
   let left = 0;

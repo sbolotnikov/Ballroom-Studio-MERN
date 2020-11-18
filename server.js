@@ -2,13 +2,13 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require('mongoose');
 const passport = require("./config/passport");
-const cors = require("cors");
+// const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 const db = require("./models");
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
+// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -18,8 +18,6 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-// console.log(process.env.GOOGLE_CLIENT_ID);
-//       console.log(process.env.GOOGLE_CLIENT_SECRET);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
