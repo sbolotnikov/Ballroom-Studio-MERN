@@ -3,8 +3,11 @@ import { Col, Row } from 'react-bootstrap';
 import "./style.css";
 export default
     function ErrorNotice(props) {
+        var topval = `calc(20%)`, leftval = `calc(20%)`;
     return (
-        <div className="error-notice" style={{left: props.left, top: props.top}}>
+        // <div className={"error-notice d-flex flex-column justify-content-center  position-absolute"} style={{left: props.left, top: props.top}}>
+
+        <div className="error-notice" style={{left: leftval, top: topval}}>
             <Row>
                 <Col>
                 <button style={{ background:"transparent", border:"0", boxShadow:"0", float: "right" }} onClick={props.clearError}>X</button>
