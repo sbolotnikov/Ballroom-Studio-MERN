@@ -2,7 +2,6 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:8080/",
   "secure": false,
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.2",
@@ -16,6 +15,7 @@
     "cloudinary-react": "^1.6.7",
     "faker": "^5.1.0",
     "gsap": "^3.5.1",
+    "http-proxy-middleware": "^1.0.6",
     "moment": "^2.29.1",
     "react": "^17.0.1",
     "react-big-calendar": "^0.28.2",

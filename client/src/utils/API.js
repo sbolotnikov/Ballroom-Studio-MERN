@@ -15,10 +15,10 @@ export default {
       return axios.get("/logout")
     },
     googleSignin: ()=>{
-      return axios.get("/auth/google")
-    },
-    googleRedirect: ()=>{
-      return axios.get("/auth/google/redirect")
+      return fetch("/auth/google", {
+        method: 'GET',
+        
+      })
     },
     allTopics: ()=>{
       return axios.get("/api/steps/all_topics")

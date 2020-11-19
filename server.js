@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const passport = require("./config/passport");
 const cors = require("cors");
 const PORT = process.env.PORT || 8080;
-const db = require("./models");
 require('dotenv').config();
 
 const app = express();
@@ -39,5 +38,4 @@ mongoose.set('toJSON', { virtuals: true });
 app.listen(PORT, () => {
   console.log(`App running on port http://localhost:${PORT}`);
 });
-
 

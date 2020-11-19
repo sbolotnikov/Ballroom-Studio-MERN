@@ -10,7 +10,7 @@ module.exports = function (app) {
 
     app.get('/auth/google/redirect',
         passport.authenticate('google', {
-            failureRedirect: '/google_registered'
+            failureRedirect: '/'
         }),
         function (req, res) {
             res.redirect('/members');
