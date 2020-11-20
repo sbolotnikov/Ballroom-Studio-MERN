@@ -92,27 +92,8 @@ function Navbar() {
                             </form>
                             {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
                             <div>
-                                <a href="http://localhost:8080/_auth/google">
-
-                                <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" onClick={() => {
-                                    // fetch('http://localhost:8080/_auth/google',{ mode:"no-cors"}
-                                    //   ).then(response => response.json())
-                                    //   .then((jsonData) =>  {
-                                    //     setErrorState(false);
-                                    //     setLoggedIn(true);
-                                    //     setEmail(jsonData.email);
-                                    //     setUserId(jsonData._id);
-                                    //     console.log(jsonData)
-                                    //     history.push("/member");
-
-
-                                    // })
-                                    //     .catch(err => {
-                                    //         console.log(err)
-                                    //         setErrorState(`cannot loging with Google`);
-
-                                    //     });
-                                }} />
+                                <a href="/auth/google">
+                                    <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
                                 </a>
                             </div>
                         </div>

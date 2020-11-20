@@ -36,11 +36,10 @@ passport.use(
   new GoogleStrategy({
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "http://localhost:8080/_auth/google/redirect"   
-      // callbackURL: "/_auth/google/redirect"  
+      callbackURL: "/auth/google/redirect",
     },
     function (accessToken, refreshToken, profile, done) {
-      let date=new Date();
+      console.log(profile);
       db.User.findOne({
         googleId: profile.id
       }).then(dbUser => {
@@ -50,10 +49,8 @@ passport.use(
               lastName: profile.name.familyName,
               email: profile.emails[0].value,
               googleId: profile.id,
-              memberStatus:"student",
-              certLevel: "social foundation",
-              birthday: date.setDate(date.getDate()-7665),
-              profilePhotoUrl: profile.photos[0].value
+              profilePhotoUrl: profile.photos[0].value,
+              memberStatus: ["student"]
             })
             .then(result=>{
               db.User.findOne({

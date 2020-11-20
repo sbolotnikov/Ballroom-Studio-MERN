@@ -1,12 +1,14 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useContext} from 'react';
 import MemberInfo from '../components/MemberInfo';
 import MemberNav from '../components/MemberNav';
 import API from '../utils/API';
+import UserContext from '../utils/UserContext';
 
 function MemberPage(){
     const [imgDisplay, setImgDisplay] = useState('');
     const [profile, setProfile] = useState({});
     const [memberStatus, setMemberStatus] = useState([]);
+    const {setLoggedIn, setEmail, setUserId} = useContext(UserContext);
 
     useEffect(() => {
         const getProfile = () => {
@@ -20,6 +22,9 @@ function MemberPage(){
                 setImgDisplay(imgLink);
                 setProfile(results.data);
                 setMemberStatus(status);
+                setUserId(results.data.id);
+                setLoggedIn(true);
+                setEmail(results.data.email);
             }).catch(err => {
                 console.log(err);
             })

@@ -10,12 +10,13 @@ module.exports = function (app) {
             scope: ['profile', 'email']
         }));
 
-    app.get('/_auth/google/redirect',
-        passport.authenticate('google'),
+    app.get('/auth/google/redirect',
+        passport.authenticate('google', {
+            failureRedirect: '/'
+        }),
         function (req, res) {
-            console.log("redirect user info")
-            console.log( req.user)
-            // res.json(req.user)
-            res.redirect('http://localhost:3000/members');
+            process.env.NODE_ENV === "production" ? 
+                res.redirect('/member') :
+                res.redirect('http://localhost:3000/#/member');
         });
 }
