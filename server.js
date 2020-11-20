@@ -2,12 +2,11 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require('mongoose');
 const passport = require("./config/passport");
-// const cors = require("cors");
+const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 require('dotenv').config();
 
 const app = express();
-// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
