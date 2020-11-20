@@ -13,6 +13,6 @@ module.exports = function (app) {
             failureRedirect: '/'
         }),
         function (req, res) {
-            res.redirect('/members');
+            res.redirect('http://localhost:3000/#/member');
         });
 }

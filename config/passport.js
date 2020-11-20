@@ -37,9 +37,9 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/redirect",
-      proxy: true
     },
     function (accessToken, refreshToken, profile, done) {
+      console.log(profile);
       db.User.findOne({
         googleId: profile.id
       }).then(dbUser => {
@@ -49,7 +49,8 @@ passport.use(
               lastName: profile.name.familyName,
               email: profile.emails[0].value,
               googleId: profile.id,
-              profilePhotoUrl: profile.photos[0].value
+              profilePhotoUrl: profile.photos[0].value,
+              memberStatus: ["student"]
             })
             .catch(err => {
               res.status(400).json(err);

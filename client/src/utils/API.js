@@ -14,12 +14,9 @@ export default {
     logout: ()=> {
       return axios.get("/logout")
     },
-    googleSignin: ()=>{
-      return fetch("/auth/google", {
-        method: 'GET',
-        
-      })
-    },
+    // googleSignin: ()=>{
+    //   return axios.get("/auth/google")
+    // },
     allTopics: ()=>{
       return axios.get("/api/steps/all_topics")
     },

@@ -14,9 +14,10 @@ app.use(express.static("public"));
 app.use(
   session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
 );
+app.use(cors({ origin: "http://localhost:3000"}));
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
@@ -34,7 +35,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio
   useFindAndModify: false,
   useUnifiedTopology: true
 });
-mongoose.set('toJSON', { virtuals: true });
+// mongoose.set('toJSON', { virtuals: true });
 app.listen(PORT, () => {
   console.log(`App running on port http://localhost:${PORT}`);
 });

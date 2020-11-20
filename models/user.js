@@ -91,15 +91,17 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.virtual('age')
   .get( function () {
-    const bDate = this.birthday;
-    const today = new Date();
-    // console.log(bDate, today);
-    const bM = bDate.getMonth();
-    const bY = bDate.getFullYear();
-    const tM = today.getMonth();
-    const tY = today.getFullYear();
-    // console.log(Math.floor((tY + tM / 12) - (bY + bM / 12)));
-    return Math.floor((tY + tM / 12) - (bY + bM / 12));
+    if(this.birthday !== undefined) {
+      const bDate = this.birthday;
+      const today = new Date();
+      // console.log(bDate, today);
+      const bM = bDate.getMonth();
+      const bY = bDate.getFullYear();
+      const tM = today.getMonth();
+      const tY = today.getFullYear();
+      // console.log(Math.floor((tY + tM / 12) - (bY + bM / 12)));
+      return Math.floor((tY + tM / 12) - (bY + bM / 12));
+    }
   })
 
 const User = mongoose.model("User", UserSchema);
