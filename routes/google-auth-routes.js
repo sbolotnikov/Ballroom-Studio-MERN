@@ -5,7 +5,7 @@ var cors = require('cors')
 
 module.exports = function (app) {
 
-    app.get('/_auth/google', 
+    app.get('/auth/google', 
         passport.authenticate('google', {
             scope: ['profile', 'email']
         }));
@@ -17,6 +17,6 @@ module.exports = function (app) {
         function (req, res) {
             process.env.NODE_ENV === "production" ? 
                 res.redirect('/member') :
-                res.redirect('http://localhost:3000/#/member');
+                res.redirect('http://localhost:3000/member');
         });
 }
