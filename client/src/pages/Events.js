@@ -1,8 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
-import Navbar from '../components/Navbar/navbar.js';
+import MemberNav from '../components/MemberNav';
 import Calendar from '../components/Calendar/calendar.js';
 // eslint-disable-next-line
-import { Link } from 'react-router-dom';
 
 function Events() {
     useEffect(() => {
@@ -11,7 +10,7 @@ function Events() {
 
     return (
         <Fragment>
-            <Navbar></Navbar>
+            <MemberNav />
             <Calendar></Calendar>
         </Fragment>
     )

@@ -1,20 +1,17 @@
-import React, { Fragment, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Navbar from '../components/Navbar/navbar' 
-import Invoice from '../components/Invoice'
+import React, { Fragment} from 'react';
+import MemberNav from '../components/MemberNav';
 import About from '../components/About'
 
-function Signup() {
-    useEffect(() => {
-        console.log("on-load");
-    }, []);
+function AboutDisplay() {
+   
+
 
     return (
         <Fragment>
-            <Navbar></Navbar>
+            <MemberNav />
             <About></About>
         </Fragment>
     )
 }
 
-export default Signup;
+export default AboutDisplay;

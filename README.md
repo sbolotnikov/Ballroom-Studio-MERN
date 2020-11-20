@@ -8,7 +8,7 @@ Lesser technologies include Mongoose, Passport, BCryptJS, Nodemailer, React Hash
 
 This demonstrates full usage of the MERN Stack in a realistic scenario by creating a scheduling, billing, and community platform that is practical for nearly any type of event or class-based business or community.
 
-Users are able to log in and create a personalized and customizable account from which they can view events, sign up for them, and communicate publicly and directly with other suers through the "Steps" social media platform. 
+Users are able to log in directly or using integration with Google OAuth  and create a personalized and customizable account from which they can view events, sign up for them, and communicate publicly and directly with other suers through the "Steps" social media platform. 
 
 Instructors, managers and Administrators have the ability to create events, edit and remove users, generate invoices, and manage the community social platform. They can also send marketing and reminder e-mails to users in the database.  
 
@@ -16,7 +16,6 @@ Instructors, managers and Administrators have the ability to create events, edit
 https://mern-ballroom.herokuapp.com/
 
 FUTURE UPDATES: 
-- Integration with Google OAuth 
 - Connecting the invoice system to Stripe
 - Calendar functionality 
 

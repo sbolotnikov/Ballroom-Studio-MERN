@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
-import Navbar from '../components/Navbar/navbar' 
+import MemberNav from '../components/MemberNav';
 import SignupForm from '../components/SignupForm'
 import SignupHeader from '../components/Signup Header'
 
@@ -10,7 +10,7 @@ function Signup() {
 
     return (
         <Fragment>
-            <Navbar />
+            <MemberNav imgLink={""} memberStatus={""}/>
             <SignupHeader />
             <SignupForm />
         </Fragment>

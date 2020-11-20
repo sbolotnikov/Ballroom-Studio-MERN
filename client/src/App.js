@@ -13,7 +13,6 @@ import Payments from './pages/Payments';
 import Invoices from './pages/Invoices';
 import EditInvoice from './pages/EditInvoice';
 import Signup from './pages/Signup';
-import Social from './pages/Social';
 import Steps from './pages/Steps';
 import MemberPage from './pages/MemberPage';
 import UserContext from "./utils/UserContext";
@@ -42,7 +41,6 @@ function App() {
           <Route exact path="/invoices" component={Invoices} />
           <Route exact path="/editInvoice" component={EditInvoice} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/social" component={Social} />
           <Route exact path="/member" component={MemberPage} />
           <Route exact path= "/DanceInspire" component={DanceInspire}/>
         </UserContext.Provider>

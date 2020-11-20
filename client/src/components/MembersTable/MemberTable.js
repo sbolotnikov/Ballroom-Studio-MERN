@@ -72,7 +72,7 @@ function MemberTable() {
                         lastName={member.lastName}
                         email={member.email}
                         phoneNumber={member.phoneNumber}
-                        birthday={member.birthday.slice(0,10)}
+                        birthday={member.birthday ?member.birthday.slice(0,10):"undefined"}
                         age={member.age}
                         certLevel={member.certLevel}
                         memberStatus={member.memberStatus}

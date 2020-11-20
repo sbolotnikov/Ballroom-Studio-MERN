@@ -1,15 +1,15 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment} from 'react';
 import { Link } from 'react-router-dom';
 import '../css/styles.css';
+import MemberNav from '../components/MemberNav';
 import Dance1Img from '../imgs/shobana-dance.png';
 import Dance2Img from '../imgs/rambert-dance.png';
 import Dance3Img from '../imgs/pineapple-dance.png';
 function DanceInspire() {
- useEffect(() => {
-   console.log('on-load');
- }, []);
+
  return (
    <Fragment>
+     <MemberNav />
      <header className='masthead bg-light text-white text-center'>
        <div className='container d-flex align-items-center flex-column'>
          <h1 className='masthead-heading mb-0 text-dark'>
