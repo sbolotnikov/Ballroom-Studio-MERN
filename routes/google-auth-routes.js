@@ -16,7 +16,7 @@ module.exports = function (app) {
         }),
         function (req, res) {
             process.env.NODE_ENV === "production" ? 
-                res.redirect('/member') :
+                res.redirect('/#/member') :
                 res.redirect('http://localhost:3000/#/member');
         });
 }
