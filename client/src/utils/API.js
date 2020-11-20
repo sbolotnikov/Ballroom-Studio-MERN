@@ -1,6 +1,5 @@
 /* eslint-disable import/no-anonymous-default-export */
 import axios from 'axios';
-
 export default {
     login: (user) => {
         return axios.post("/api/login", user);
@@ -15,10 +14,9 @@ export default {
       return axios.get("/logout")
     },
     googleSignin: ()=>{
-      return axios.get("/auth/google")
-    },
-    googleRedirect: ()=>{
-      return axios.get("/auth/google/redirect")
+      // console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+      // console.log(process.env.REACT_APP_GOOGLE_CLIENT_SECRET);
+      return axios.get("http://localhost:8080/_auth/google")
     },
     allTopics: ()=>{
       return axios.get("/api/steps/all_topics")

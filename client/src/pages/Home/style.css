@@ -47,7 +47,11 @@
   #anim {
     height:auto;
     line-height: 18px;
-    justify-self: center;
+    
+    color: #ffffff;
+    text-shadow: 1px 1px #faa65c;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 15px;
   }
   #smScreenBg{
     width: 100%;
@@ -55,8 +59,12 @@
 }
 @media (max-width:465px) {
   #anim {
-    justify-self: center;
+    
     font-size: 20px;
+    color: #ffffff;
+    text-shadow: 1px 1px #faa65c;
+    background-color: rgba(0,0,0,0.5);
+    border-radius: 15px;
   }
   #smScreenBg{
     width:100%
@@ -70,7 +78,7 @@
   text-shadow: 1px 1px #faa65c;
   background-color: rgba(0,0,0,0.5);
   border-radius: 15px;
-  justify-self: center;
+  
 }
   .display-3 {
     font-size: 3rem;
@@ -123,4 +131,11 @@ color: white;
   text-shadow: 0 0 3px #FF0000, 0 0 5px #0000FF ;
 }
 
-
+#anim {
+  /* font-size: 30px; */
+  color: #ffffff;
+  text-shadow: 1px 1px #faa65c;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 15px;
+  max-width: 850px;
+}
