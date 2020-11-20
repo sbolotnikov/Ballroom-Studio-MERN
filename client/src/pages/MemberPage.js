@@ -4,24 +4,14 @@ import MemberNav from '../components/MemberNav';
 import API from '../utils/API';
 import UserContext from '../utils/UserContext';
 
-function MemberPage(){
-    const [imgDisplay, setImgDisplay] = useState('');
+function MemberPage(){  
     const [profile, setProfile] = useState({});
-    const [memberStatus, setMemberStatus] = useState([]);
     const {setLoggedIn, setEmail, setUserId} = useContext(UserContext);
 
     useEffect(() => {
         const getProfile = () => {
-            let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
-            let status = null;
             API.getProfile().then(results => {
-                if (results.data.profilePhotoUrl) {
-                    imgLink = results.data.profilePhotoUrl;
-                    status=results.data.memberStatus;
-                }
-                setImgDisplay(imgLink);
                 setProfile(results.data);
-                setMemberStatus(status);
                 setUserId(results.data.id);
                 setLoggedIn(true);
                 setEmail(results.data.email);
@@ -35,12 +25,7 @@ function MemberPage(){
     },[]);
 
     const getUpdatedProfile = () => {
-        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
             API.getProfile().then(results => {
-                if (results.data.profilePhotoUrl) {
-                    imgLink = results.data.profilePhotoUrl;
-                }
-                setImgDisplay(imgLink);
                 setProfile(results.data);
             }).catch(err => {
                 console.log(err);
@@ -49,7 +34,7 @@ function MemberPage(){
 
     return (
         <div>
-            <MemberNav imgLink={imgDisplay} memberStatus={memberStatus}/>
+            <MemberNav />
             <MemberInfo profile={profile} getProfile={getUpdatedProfile}/>
         </div>
     )

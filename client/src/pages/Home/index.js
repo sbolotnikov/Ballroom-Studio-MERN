@@ -1,14 +1,13 @@
 import React, { Fragment, useEffect } from 'react';
 import gsap from 'gsap';
 import "animate.css/animate.min.css";
-import Navigation from '../../components/Navbar/navbar';
+import MemberNav from '../../components/MemberNav';
 import Typewriter from '../../components/typewriter';
 import "./style.css";
 let i = 0;
 function ToRenderEverything() {
   useEffect(() => {
     i = 0;
-    // gsap.from("#cardGreeting", { duration: 1, backgroundPosition: '-200px,0px', scale: 1.5, opacity: 0, ease: "power2.out" });
     gsap.from("#cardImage1", { duration: 2, x: 300, delay: 1, opacity: 0, ease: "power2.out" });
     gsap.from("#cloud", { duration: 2, x: 200, y: 200, opacity: 0, delay: 3, ease: "elastic" });
     gsap.from("#aside1", { duration: 1, opacity: 0, delay: 4, ease: "elastic" });
@@ -39,7 +38,7 @@ function ToRenderEverything() {
 
   return (
     <Fragment>
-      <Navigation />
+      <MemberNav />
       <div className="container" style={{ maxWidth: "1440px", overflow: "hidden" }}>
         <main className="container">
           <div className="jumbotron jumbotron-fluid bg-transparent">
@@ -52,11 +51,8 @@ function ToRenderEverything() {
                 alt="avatar"
                 className="d-md-none" id="smScreenBg" width="500"
               />
-              {/* <div className="card"  style={{ alignItems: "center", background: "transparent", borderColor: "transparent"}}> */}
-              {/* <div className="card"  style={{ background: "transparent", borderColor: "transparent", position:"relative", top: calc("100vh"-"50px"), left: calc("100vh"-"40px") , height: "80%" }}> */}
               <img className={"d-flex flex-column justify-content-center  position-absolute"} id="cardImage1" src={process.env.PUBLIC_URL + "./imgs/logo.gif"}
                 alt="Studio Logo" style={{ borderColor: "transparent", top: topval, left: leftval, width: "80%" }} />
-              {/* <div className="card-img-overlay"> */}
               <figure id="cloud" style={{ top: "50px", width: "90%" }} className={"d-flex flex-column justify-content-center text-center position-relative"} >
 
                 <p id="anim"><Typewriter text='Hello, ' />
@@ -65,9 +61,6 @@ function ToRenderEverything() {
                   <br /><Typewriter text='If you have any questions, please feel free to call us at (123)456-1234. ' />
                 </p>
               </figure>
-              {/* </div> */}
-              {/* </div> */}
-
             </div>
           </div>
 

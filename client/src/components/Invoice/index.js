@@ -21,7 +21,6 @@ import "./style.css";
 //   });
 // }); 
 function Invoice(props) {
-    // const [show, setShow] = useState(true);
     return (
         <div id="invoice">
 

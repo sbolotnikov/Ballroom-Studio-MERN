@@ -19,18 +19,14 @@ function Steps() {
     const [topicsArray, setTopicsArray] = useState([]);
     const [addstep, setAddStep] = useState('')
     const [stepsSet, setStepsSet] = useState([]);
-    const [imgDisplay, setImgDisplay] = useState('');
     const [box, setBox] = useState(true);
 
     useEffect(() => {
         setTopicState();
-        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
+  
         API.getProfile().then(results => {
             setProfile(results.data);
-            if (results.data.profilePhotoUrl) {
-                imgLink = results.data.profilePhotoUrl;
-            }
-            setImgDisplay(imgLink);
+            
         }).catch(err => {
             console.log(err);
         })
@@ -127,7 +123,7 @@ function Steps() {
     }
     return (
         <div>
-            <MemberNav imgLink={imgDisplay} />
+            <MemberNav />
             <div className="container">
 
                 <h2 className="formTop d-flex justify-content-center ">Welcome, {profile.firstName} <span className="member"></span></h2>

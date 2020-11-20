@@ -15,7 +15,6 @@ import ErrorNotice from "../../components/misc/errorNotice";
 function Payments() {
     const [selectedStudent, setSelectedStudent] = useState(null);
     const [selectedType, setSelectedType] = useState(null);
-    const [imgDisplay, setImgDisplay] = useState('');
     const [profile, setProfile] = useState({});
     const [members, setMembers] = useState([]);
     const [amount, setAmount] = useState(1);
@@ -50,12 +49,7 @@ function Payments() {
     }, []);
 
     const getProfile = () => {
-        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
         API.getProfile().then(results => {
-            if (results.data.profilePhotoUrl) {
-                imgLink = results.data.profilePhotoUrl;
-            }
-            setImgDisplay(imgLink);
             setProfile(results.data);
         }).catch(err => {
             console.log(err);
@@ -150,11 +144,6 @@ function Payments() {
             setErrorState("Please enter payment options");
             return;
         }
-        // var d = new Date();
-        // if ((!expirationDate) || (expirationDate>d)) {
-        //     setErrorState("Please select correct expiration date");
-        //     return;
-        // }
         if (buySessions.length<1) {
             setErrorState("sessions can not be blank!");
             return;
@@ -182,7 +171,7 @@ function Payments() {
 
     return (
         <Fragment>
-            <MemberNav imgLink={imgDisplay} />
+            <MemberNav />
             <div className="container">
             {/* <Invoice /> */}
             <Row>
