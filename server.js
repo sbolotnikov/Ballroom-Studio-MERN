@@ -15,7 +15,7 @@ app.use(express.static("public"));
 app.use(
   session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
 );
-app.use(cors({ origin: "http://localhost:3000"}));
+app.use(cors());
 
 app.use(passport.initialize());
 app.use(passport.session());
