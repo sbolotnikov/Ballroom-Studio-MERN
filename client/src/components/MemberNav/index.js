@@ -59,7 +59,7 @@ function MemberNav(props) {
                             API.logout().then((results) => {
                                 setLoggedIn(false);
                                 setEmail("");
-                                history.push("/home");
+                                history.push("/");
                             })
                                 .catch(err => {
                                     console.log(err)
