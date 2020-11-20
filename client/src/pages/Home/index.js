@@ -26,10 +26,6 @@ function ToRenderEverything() {
           document.querySelector(".glow").classList.remove("glow");
         }
         i++
-        // if (i === 165) {
-        //   i = 0;
-        //   clearInterval(timerInterval);
-        // }
       }, 80);
     }, 4000);
   }, []);

@@ -14,9 +14,9 @@ export default {
       return axios.get("/logout")
     },
     googleSignin: ()=>{
-      console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
-      console.log(process.env.REACT_APP_GOOGLE_CLIENT_SECRET);
-      return axios.get("/auth/google")
+      // console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+      // console.log(process.env.REACT_APP_GOOGLE_CLIENT_SECRET);
+      return axios.get("http://localhost:8080/_auth/google")
     },
     allTopics: ()=>{
       return axios.get("/api/steps/all_topics")
