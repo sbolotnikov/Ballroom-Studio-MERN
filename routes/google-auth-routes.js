@@ -13,6 +13,8 @@ module.exports = function (app) {
             failureRedirect: '/'
         }),
         function (req, res) {
-            res.redirect('http://localhost:3000/#/member');
+            process.env.NODE_ENV === "production" ? 
+                res.redirect('/member') :
+                res.redirect('http://localhost:3000/#/member');
         });
 }
