@@ -2,11 +2,12 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require('mongoose');
 const passport = require("./config/passport");
-const cors = require("cors");
+// const cors = require("cors");
 const PORT = process.env.PORT || 8080;
 require('dotenv').config();
 
 const app = express();
+// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));
@@ -21,8 +22,6 @@ app.use(passport.session());
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
-// routes
-// require("./routes/html-routes.js")(app);
 require("./routes/api-routes.js")(app);
 require("./routes/email-routes.js")(app);
 require("./routes/google-auth-routes.js")(app);

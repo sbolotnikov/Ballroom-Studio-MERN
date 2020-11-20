@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import "./style.css";
 import API from '../../utils/API';
 import Cloudinary from '../Cloudinary';
 import ErrorNotice from '../misc/errorNotice';
-
+import UserContext from '../../utils/UserContext';
 
 //  class SignupForm extends React.Component{
 //     constructor(props){
 //       super(props);
 //       this.setState({certlevel: "social foundation", memberstatus: "student"});
 function SignupForm(props) {
+    const {setLoggedIn, setEmail, setUserId } = useContext(UserContext);
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
-    const [email, setEmail] = useState('');
+    const [email1, setEmail1] = useState('');
     const [phonenumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
     const [birthday, setBirthday] = useState('');
@@ -31,13 +32,13 @@ function SignupForm(props) {
         event.preventDefault();
 
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if (re.test(email.toLowerCase())) {
+        if (re.test(email1.toLowerCase())) {
             let memberArr=[]
             memberArr.push(memberstatus);
             const userLogin = {
                 firstName: firstname,
                 lastName: lastname,
-                email: email,
+                email: email1,
                 phoneNumber: phonenumber,
                 password: password,
                 birthday: birthday,
@@ -48,7 +49,24 @@ function SignupForm(props) {
             // after login is successful, use history.push to redirect
             API.signup(userLogin).then(() => {
                 setErrorState(false);
-                history.push("/member");
+                const userLogin = {
+                    email: email1,
+                    password: password
+                };
+                // after login is successful, use history.push to redirect
+                API.login(userLogin).then((results) => {
+                    setUserId(results.data.id);
+                    setErrorState(false);
+                    setLoggedIn(true);
+                    setEmail(results.data.email);
+                    history.push("/member");
+                })
+                .catch(err => {
+                    console.log(err.response.data)
+                    setErrorState(`<p>Status${err.response.status}</p> <br /><h3>${err.response.data} <br /> Your email already exists in our database</h3>`);
+
+                });
+
             })
                 .catch(err => {
                     console.log(err.response.data)
@@ -89,7 +107,7 @@ function SignupForm(props) {
                         <div className="form-group col-md-6">
                             <label for="email">Email</label>
                             <input type="email" className="input" id="email" placeholder="Dancer@Ballroom.com"
-                                onChange={event => setEmail(event.target.value)} />
+                                onChange={event => setEmail1(event.target.value)} />
                         </div>
                         <div className="form-group col-md-6">
                             <label for="phoneNumber">Telephone</label>

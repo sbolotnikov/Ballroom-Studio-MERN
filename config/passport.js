@@ -52,9 +52,17 @@ passport.use(
               profilePhotoUrl: profile.photos[0].value,
               memberStatus: ["student"]
             })
+            .then(result=>{
+              db.User.findOne({
+                email: profile.emails[0].value
+              }).then(dbUser => {
+                return done(null, dbUser);
+              })
+            })
             .catch(err => {
-              res.status(400).json(err);
+              console.log(err)
             });
+            
         }
         return done(null, dbUser);
       })

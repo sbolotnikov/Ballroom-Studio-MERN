@@ -17,7 +17,7 @@ import Social from './pages/Social';
 import Steps from './pages/Steps';
 import MemberPage from './pages/MemberPage';
 import UserContext from "./utils/UserContext";
-import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import DanceInspire from "./pages/Dance";
 
 function App() {
