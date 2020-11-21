@@ -280,6 +280,7 @@ module.exports = function (app) {
           email: req.body.email,
           phoneNumber: req.body.phoneNumber,
           profilePhotoUrl: req.body.profilePhotoUrl,
+          birthday:req.body.birthday
         }
       },{
         new: true

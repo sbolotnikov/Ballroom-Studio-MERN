@@ -6,6 +6,6 @@
     z-index: 3;
     left: 5px;
     top: 5px;
-    position:absolute;
+    position: fixed;
     width: fit-content;
 }
