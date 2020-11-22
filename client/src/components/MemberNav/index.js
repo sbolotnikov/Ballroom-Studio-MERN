@@ -29,17 +29,17 @@ function MemberNav(props) {
     useEffect(() => {
         let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
         let status = null;
-            API.getProfile().then(results => {
-                if (results.data.profilePhotoUrl) {
-                    imgLink = results.data.profilePhotoUrl;
-                    status=results.data.memberStatus;
-                }
-                setImgDisplay(imgLink);
-                setMemberStatus(status);
-            }).catch(err => {
-                console.log(err);
-            })
-        },[]);
+        API.getProfile().then(results => {
+            if (results.data.profilePhotoUrl) {
+                imgLink = results.data.profilePhotoUrl;
+                status = results.data.memberStatus;
+            }
+            setImgDisplay(imgLink);
+            setMemberStatus(status);
+        }).catch(err => {
+            console.log(err);
+        })
+    }, []);
     function handleLogin(event) {
         event.preventDefault();
 
@@ -100,13 +100,19 @@ function MemberNav(props) {
                                     <button type="submit" className="btn btn-primary">Login</button>
 
                                 </div>
+
+                                {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
+                                <div>
+                                    <a href="/auth/google">
+                                        <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
+                                    </a>
+                                </div>
+                                <div className="form-group">
+                                    <a href="/auth/facebook">
+                                        <h4><span className="fab"><i className="fa fa-facebook-official" aria-hidden="true"></i></span>Login with Facebook</h4>
+                                    </a>
+                                </div>
                             </form>
-                            {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
-                            <div>
-                                <a href="/auth/google">
-                                    <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
-                                </a>
-                            </div>
                         </div>
                     </li> || ""}
                     {!loggedIn && <li className="nav-item">

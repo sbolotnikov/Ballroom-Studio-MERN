@@ -45,7 +45,7 @@ function Invoice(props) {
 
                             <div className="col company-details">
                                 <h2 className="name">
-                                    <a target="_blank" href="https://www.github.com/nlamonaco86" className="textRed">
+                                    <a target="_blank" href="https://www.github.com/nlamonaco86" rel="noreferrer"  className="textRed">
                                         MERN Studios
                             </a>
                                 </h2>

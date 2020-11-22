@@ -30,6 +30,9 @@ const UserSchema = new Schema({
   googleId: {
     type: String
   },
+  facebookId: {
+    type: String
+  },
   profilePhotoUrl: {
     type: String
   },
@@ -91,10 +94,9 @@ UserSchema.pre('save', function (next) {
 
 UserSchema.virtual('age')
   .get( function () {
-    if(this.birthday !== undefined) {
+    if(this.birthday) {
       const bDate = this.birthday;
       const today = new Date();
-      // console.log(bDate, today);
       const bM = bDate.getMonth();
       const bY = bDate.getFullYear();
       const tM = today.getMonth();

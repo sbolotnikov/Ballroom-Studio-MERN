@@ -44,6 +44,7 @@ export default {
       return axios.post("api/new_session", session);
     },
     updateProfile: (userId, profile) => {
+      console.log(profile)
       return axios.put(`/api/profile/${userId}`, profile);
     },
     postPM: (pm) => {

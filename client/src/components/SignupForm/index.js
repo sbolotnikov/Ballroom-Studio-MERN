@@ -5,35 +5,35 @@ import API from '../../utils/API';
 import Cloudinary from '../Cloudinary';
 import ErrorNotice from '../misc/errorNotice';
 import UserContext from '../../utils/UserContext';
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
 
-//  class SignupForm extends React.Component{
-//     constructor(props){
-//       super(props);
-//       this.setState({certlevel: "social foundation", memberstatus: "student"});
 function SignupForm(props) {
-    const {setLoggedIn, setEmail, setUserId } = useContext(UserContext);
+    const { setLoggedIn, setEmail, setUserId } = useContext(UserContext);
     const [firstname, setFirstName] = useState('');
     const [lastname, setLastName] = useState('');
     const [email1, setEmail1] = useState('');
     const [phonenumber, setPhoneNumber] = useState('');
     const [password, setPassword] = useState('');
+    const [password1, setPassword1] = useState('');
     const [birthday, setBirthday] = useState('');
     const [certlevel, setCertLevel] = useState('social foundation');
     const [memberstatus, setMemberStatus] = useState('student');
     const [errorstate, setErrorState] = useState(false);
     const [imgUrl, setImgUrl] = useState("");
-   
-    // setMemberStatus("student");
-    // setCertLevel("social foundation");
-    // use history to redirect after login
-    const history = useHistory();
 
+
+    const history = useHistory();
+    var phoneInput = ""
     function handleSignup(event) {
         event.preventDefault();
-
+        if (password !== password1) {
+            setErrorState("Confirmed Password does not match original");
+            return
+        }
         const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (re.test(email1.toLowerCase())) {
-            let memberArr=[]
+            let memberArr = []
             memberArr.push(memberstatus);
             const userLogin = {
                 firstName: firstname,
@@ -61,11 +61,11 @@ function SignupForm(props) {
                     setEmail(results.data.email);
                     history.push("/member");
                 })
-                .catch(err => {
-                    console.log(err.response.data)
-                    setErrorState(`<p>Status${err.response.status}</p> <br /><h3>${err.response.data} <br /> Your email already exists in our database</h3>`);
+                    .catch(err => {
+                        console.log(err.response.data)
+                        setErrorState(`<p>Status${err.response.status}</p> <br /><h3>${err.response.data} <br /> Your email already exists in our database</h3>`);
 
-                });
+                    });
 
             })
                 .catch(err => {
@@ -87,9 +87,9 @@ function SignupForm(props) {
     return (
         <div className="container bgW">
             <div className="formTop d-flex justify-content-center">Sign Up</div>
-            {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
             <div className="card-body font-weight-bold bgW">
-                <form className="create" onSubmit={handleSignup}>
+                <form className="create" id="formSignIn" onSubmit={handleSignup}>
+                    {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <label for="firstName">First Name</label>
@@ -111,8 +111,19 @@ function SignupForm(props) {
                         </div>
                         <div className="form-group col-md-6">
                             <label for="phoneNumber">Telephone</label>
-                            <input type="text" className="input" id="phoneNumber" placeholder="use this format 111-111-1111"
-                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={event => setPhoneNumber(event.target.value)} />
+                            {/* <input type="text" className="input" id="phoneNumber" placeholder="use this format 111-111-1111"
+                                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" onChange={event => setPhoneNumber(event.target.value)} /> */}
+
+                            <PhoneInput className="input" id="phoneNumber"
+                                country={'us'}
+                                value={phoneInput}
+                                onChange={phonenumber => setPhoneNumber(phonenumber)}
+                                inputStyle={{
+                                    width: '100%', resize: 'vertical', paddingLeft: '55px', border: '2px solid black',
+                                    borderRadius: '25px', boxShadow: '4px 4px 10px rgba(0,0,0,0.06)', height: '40px'
+                                }}
+                                buttonStyle={{ borderRadius: '25px 0px 0px 25px', border: '2px solid black', boxShadow: '4px 4px 10px rgba(0,0,0,0.06)', height: '40px' }}
+                            />
                         </div>
                     </div>
                     <div className="form-row">
@@ -122,7 +133,7 @@ function SignupForm(props) {
                         </div>
                         <div className="form-group col-md-6">
                             <label for="confirmPassword">Confirm Password</label>
-                            <input type="password" className="input" id="confirmPassword" placeholder="**********"></input>
+                            <input type="password" className="input" id="confirmPassword" placeholder="**********" onChange={event => setPassword1(event.target.value)} />
                         </div>
                     </div>
                     <div className="form-row">
@@ -144,19 +155,18 @@ function SignupForm(props) {
                         <div className="form-group col-md-4">
                             <label for="memberStatus">Certification</label>
                             <select id="memberStatus" className=""
-                            onChange={event => setMemberStatus(event.target.value)}>
+                                onChange={event => setMemberStatus(event.target.value)}>
                                 <option value="student">Student</option>
                                 <option value="guest">Guest</option>
                             </select>
                         </div>
-                        <Cloudinary getImgUrl={getImgUrl}/>
+                    </div>
 
-                    </div>
-                    <div className="d-flex justify-content-around">
-                        <button type="submit" className="btn btn-circle btn-lg">Sign Up</button>
-                    </div>
                 </form>
-
+                <Cloudinary getImgUrl={getImgUrl} />
+                <div className="d-flex justify-content-around">
+                    <button type="submit" form="formSignIn" className="btn btn-circle btn-lg">Sign Up</button>
+                </div>
             </div>
         </div>
     )
