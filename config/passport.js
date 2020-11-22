@@ -2,7 +2,7 @@ require('dotenv').config();
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
-const FacebookStrategy = require("passport-facebook").Strategy;
+// const FacebookStrategy = require("passport-facebook").Strategy;
 const db = require("../models");
 // Local Strategy
 passport.use(

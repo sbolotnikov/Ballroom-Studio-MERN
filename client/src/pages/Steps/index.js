@@ -23,10 +23,10 @@ function Steps() {
 
     useEffect(() => {
         setTopicState();
-  
+
         API.getProfile().then(results => {
             setProfile(results.data);
-            
+
         }).catch(err => {
             console.log(err);
         })
@@ -144,20 +144,13 @@ function Steps() {
                                     <h4 className="formTop d-flex justify-content-center mt-4">Direct messages:</h4>
                                     <DirectMessage />
 
-                                     <h4 className="stepsTitle">{(box) ?"Incoming messages": "Outgoing messages"}</h4>
+                                    <h4 className="stepsTitle">{(box) ? "Incoming messages" : "Outgoing messages"}</h4>
                                     <Switch
                                         isOn={box}
                                         onColor="#152a61"
                                         handleToggle={() => setBox(!box)}
                                     />
-{(box) ? <DMincoming /> : <DMoutgoing />}
-
-
-
-
-
-
-
+                                    {(box) ? <DMincoming /> : <DMoutgoing />}
 
 
                                 </Col>
@@ -177,7 +170,7 @@ function Steps() {
                                             <option value={0} className="stepsItem mt-4" id={"topic0"}></option>
                                             {topicsArray.slice(0).reverse().map((topic, j) => {
                                                 return (
-                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author.firstName + '' + topic.author.lastName} </option>
+                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author ? topic.author.firstName + '' + topic.author.lastName: "DELETED USER"} </option>
                                                 )
                                             })}
 
@@ -208,10 +201,10 @@ function Steps() {
                                                         id={step._id}
                                                         message={step.message}
                                                         time={step.updatedAt}
-                                                        name={step.author.firstName + ' ' + step.author.lastName}
-                                                        profileImg={step.author.profilePhotoUrl}
+                                                        name={step.author ? step.author.firstName + ' ' + step.author.lastName : "Deleted User"}
+                                                        profileImg={step.author ? step.author.profilePhotoUrl:process.env.PUBLIC_URL + "./imgs/defaultIcon.png"}
                                                         status={profile.memberStatus[0]}
-                                                        authorid={step.author.email}
+                                                        authorid={step.author ? step.author.email: ""}
                                                         userid={profile.email} />
                                                 )
                                             })}
