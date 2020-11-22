@@ -20,13 +20,13 @@ module.exports = function (app) {
                 res.redirect('http://localhost:3000/#/member');
         });
 
-    app.get('/auth/facebook', passport.authenticate('facebook'));
+    // app.get('/auth/facebook', passport.authenticate('facebook'));
 
-    app.get('/auth/facebook/callback',
-        passport.authenticate('facebook'),
-        function (req, res) {
-            process.env.NODE_ENV === "production" ?
-                res.redirect('/#/member') :
-                res.redirect('http://localhost:3000/#/member');
-        });
+    // app.get('/auth/facebook/callback',
+    //     passport.authenticate('facebook'),
+    //     function (req, res) {
+    //         process.env.NODE_ENV === "production" ?
+    //             res.redirect('/#/member') :
+    //             res.redirect('http://localhost:3000/#/member');
+    //     });
 }

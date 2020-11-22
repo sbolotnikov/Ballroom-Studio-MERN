@@ -47,13 +47,13 @@ function DMincoming() {
                     return (
                         <Row value={j}>
                             <Col xs={4} sm={5}>
-                                <img src={dm.author.profilePhotoUrl ? dm.author.profilePhotoUrl : imgLink} alt='profile avatar' className="img_style" />
+                                <img src={dm.author && dm.author.profilePhotoUrl ? dm.author.profilePhotoUrl : imgLink} alt='profile avatar' className="img_style" />
                             </Col>
                             <Col xs={8} sm={7} style={{ background: dm.confirm ? "white" : "red" }} >
                                 <div className="media-body" id={dm._id}>
                                     <p>{moment(dm.updatedAt).format("h:mma on dddd")} </p>
 
-                                    <p className="mt-0"><strong>{dm.author.firstName + " " + dm.author.lastName}</strong></p>
+                                   {dm.author ?<p className="mt-0"><strong>{dm.author.firstName + " " + dm.author.lastName}</strong></p>: <p>Deleted User wrote</p>}
                                     <p style={{ flexWrap: "wrap" }}>{dm.message}</p>
                                     {!dm.confirm ? <input type="checkbox" name={"box-" + j} value={dm._id} onClick={event => handleCheckbox(event, j)} /> : <div></div>}
                                 </div>
