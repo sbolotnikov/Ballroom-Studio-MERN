@@ -107,11 +107,11 @@ function MemberNav(props) {
                                         <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
                                     </a>
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <a href="/auth/facebook">
                                         <h4><span className="fab"><i className="fa fa-facebook-official" aria-hidden="true"></i></span>Login with Facebook</h4>
                                     </a>
-                                </div>
+                                </div> */}
                             </form>
                         </div>
                     </li> || ""}

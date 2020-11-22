@@ -33,50 +33,50 @@ passport.use(
 );
 
 // Facebook Strategy
-passport.use(new FacebookStrategy({
-  clientID: process.env.FACEBOOK_CLIENT_ID,
-  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-  callbackURL: "/auth/facebook/callback",
-  proxy: true
-},
-  (accessToken, refreshToken, profile, cb) => {
-    console.log(profile);
-    db.User.findOne({
-      email: profile.emails[0].value
-    }).then(dbUser => {
-      if (!dbUser) {
-        db.User.create({
-          firstName: profile.name.givenName,
-          lastName: profile.name.familyName,
-          email: profile.emails[0].value,
-          facebookId: profile.id,
-          profilePhotoUrl: profile.photos[0].value,
-          memberStatus: ["student"]
-        })
-          .then(result => {
-            db.User.findOne({
-              email: profile.emails[0].value
-            }).then(dbUser => {
-              return cb(null, dbUser);
-            })
-          })
-          .catch(err => {
-            console.log(err)
-          });
+// passport.use(new FacebookStrategy({
+//   clientID: process.env.FACEBOOK_CLIENT_ID,
+//   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
+//   callbackURL: "/auth/facebook/callback",
+//   proxy: true
+// },
+//   (accessToken, refreshToken, profile, cb) => {
+//     console.log(profile);
+//     db.User.findOne({
+//       email: profile.emails[0].value
+//     }).then(dbUser => {
+//       if (!dbUser) {
+//         db.User.create({
+//           firstName: profile.name.givenName,
+//           lastName: profile.name.familyName,
+//           email: profile.emails[0].value,
+//           facebookId: profile.id,
+//           profilePhotoUrl: profile.photos[0].value,
+//           memberStatus: ["student"]
+//         })
+//           .then(result => {
+//             db.User.findOne({
+//               email: profile.emails[0].value
+//             }).then(dbUser => {
+//               return cb(null, dbUser);
+//             })
+//           })
+//           .catch(err => {
+//             console.log(err)
+//           });
 
-      }
-      if (!dbUser.facebookId) {
-        db.User.findOneAndUpdate(
-          { "email": profile.emails[0].value },
-          { "facebookId": profile.id }
-        ).then(dbUser => { return cb(null, dbUser) })
-          .catch(err => {
-            console.log(err)
-          });
-      } else return cb(null, dbUser);
-    })
-  })
-);
+//       }
+//       if (!dbUser.facebookId) {
+//         db.User.findOneAndUpdate(
+//           { "email": profile.emails[0].value },
+//           { "facebookId": profile.id }
+//         ).then(dbUser => { return cb(null, dbUser) })
+//           .catch(err => {
+//             console.log(err)
+//           });
+//       } else return cb(null, dbUser);
+//     })
+//   })
+// );
 
 
 // google strategy
