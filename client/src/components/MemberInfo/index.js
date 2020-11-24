@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from "react-router-dom";
 import API from '../../utils/API';
 import UserContext from '../../utils/UserContext';
 import MemberTable from '../MembersTable/MemberTable'
@@ -34,7 +35,8 @@ function MemberInfo(props) {
     const [newEmail, setNewEmail] = useState(email);
     const [imgUrl, setImgUrl] = useState(null);
     const [birthday, setBirthday] = useState('');
-
+    
+    const history = useHistory(); 
     const saveProfile = () => {
         // ADD VALIDATION
         API.updateProfile(userId, {
@@ -59,7 +61,9 @@ function MemberInfo(props) {
     const getImgUrl = (url) => {
         setImgUrl(url);
     }
-
+    const changePass = () => {
+        history.push("/passChange");
+    }
     return (
         <div className="container">
             <div className="formTop d-flex justify-content-center mt-4">{loggedIn === false ? 'Please log in' : "Welcome " + props.profile.firstName + " " + props.profile.lastName}</div>
@@ -72,7 +76,7 @@ function MemberInfo(props) {
                         </div>
                     <div className="row no-gutters justify-content-center">
                         <div>
-                            <img src={props.profile.profilePhotoUrl?props.profile.profilePhotoUrl: process.env.PUBLIC_URL + "./imgs/defaultIcon.png"} style={styles.img} className="card-img" alt="user avatar" />
+                            <img src={props.profile.profilePhotoUrl ? props.profile.profilePhotoUrl : process.env.PUBLIC_URL + "./imgs/defaultIcon.png"} style={styles.img} className="card-img" alt="user avatar" />
                             {updateProfile ?
                                 <Cloudinary style={styles.img} getImgUrl={getImgUrl} /> : <div></div>
                             }
@@ -113,7 +117,7 @@ function MemberInfo(props) {
                                                 disabled
                                                 value={props.profile.phoneNumber}
                                                 inputStyle={{ paddingLeft: '55px', border: '0', boxShadow: '0px white', background: 'white', height: '40px' }}
-                                                
+
                                             />
                                             // <div className="form-control-plaintext">{props.profile.phoneNumber}</div>
                                         }
@@ -123,12 +127,12 @@ function MemberInfo(props) {
                                     <label className="col-4 col-form-label">Birth Date</label>
                                     <div className="col-8">
                                         {updateProfile ?
-                                            <input type="date" className="form-control-plaintext"  defaultValue={props.profile.birthday ? props.profile.birthday.substring(0, 10):""}
+                                            <input type="date" className="form-control-plaintext" defaultValue={props.profile.birthday ? props.profile.birthday.substring(0, 10) : ""}
                                                 onChange={event => setBirthday(event.target.value)} />
                                             :
-                                            <input type="date" className="form-control-plaintext"  defaultValue={props.profile.birthday ? props.profile.birthday.substring(0, 10):""}
-                                            onChange={event => setBirthday(event.target.value)} disabled />
-                                            }
+                                            <input type="date" className="form-control-plaintext" defaultValue={props.profile.birthday ? props.profile.birthday.substring(0, 10) : ""}
+                                                onChange={event => setBirthday(event.target.value)} disabled />
+                                        }
 
                                     </div>
                                 </div>
@@ -142,7 +146,7 @@ function MemberInfo(props) {
                             <button type="button" className="cuteBtn mt-4" id="updateProBtn" onClick={toggleUpdate}>{updateProfile ? "Cancel" : "Update Profile"}</button>
                             {updateProfile &&
                                 <button type="button" className="cuteBtn mt-4 mx-4" id="saveProBtn" onClick={saveProfile}>Save Profile</button>}
-
+                            <button type="button" className="cuteBtn mt-4 mx-4" id="saveProBtn" onClick={changePass}>Change Password</button>
                         </div>
                     </div>
                 </div>

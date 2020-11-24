@@ -55,7 +55,8 @@ function MemberNav(props) {
                 setErrorState(false);
                 setLoggedIn(true);
                 setEmail(results.data.email);
-                history.push("/member");
+                console.log(results);
+                results.data.tempPassword? history.push("/passChange") : history.push("/member");
             })
                 .catch(err => {
                     console.log(err)
@@ -107,6 +108,11 @@ function MemberNav(props) {
                                         <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
                                     </a>
                                 </div>
+                                <div>
+                                   
+                                        <h5>Forgot password? Click  <a href="/#/password"> Here </a></h5>
+                                   
+                                </div>
                                 {/* <div className="form-group">
                                     <a href="/auth/facebook">
                                         <h4><span className="fab"><i className="fa fa-facebook-official" aria-hidden="true"></i></span>Login with Facebook</h4>
@@ -114,24 +120,24 @@ function MemberNav(props) {
                                 </div> */}
                             </form>
                         </div>
-                    </li> || ""}
+                    </li>}
                     {!loggedIn && <li className="nav-item">
                         <Link to="/signup" className="nav-link">
                             Signup
                     </Link>
 
-                    </li> || ""}
+                    </li>}
 
                     <li className="nav-item">
                         <Link to="/events" className="nav-link">
                             Events
                     </Link>
                     </li>
-                    {loggedIn && <li className="nav-item">
+                    <li className="nav-item">
                         <Link to="/steps" className="nav-link">
                             Social
                     </Link>
-                    </li> || ""}
+                    </li>
                     <li className="nav-item">
                         <Link to="/DanceInspire" className="nav-link">
                             Dance Inspirations

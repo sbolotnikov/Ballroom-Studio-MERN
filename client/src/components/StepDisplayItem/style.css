@@ -5,6 +5,7 @@
 }
 .stepStyle{
     opacity: .8;
+    flex-wrap: wrap;
     background-color: beige;
     color: black;
     text-shadow: 1px 1px #faa65c;

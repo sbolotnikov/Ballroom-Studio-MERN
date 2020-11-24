@@ -36,16 +36,16 @@ function DMincoming() {
                 {dmIncoming && dmIncoming.map((dm, j) => {
                     return (
                         <Row value={j}>
-                            <Col xs={4} sm={5}>
-                                <img src={dm.dm_recipient && dm.dm_recipient.profilePhotoUrl ? dm.dm_recipient.profilePhotoUrl : imgLink} alt='profile avatar' className="img_style" />
+                            <Col xs={4} sm={3}>
+                                <img style={{padding:"5px 0 0 5px" }} src={dm.dm_recipient && dm.dm_recipient.profilePhotoUrl ? dm.dm_recipient.profilePhotoUrl : imgLink} alt='profile avatar' className="img_style" />
                             </Col>
-                            <Col xs={8} sm={7} style={{ background: dm.confirm ? "white" : "red" }} >
+                            <Col xs={8} sm={9} style={{ background: dm.confirm ? "white" : "red" }} >
                                 <div className="media-body" id={dm._id}>
                                     <p>{moment(dm.updatedAt).format("h:mma on dddd")} </p>
                                     {dm.dm_recipient ? <p className="mt-0"><strong>{dm.dm_recipient.firstName + " " + dm.dm_recipient.lastName}</strong></p>: <p>You wrote to Deleted User</p>}
                                     <p style={{ flexWrap: "wrap" }}>{dm.message}</p>
                                 </div>
-                                <button style={{ color: "blue", float: "right" }} value={dm._id} onClick={event => handleDeleteDM(event, j)}>x</button>
+                                <button className="cuteBtn" style={{ color: "blue", float: "right" }} value={dm._id} onClick={event => handleDeleteDM(event, j)}>x</button>
                             </Col>
                         </Row>
                     )

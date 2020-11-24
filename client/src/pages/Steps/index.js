@@ -1,5 +1,5 @@
 import "./style.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import MemberNav from '../../components/MemberNav';
 import DirectMessage from '../../components/DirectMessage';
 import DMincoming from '../../components/DMincoming';
@@ -9,7 +9,7 @@ import StepDisplayItem from '../../components/StepDisplayItem';
 import API from '../../utils/API';
 import ErrorNotice from "../../components/misc/errorNotice";
 import { Col, Row } from "react-bootstrap";
-
+import UserContext from '../../utils/UserContext';
 
 function Steps() {
     const [profile, setProfile] = useState({});
@@ -20,20 +20,22 @@ function Steps() {
     const [addstep, setAddStep] = useState('')
     const [stepsSet, setStepsSet] = useState([]);
     const [box, setBox] = useState(true);
+    const {loggedIn, setLoggedIn} = useContext(UserContext);
 
     useEffect(() => {
         setTopicState();
 
         API.getProfile().then(results => {
             setProfile(results.data);
-
+            if (loggedIn) setLoggedIn(!results.data.tempPassword);
+            if (results.data.tempPassword) setErrorState("Please reset your password first")
         }).catch(err => {
             console.log(err);
         })
     }, []);
     function setTopicState() {
         API.allTopics().then(results => {
-            setTopicsArray(results.data);
+            setTopicsArray(results.data.reverse());
             // console.log(topicsArray);
             setTopic(results.data[0]._id);
         }).then(() => {
@@ -46,7 +48,7 @@ function Steps() {
     }
     function getSetofSteps(topicref) {
         API.getSetSteps(topicref).then(res1 => {
-            setStepsSet(res1.data);
+            setStepsSet(res1.data.reverse());
         }).catch(err => {
             setStepsSet([])
             console.log(err);
@@ -140,7 +142,7 @@ function Steps() {
                         />
                         <div className="container">
                             <Row className="d-flex flex-row justify-content-center">
-                                <Col md={4}>
+                               {loggedIn && <Col md={4}>
                                     <h4 className="formTop d-flex justify-content-center mt-4">Direct messages:</h4>
                                     <DirectMessage />
 
@@ -153,14 +155,14 @@ function Steps() {
                                     {(box) ? <DMincoming /> : <DMoutgoing />}
 
 
-                                </Col>
+                                </Col>}
                                 <Col md={8}>
                                     <h4 className="formTop d-flex justify-content-center mt-4">Latest hot topics:</h4>
-                                    <input type="text" className="form-control" id="topic" placeholder="Add new topic"
-                                        onChange={event => setAddTopic(event.target.value)} />
+                                    {loggedIn &&   <input type="text" className="form-control" id="topic" placeholder="Add new topic"
+                                        onChange={event => setAddTopic(event.target.value)} />}
                                     {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
                                     <div className="d-flex justify-content-center">
-                                        <button id="topicAdd" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleAddTopic} >Add</button>
+                                    {loggedIn &&   <button id="topicAdd" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleAddTopic} >Add</button>}
                                     </div>
 
                                     <h4 className="stepsTitle">Choose a Topic:</h4>
@@ -168,42 +170,41 @@ function Steps() {
                                     <figure id="topicChoice">
                                         <select name="topics" className="stepsItem" id="topics" onChange={topicChange}>
                                             <option value={0} className="stepsItem mt-4" id={"topic0"}></option>
-                                            {topicsArray.slice(0).reverse().map((topic, j) => {
+                                            { topicsArray.map((topic, j) => {
                                                 return (
-                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author ? topic.author.firstName + '' + topic.author.lastName: "DELETED USER"} </option>
+                                                    <option value={topic._id} className="stepsItem" id={"topic" + j}>{topic.topic} by {topic.author ? topic.author.firstName + '_' + topic.author.lastName: "DELETED USER"} </option>
                                                 )
                                             })}
 
                                         </select>
                                     </figure>
 
-                                    <div className="d-flex justify-content-center">
+                                    {loggedIn &&  <div className="d-flex justify-content-center">
                                         <button id="topicDel" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button>
                                         {/* {(profile.memberStatus === ["teacher"]) || (profile.memberStatus === ["admin"]) ? <button id="topicDel" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleDelTopic} >Delete</button> : <div></div>} */}
-                                    </div>
+                                    </div>}
 
                                     <p className="formTop d-flex justify-content-center  mt-4">Step</p>
-                                    <textarea className="form-control" rows="3" id="step-box" onChange={event => setAddStep(event.target.value)}
-                                        placeholder="Enter your Step-tweet Here!"></textarea>
-                                    <div className="d-flex justify-content-center">
+                                    {loggedIn && <textarea className="form-control" rows="3" id="step-box" onChange={event => setAddStep(event.target.value)}
+                                        placeholder="Enter your Step-tweet Here!"></textarea>}
+                                    {loggedIn && <div className="d-flex justify-content-center">
                                         <button id="step-submit" className="cuteBtn" onClick={handleAddStep}
                                             style={{ marginLeft: "10px" }}>Submit!</button>
-                                    </div>
+                                    </div>}
                                     <Row className="d-flex flex-row justify-content-center">
                                         {/* <Row> */}
                                         <Col lg={12} onClick={handleDelStepSubmit}>
                                             <h2 className="stepsTitle">Steps list:</h2>
                                             <hr />
-                                            {stepsSet.slice(0).reverse().map((step, j) => {
+                                            {stepsSet.map((step, j) => {
                                                 return (
-                                                    // <h3 id={step._id} className="stepsItem" id={"step" + j}>{step.message}</h3>
                                                     <StepDisplayItem
                                                         id={step._id}
                                                         message={step.message}
                                                         time={step.updatedAt}
                                                         name={step.author ? step.author.firstName + ' ' + step.author.lastName : "Deleted User"}
                                                         profileImg={step.author ? step.author.profilePhotoUrl:process.env.PUBLIC_URL + "./imgs/defaultIcon.png"}
-                                                        status={profile.memberStatus[0]}
+                                                        status={profile.memberStatus ? profile.memberStatus[0]: "student"}
                                                         authorid={step.author ? step.author.email: ""}
                                                         userid={profile.email} />
                                                 )

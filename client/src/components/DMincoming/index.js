@@ -10,7 +10,7 @@ function DMincoming() {
     let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
     useEffect(() => {
         API.getIncomingDM().then(results => {
-
+            console.log(results)
             var res = results.data.sort(compareValues('updatedAt', 'desc'));
             console.log(res)
             setDMIncoming(res)
@@ -46,10 +46,10 @@ function DMincoming() {
                 {dmIncoming && dmIncoming.map((dm, j) => {
                     return (
                         <Row value={j}>
-                            <Col xs={4} sm={5}>
-                                <img src={dm.author && dm.author.profilePhotoUrl ? dm.author.profilePhotoUrl : imgLink} alt='profile avatar' className="img_style" />
+                            <Col xs={4} sm={3} >
+                                <img style={{padding:"5px 0 0 5px" }} src={dm.author && dm.author.profilePhotoUrl ? dm.author.profilePhotoUrl : imgLink} alt='profile avatar' className="img_style" />
                             </Col>
-                            <Col xs={8} sm={7} style={{ background: dm.confirm ? "white" : "red" }} >
+                            <Col xs={8} sm={9} style={{ background: dm.confirm ? "white" : "red" }} >
                                 <div className="media-body" id={dm._id}>
                                     <p>{moment(dm.updatedAt).format("h:mma on dddd")} </p>
 
@@ -57,7 +57,7 @@ function DMincoming() {
                                     <p style={{ flexWrap: "wrap" }}>{dm.message}</p>
                                     {!dm.confirm ? <input type="checkbox" name={"box-" + j} value={dm._id} onClick={event => handleCheckbox(event, j)} /> : <div></div>}
                                 </div>
-                                <button style={{ color: "blue", float: "right" }} value={dm._id} onClick={event => handleDeleteDM(event, j)} className="cuteBtn">x</button>
+                                <button className="cuteBtn" style={{color: "blue", float: "right" }} value={dm._id} onClick={event => handleDeleteDM(event, j)} className="cuteBtn">x</button>
                             </Col>
                             {/* {(props.status === "teacher") || (props.status === "admin") || (props.authorid === props.userid) ? <button type="submit" className="btn btn-danger float-right" value={props.id}>Delete</button> : <div></div>} */}
                         </Row>

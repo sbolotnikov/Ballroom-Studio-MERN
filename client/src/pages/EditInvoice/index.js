@@ -15,10 +15,9 @@ import { useHistory } from "react-router-dom";
 
 
 function EditInvoice() {
-    const { invoiceId, setInvoiceId } = useContext(UserContext);
+    const {loggedIn,setLoggedIn, invoiceId, setInvoiceId } = useContext(UserContext);
     const [selectedStudent, setSelectedStudent] = useState({});
     const [selectedType, setSelectedType] = useState(null);
-    const [imgDisplay, setImgDisplay] = useState('');
     const [profile, setProfile] = useState({});
     const [members, setMembers] = useState([]);
     const [amount, setAmount] = useState(1);
@@ -74,12 +73,9 @@ function EditInvoice() {
     }, []);
 
     const getProfile = () => {
-        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
         API.getProfile().then(results => {
-            if (results.data.profilePhotoUrl) {
-                imgLink = results.data.profilePhotoUrl;
-            }
-            setImgDisplay(imgLink);
+            setLoggedIn(!results.data.tempPassword);
+            if (results.data.tempPassword) setErrorState("Please reset your password first");         
             setProfile(results.data);
         }).catch(err => {
             console.log(err);
@@ -217,19 +213,14 @@ function EditInvoice() {
 
     return (
         <Fragment>
-            <MemberNav imgLink={imgDisplay} />
-            {/* <Invoice /> */}
-            <Row>
+            <MemberNav />
+            {errorstate && (<ErrorNotice message={errorstate} clearError={() => setErrorState(undefined)} />)}
+            {loggedIn &&  <Row>
                 <Col lg={4}>
 
                     {invoiceId.length > 0 ? selectedStudent && <h3> {selectedStudent.label}</h3> :
                         members && <Select width='300px' menuColor='red'
-                            options={members} defaultValue={selectedStudent} onChange={setSelectedStudent} />}
-
-
-
-
-                    {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
+                            options={members} defaultValue={selectedStudent} onChange={setSelectedStudent} />}           
                     <Select width='300px' menuColor='red'
                         options={priceList} defaultValue={selectedType} onChange={setSelectedType} />
                     <label for="inpAmount">Amount of Units:</label><br />
@@ -265,7 +256,7 @@ function EditInvoice() {
                     <InvoicePayment payment={payments} onChange={handleDeletePayment} />
                     <button type="submit" id="submitSession" className="cuteBtn" style={{ marginLeft: "10px" }} onClick={handleSubmitInvoice} >Submit invoice</button>
                 </Col>
-            </Row>
+            </Row>}
         </Fragment>
     )
 }

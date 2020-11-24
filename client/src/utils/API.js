@@ -108,7 +108,13 @@ export default {
       return axios.put(`/api/invoice/${id}`,obj)
     },
     deleteInvoice: (id) =>{
-      console.log("in API get 1 Invoice");
       return axios.delete(`/api/invoice/${id}`)
+    },
+    recoverPassword: (password)=> {
+      return axios.post("/api/user_data/forgotpassword", password)
+    },
+    ChangePassword: (info)=> {
+      console.log("in API recover");
+      return axios.put("/api/user_data/changepassword", info)
     }
 }
