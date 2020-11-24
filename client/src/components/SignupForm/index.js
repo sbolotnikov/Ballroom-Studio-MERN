@@ -89,7 +89,7 @@ function SignupForm(props) {
             <div className="formTop d-flex justify-content-center">Sign Up</div>
             <div className="card-body font-weight-bold bgW">
                 <form className="create" id="formSignIn" onSubmit={handleSignup}>
-                    {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
+                    {errorstate && (<ErrorNotice message={errorstate} clearError={() => setErrorState(undefined)} />)}
                     <div className="form-row">
                         <div className="form-group col-md-6">
                             <label for="firstName">First Name</label>

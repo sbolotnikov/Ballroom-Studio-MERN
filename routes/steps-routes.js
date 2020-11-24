@@ -6,17 +6,17 @@ module.exports = function (app) {
 
   // GET all topics
   app.get("/api/steps/all_topics", function (req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back to startup screen
-      res.redirect("/");
-    } else {
+    // if (!req.user) {
+    
+    //   res.redirect("/");
+    // } else {
       db.Topic.find({}).populate("author").then(function (results) {
         // results are available to us inside the .then
         res.json(results);
       }).catch(function (err) {
         res.send(err);
       })
-    }
+    // }
   });
 
 
@@ -101,10 +101,10 @@ module.exports = function (app) {
 
   // get all steps of 1 topic
   app.get("/api/steps/data/:topic", function (req, res) {
-    if (!req.user) {
-      // The user is not logged in, send back to startup screen
-      res.redirect("/");
-    } else {
+    // if (!req.user) {
+    
+    //   res.redirect("/");
+    // } else {
       db.Step.find({
         topic: req.params.topic
       })
@@ -114,7 +114,7 @@ module.exports = function (app) {
         }).catch(function (err) {
           res.send(err);
         });
-    }
+    // }
   });
 
   // delete all Steps of a topic 

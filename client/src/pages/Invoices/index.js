@@ -6,14 +6,15 @@ import compareValues from '../../utils/compareValues';
 import MemberNav from '../../components/MemberNav';
 import { useHistory } from "react-router-dom";
 import UserContext from '../../utils/UserContext';
+import ErrorNotice from "../../components/misc/errorNotice";
 
 // import Invoice from '../../components/Invoice';
 
 function Invoices() {
-    const { invoiceId, setInvoiceId } = useContext(UserContext);
-    const [imgDisplay, setImgDisplay] = useState('');
+    const {loggedIn, setLoggedIn, invoiceId, setInvoiceId } = useContext(UserContext);
     const [profile, setProfile] = useState({});
     const [invoices, setInvoices] = useState([]);
+    const [errorstate, setErrorState] = useState(false);
     const history = useHistory();
     useEffect(() => {
         getProfile();
@@ -26,12 +27,9 @@ function Invoices() {
         })
     }, []);
     const getProfile = () => {
-        let imgLink = process.env.PUBLIC_URL + "./imgs/defaultIcon.png";
-        API.getProfile().then(results => {
-            if (results.data.profilePhotoUrl) {
-                imgLink = results.data.profilePhotoUrl;
-            }
-            setImgDisplay(imgLink);
+        API.getProfile().then(results => {          
+            setLoggedIn(!results.data.tempPassword);
+            if (results.data.tempPassword) setErrorState("Please reset your password first");
             setProfile(results.data);
         }).catch(err => {
             console.log(err);
@@ -53,9 +51,9 @@ function Invoices() {
     }
     return (
         <Fragment>
-            <MemberNav imgLink={imgDisplay} />
-
-            <Table responsive striped bordered hover>
+            <MemberNav />
+            {errorstate && (<ErrorNotice message={errorstate} left={40} top={40} clearError={() => setErrorState(undefined)} />)}
+            {loggedIn && <Table responsive striped bordered hover>
                 <thead>
                     <tr>
                         <th>#</th>
@@ -84,8 +82,8 @@ function Invoices() {
                             </tr>)
                     })}
                 </tbody>
-            </Table>
-            <button className="cuteBtn" value={''} onClick={handleEditInvoice}>Add</button>
+            </Table>}
+            {loggedIn && <button className="cuteBtn" value={''} onClick={handleEditInvoice}>Add</button>}
 
         </Fragment>
     )

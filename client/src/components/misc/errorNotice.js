@@ -7,7 +7,7 @@ export default
     return (
         // <div className={"error-notice d-flex flex-column justify-content-center  position-absolute"} style={{left: props.left, top: props.top}}>
 
-        <div className="error-notice" style={{left: leftval, top: topval}}>
+        <div className="error-notice" style={{left: leftval, top: topval, flexWrap: "wrap"}}>
             <Row>
                 <Col>
                 <button style={{ background:"transparent", border:"0", boxShadow:"0", float: "right" }} onClick={props.clearError}>X</button>

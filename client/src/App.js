@@ -18,6 +18,8 @@ import MemberPage from './pages/MemberPage';
 import UserContext from "./utils/UserContext";
 import { HashRouter as Router, Route, Redirect } from 'react-router-dom';
 import DanceInspire from "./pages/Dance";
+import PasswordRecover from "./pages/Recover";
+import ChangePassword from "./pages/ChangePassword";
 
 function App() {
   const [email, setEmail] = useState("");
@@ -43,6 +45,8 @@ function App() {
           <Route exact path="/signup" component={Signup} />
           <Route exact path="/member" component={MemberPage} />
           <Route exact path= "/DanceInspire" component={DanceInspire}/>
+          <Route exact path="/password" component={PasswordRecover} />
+          <Route exact path="/passChange" component={ChangePassword} />
         </UserContext.Provider>
       </Router>
     </div>
