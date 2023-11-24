@@ -31,7 +31,8 @@ require('./routes/invoice-routes.js')(app);
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,
   useFindAndModify: false,
-  useUnifiedTopology: true
+  useUnifiedTopology: true,
+  useCreateIndex:true,
 });
 // mongoose.set('toJSON', { virtuals: true });
 app.listen(PORT, () => {
