@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use(
-  session({ secret: "keyboard cat", resave: true, saveUninitialized: true })
+  session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
 );
 app.use(cors());
 
