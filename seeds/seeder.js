@@ -12,7 +12,7 @@ seedData = populateTab();
 users = [...seedData.userObj];
 sessions = [...seedData.sessionsObj];
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/ballroom-studio', {
+mongoose.connect(process.env.MY_MONGO_URL || 'mongodb://localhost/ballroom-studio', {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true 

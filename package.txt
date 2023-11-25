@@ -1,0 +1,10 @@
+ // "scripts": {
+  //   "start": "if-env NODE_ENV=production && yarn start:prod || yarn start:dev",
+  //   "start:prod": "node server.js",
+  //   "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"yarn client\"",
+  //   "client": "cd client && yarn start",
+  //   "seed": "node scripts/seedDB.js",
+  //   "install": "cd client && yarn install",
+  //   "build": "cd client && yarn build",
+  //   "heroku-postbuild": "yarn build"
+  // },
