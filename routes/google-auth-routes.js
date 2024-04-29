@@ -5,18 +5,18 @@ var cors = require('cors')
 
 module.exports = function (app) {
 
-    app.get('/auth/google',
+    app.get('/api/auth/google',
         passport.authenticate('google', {
             scope: ['profile', 'email']
         }));
 
-    app.get('/auth/google/redirect',
+    app.get('/api/auth/google/redirect',
         passport.authenticate('google', {
             failureRedirect: '/'
         }),
         function (req, res) {
             process.env.NODE_ENV === "production" ?
-                res.redirect('/#/member') :
+                res.redirect('https://mern-ballroom.onrender.com/#/member') :
                 res.redirect('http://localhost:3000/#/member');
         });
 

@@ -104,7 +104,7 @@ function MemberNav(props) {
 
                                 {errorstate && (<ErrorNotice message={errorstate} left={10} top={10} clearError={() => setErrorState(undefined)} />)}
                                 <div>
-                                    <a href="/auth/google">
+                                    <a href="/api/auth/google">
                                         <img src={process.env.PUBLIC_URL + "./imgs/google-sign-in-btn.png"} alt="Login with Google" />
                                     </a>
                                 </div>
