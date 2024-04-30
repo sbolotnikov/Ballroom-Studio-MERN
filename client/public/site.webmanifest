@@ -1,7 +1,7 @@
 {
-  "name": "Eat 'Da Burger",
-    "short_name": "Eat Burger",
-    "description": " Eat Da Burger! is a restaurant app that lets users input the names of burgers they'd like to eat.",
+  "name": "MERN Ballroom Studio",
+    "short_name": "MERN Ballroom",
+    "description": " This demonstrates full usage of the MERN Stack in a realistic scenario by creating a scheduling, billing, and community platform that is practical for nearly any type of event or class-based business or community. Users are able to log in directly or using integration with Google OAuth  and create a personalized and customizable account from which they can view events, sign up for them, and communicate publicly and directly with other suers through the Steps social media platform.  Instructors, managers and Administrators have the ability to create events, edit and remove users, generate invoices, and manage the community social platform. They can also send marketing and reminder e-mails to users in the database.",
   "theme_color": "#fff",
   "background_color": "#fff",
   "display": "fullscreen",
