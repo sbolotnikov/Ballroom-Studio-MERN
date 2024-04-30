@@ -13,7 +13,7 @@ Users are able to log in directly or using integration with Google OAuth  and cr
 Instructors, managers and Administrators have the ability to create events, edit and remove users, generate invoices, and manage the community social platform. They can also send marketing and reminder e-mails to users in the database.  
 
 ## Deployed Site: 
-https://mernballroom.onrender.com
+https://mern-ballroom.onrender.com
 
 
 FUTURE UPDATES: 
