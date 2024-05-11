@@ -14,7 +14,7 @@ app.use(express.static("public"));
 app.use(
   session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
 );
-app.use(cors());
+app.use(cors({origin: ["http://localhost:3000",'https://mern-ballroom.onrender.com/'], credentials: true}));
 
 app.use(passport.initialize());
 app.use(passport.session());
