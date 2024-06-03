@@ -187,7 +187,7 @@ module.exports = function (app) {
       // The user is not logged in, send back an empty object
       res.json({});
     } else {
-      db.Session.find({
+       db.Session.find({
           teachers: mongoose.Types.ObjectId(req.params.userId)
         })
         .then(results => {
