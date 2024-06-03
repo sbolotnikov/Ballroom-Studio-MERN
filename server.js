@@ -2,6 +2,7 @@ const express = require("express");
 const session = require("express-session");
 const mongoose = require('mongoose');
 const passport = require("./config/passport");
+const path = require('path');
 const cors = require("cors");
 const port = process.env.PORT || 8080;
 require('dotenv').config();
@@ -14,7 +15,7 @@ app.use(express.static("public"));
 app.use(
   session({ secret: "keyboard cat", resave: false, saveUninitialized: false })
 );
-app.use(cors({origin: ["http://localhost:3000",'https://mern-ballroom.onrender.com/'], credentials: true}));
+app.use(cors({origin: ["http://localhost:3000",'https://mern-ballroom.onrender.com/','https://mernballroom.onrender.com/','https://ballroom-dance-studio.onrender.com'], credentials: true}));
 
 app.use(passport.initialize());
 app.use(passport.session());
