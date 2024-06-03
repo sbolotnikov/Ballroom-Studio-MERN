@@ -37,9 +37,9 @@ mongoose.connect(process.env.MY_MONGO_URL || 'mongodb://localhost/ballroom-studi
 });
 if (process.env.NODE_ENV === 'production') {
   //*Set static folder up in production
-  app.use(express.static('client/build'));
+  // app.use(express.static('client/build'));
 
-  app.get('*', (req,res) => res.sendFile(path.resolve(__dirname, 'client', 'build','index.html')));
+  app.get('*', (req,res) => res.sendFile('index.html',{root:"public"}));
 }
 app.listen(port, () => {
   console.log(`App running on port http://localhost:${port}`);
