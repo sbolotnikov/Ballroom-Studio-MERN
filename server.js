@@ -3,7 +3,7 @@ const session = require("express-session");
 const mongoose = require('mongoose');
 const passport = require("./config/passport");
 const cors = require("cors");
-const PORT = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 require('dotenv').config();
 
 const app = express();
@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'production') {
 
   app.get('*', (req,res) => res.sendFile(path.resolve(__dirname, 'client', 'build','index.html')));
 }
-app.listen(PORT, () => {
-  console.log(`App running on port http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`App running on port http://localhost:${port}`);
 });
 
