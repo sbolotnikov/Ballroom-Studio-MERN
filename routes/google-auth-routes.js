@@ -16,7 +16,7 @@ module.exports = function (app) {
         }),
         function (req, res) {
             process.env.NODE_ENV === "production" ?
-                res.redirect('https://mern-ballroom.onrender.com/#/member') :
+                res.redirect('https://ballroom-dance-studio.onrender.com/#/member') :
                 res.redirect('http://localhost:3000/#/member');
         });
 
